@@ -12,3 +12,5 @@ Repository for the code developed during the Software Engeneering course.
 
 * **Requisits**: NFC or Bluetooth devices for location and database to hold images, locations and paths of the conference.
 ## Elevator Pitch
+## User Cases
+## Domain Analysis
