@@ -16,7 +16,10 @@
 * When you go to a conference, you go there with which purpose? With the purpose of getting the best and the most of the conference, from the moment we step in. However, from the moment we arrive, we find ourselves in that new space we don’t know and we don’t even know how to go to where we want or need, losing those precious moment of the beginning of a lecture or workshop. For that, the ideal would be an application that would allow us to locate ourselves automatically, anywhere, on any conference, fast and effectively, with the help of a 3D view and a visualization of the path to where we want to go, minimizing the time and effort we need to locate ourselves and to know how to get where we want.
 
 ## Requirements
-### User Cases
+### Use Cases
+
+![use case diagram](./resources/use_cases.png)
+
 ### User Stories
 * **Trello** : [English](https://trello.com/b/m0GrAXGv/user-stories-esof)
 ### Domain Modeling
