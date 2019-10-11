@@ -17,6 +17,7 @@
 
 ## Requirements
 ### User Cases
-### Domain Analysis
+### User Stories
+### Domain Modeling
 
 ## Architecture and Design
