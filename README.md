@@ -18,6 +18,7 @@
 ## Requirements
 ### User Cases
 ### User Stories
+* **Trello** : [English](https://trello.com/b/m0GrAXGv/user-stories-esof)
 ### Domain Modeling
 
 ## Architecture and Design
