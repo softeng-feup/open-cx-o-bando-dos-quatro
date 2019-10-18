@@ -23,5 +23,5 @@
 ### User Stories
 * **Trello** : [English](https://trello.com/b/m0GrAXGv/user-stories-esof)
 ### Domain Modeling
-![model domain diagram](./resources/ESOF_MODEL_DOMAIN.png)
+![model domain diagram](./resources/ESOF_DOMAIN_MODEL.png)
 ## Architecture and Design
