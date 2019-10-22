@@ -53,3 +53,6 @@ Thank you!
 ### Domain model
 ![model domain diagram](./resources/ESOF_DOMAIN_MODEL.png)
 ## Architecture and Design
+### Logical Architecture
+### Physical Architecture
+### Prototype
