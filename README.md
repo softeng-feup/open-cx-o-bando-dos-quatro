@@ -61,4 +61,7 @@ Thank you!
 
 ### Physical Architecture
 
+![physical architecture diagram](./resources/esof_physical_arch.png)
+
+
 ### Prototype
