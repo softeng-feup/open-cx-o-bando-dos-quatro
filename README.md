@@ -52,7 +52,13 @@ Thank you!
 * **Trello** : [English](https://trello.com/b/m0GrAXGv/user-stories-esof)
 ### Domain model
 ![model domain diagram](./resources/ESOF_DOMAIN_MODEL.png)
+
 ## Architecture and Design
+
 ### Logical Architecture
+
+![logical architecture diagram](./resources/esof_logical_architecture.png)
+
 ### Physical Architecture
+
 ### Prototype
