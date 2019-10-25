@@ -76,7 +76,7 @@ __Guidance App:__
 
 
 ### User stories
-* **Trello** : [Also contains Acceptance Test](https://trello.com/b/m0GrAXGv/user-stories-esof) 
+* **Trello** : [Also contains Acceptance Test & Mockups](https://trello.com/b/m0GrAXGv/user-stories-esof) 
 ### Domain model
 ![model domain diagram](./resources/ESOF_DOMAIN_MODEL.png)
 
