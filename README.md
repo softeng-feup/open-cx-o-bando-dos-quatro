@@ -52,6 +52,8 @@ Thank you!
 * **Trello** : [English](https://trello.com/b/m0GrAXGv/user-stories-esof)
 ### Domain model
 ![model domain diagram](./resources/ESOF_DOMAIN_MODEL.png)
+
+
 To better understand the context of the software system, it is very useful to have a simple UML class diagram with key concepts and relationships involved of the problem domain addressed by our module.
 The diagram shows all locations have an associated image, we can do many transitions between locations, each one with some info. A path is an association between two locations, our atual location and the destination.
 ## Architecture and Design
