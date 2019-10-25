@@ -63,5 +63,7 @@ Thank you!
 
 ![physical architecture diagram](./resources/esof_physical_arch.png)
 
+The deployment UML diagram above documents high-level physical structures of the software system. The Nodes represent hardware requirements for the project's idea to work properly. Each one holds one or more components, this is, pieces of software that vary in language or functionality and can communicate with each other.
+
 
 ### Prototype
