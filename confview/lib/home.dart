@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-
+import 'action_item.dart';
 
 
 
@@ -57,12 +57,29 @@ class _HomePageState extends State<HomePage> {
 
     // TODO: change the parameter
     Widget _buildRow(String conferenceName) {
-        return ListTile(
-            title: Text(conferenceName),
-            trailing: Icon(
-                Icons.favorite,
-                color: Colors.red,
-            ),
+        return OnSlide(
+            items: <ActionItem>[
+                ActionItem(
+                    icon: IconButton(
+                        icon: Icon(Icons.delete),
+                        onPressed: (){},
+                        color: Colors.red),
+                    onPress: (){},
+                    backgroundColor: Colors.white),  
+                ],
+            child:
+                Container(
+                padding: const EdgeInsets.only(top:10.0),
+                width: 200.0,
+                height: 150.0,
+                child: Card(
+                    child: Row(
+                        children: <Widget>[
+                            Text(conferenceName)
+                            ],
+                        ),
+                    )
+                )
         );
     }
 
