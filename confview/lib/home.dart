@@ -15,7 +15,7 @@ class HomePage extends StatefulWidget {
 class _HomePageState extends State<HomePage> {
 
     // TODO: the app must get the conference names from the database
-    final List<String> _conferences = ["conf1", "conf2"];
+    final List<String> _conferences = ["Web Summit", "Talk A Bit"];
 
 
     @override
@@ -106,12 +106,20 @@ class _HomePageState extends State<HomePage> {
         return AlertDialog(
             title: Text('Add Conference'),
             content: TextField(
-                decoration: InputDecoration(hintText: 'Conference Code'),
+                decoration: InputDecoration(
+                    hintText: 'CODE',
+                    border: OutlineInputBorder(),
+                ),
+                textCapitalization: TextCapitalization.characters,
+                textAlign: TextAlign.center,
+                maxLines: 1,
+                maxLength: 15,  // TODO: this is a temporary value
                 controller: textController,
                 autocorrect: false,
                 autofocus: true,
-                onSubmitted: _addNewConference(textController.text, context)
-                ),
+                onSubmitted: (text) {
+                    _addNewConference(text, context);
+                }),
             actions: <Widget>[
                 MaterialButton(
                     onPressed: (){
@@ -124,10 +132,12 @@ class _HomePageState extends State<HomePage> {
     }
 
     _addNewConference(String conferenceName, BuildContext context) {
+        print('Checking if it is possible to create a new conf');
         if ( conferenceName == '')
             return;
 
         setState(() {
+        print('Created a new conference');
         _conferences.add(conferenceName);
         });
 
