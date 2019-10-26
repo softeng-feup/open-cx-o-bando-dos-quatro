@@ -40,23 +40,26 @@ class _HomePageState extends State<HomePage> {
     }
 
     Widget _buildList() {
+
         return ListView.builder(
             padding: const EdgeInsets.all(16),
             itemBuilder: (BuildContext _context, int i) {
-                if (i.isOdd) {
-                    return Divider();
-                }
+                
                 final int index = i ~/ 2;
-                if (index < _conferences.length)
-                    return _buildRow(_conferences[index]);
-
-                return null;
+                
+                if (index >= _conferences.length)
+                    return null;
+                
+                if (i.isOdd)
+                    return Divider();
+                
+                return _buildRow(index);
             }
         );  
     }
 
     // TODO: change the parameter
-    Widget _buildRow(String conferenceName) {
+    Widget _buildRow(int index) {
         return OnSlide(
             items: <ActionItem>[
                 ActionItem(
@@ -64,7 +67,9 @@ class _HomePageState extends State<HomePage> {
                         icon: Icon(Icons.delete),
                         onPressed: (){},
                         color: Colors.red),
-                    onPress: (){},
+                    onPress: (){
+                        _deleteConference(index);
+                    },
                     backgroundColor: Colors.white),  
                 ],
             child:
@@ -75,7 +80,7 @@ class _HomePageState extends State<HomePage> {
                 child: Card(
                     child: Row(
                         children: <Widget>[
-                            Text(conferenceName)
+                            Text(_conferences[index])
                             ],
                         ),
                     )
@@ -127,6 +132,12 @@ class _HomePageState extends State<HomePage> {
         });
 
         Navigator.pop(context);
+    }
+
+    _deleteConference(int index) {
+        setState(() {
+            _conferences.removeAt(index);
+        });
     }
 }
 
