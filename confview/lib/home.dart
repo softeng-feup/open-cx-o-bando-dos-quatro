@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
-//import 'nav.dart';
+
 import 'action_item.dart';
+import 'nav.dart';
 
 
 
@@ -59,33 +60,39 @@ class _HomePageState extends State<HomePage> {
         );  
     }
 
-    // TODO: change the parameter
+    // TODO: change the parameter, InkWell is temporary(incorporate into OnSlide)
     Widget _buildRow(int index) {
-        return OnSlide(
-            items: <ActionItem>[
-                ActionItem(
-                    icon: IconButton(
-                        icon: Icon(Icons.delete),
-                        onPressed: (){},
-                        color: Colors.red),
-                    onPress: (){
-                        _deleteConference(index);
-                    },
-                    backgroundColor: Colors.white),  
-                ],
-            child:
-                Container(
-                padding: const EdgeInsets.only(top:10.0),
-                width: 200.0,
-                height: 150.0,
-                child: Card(
-                    child: Row(
-                        children: <Widget>[
-                            Text(_conferences[index])
-                            ],
-                        ),
-                    )
-                )
+        return InkWell( 
+            child:OnSlide(
+                items: <ActionItem>[
+                    ActionItem(
+                        icon: IconButton(
+                            icon: Icon(Icons.delete),
+                            onPressed: (){},
+                            color: Colors.red),
+                        onPress: (){
+                            _deleteConference(index);
+                        },
+                        backgroundColor: Colors.white),  
+                    ],
+                child:
+                    Container(
+                    padding: const EdgeInsets.only(top:10.0),
+                    width: 200.0,
+                    height: 150.0,
+                    child: Card(
+                        child: Row(
+                            children: <Widget>[
+                                Text(_conferences[index])
+                                ],
+                            ),
+                        )
+                    ),
+                ),
+            onTap:() {
+                // TODO: this is temporary, change the parameter so that the map screen is built for the correct conference
+                Navigator.of(context).push(MaterialPageRoute(builder: (context) => MapScreen(conferenceId: 0)));
+            }
         );
     }
 
@@ -149,6 +156,10 @@ class _HomePageState extends State<HomePage> {
         setState(() {
             _conferences.removeAt(index);
         });
+    }
+
+    _openConference() {
+
     }
 }
 

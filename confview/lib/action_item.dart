@@ -72,7 +72,7 @@ class ActionItem extends Object {
 
 
 
-
+// TODO: add onPressed or onTap functionality
 class OnSlide extends StatefulWidget {
 
     final List<ActionItem> items;
@@ -101,9 +101,7 @@ class _OnSlideState extends State<OnSlide> {
         super.initState();
     }
 
-    // FIXME: fix this function
-    // always return true for some reason
-    // refactor the if statements
+    // FIXME: refactor the if statements
     bool _handleScrollNotification(dynamic notification) {
         if (!(notification is ScrollEndNotification))
             return true;
