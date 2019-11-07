@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 
 import 'home.dart';
+//import 'panorama_view.dart';
+
 
 void main() => runApp(ConfView());
 
@@ -17,8 +19,9 @@ class ConfView extends StatelessWidget {
 
       ),
 
-      //home: MapScreen(conferenceId: 0),
       home: HomePage(title: 'Conference Viewer'),
+      //home: MapScreen(conferenceId: 0),
+      //home: PanoramaView(),
 
     );
   }
