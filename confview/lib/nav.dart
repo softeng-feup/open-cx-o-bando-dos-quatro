@@ -1,3 +1,4 @@
+import 'package:confview/graph_draw.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_speed_dial/flutter_speed_dial.dart';
 import 'nfc.dart';
@@ -67,19 +68,6 @@ class _MapScreenState extends State<MapScreen> {
     @override 
     Widget build(BuildContext context) {
 
-        Widget floatingActionButton1 = FloatingActionButton(
-            child: Icon(Icons.nfc),
-            tooltip: 'Read NFC tag',
-            onPressed: _readTag,
-        );
-
-        Widget floatingActionButton2 = FloatingActionButton(
-            child: Icon(Icons.airplay),
-            tooltip: 'Read NFC tag',
-            onPressed: _readTag,
-        );
-
-
         return Scaffold(
             appBar: AppBar(
                 leading: _isSearching ? _buildBackButton() : null,
@@ -99,7 +87,7 @@ class _MapScreenState extends State<MapScreen> {
                 */
             ),
             body: _isSearching ? _buildSuggestions() : _buildMap(),
-                floatingActionButton:  _getFAB(),
+            floatingActionButton:  _getFAB(),
 
         );
     }
@@ -108,7 +96,7 @@ class _MapScreenState extends State<MapScreen> {
         return SpeedDial(
             animatedIcon: AnimatedIcons.menu_close,
             animatedIconTheme: IconThemeData(size: 22),
-            backgroundColor: Color(0xFF801E48),
+            backgroundColor: Colors.blue,
             visible: true,
             curve: Curves.bounceIn,
             children: [
@@ -148,10 +136,7 @@ class _MapScreenState extends State<MapScreen> {
     }
 
     Widget _buildMap() {
-        print(_isSearching);
-        
-        return null;
-        
+        return GraphDraw();
     }
 
     Widget _buildButtons() {
