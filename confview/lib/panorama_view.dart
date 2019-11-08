@@ -21,27 +21,32 @@ class _PanoramaViewState extends State<PanoramaView> {
     final double dragResistance = 200;
 
     /*  Some test image urls
-        https://www.worldphoto.org/sites/default/files/Mohammad%20Reza%20Domiri%20Ganji%2C%20Iran%20%2C%20Shortlist%2C%20Open%2C%20Panoramic%2C%202015%20Sony%20World%20Photography%20Awards%20%282%29.jpg
-        https://cdn.pixabay.com/photo/2017/03/05/00/34/panorama-2117310_960_720.jpg
-        https://saffi3d.files.wordpress.com/2011/08/commercial_area_cam_v004.jpg
+        https://www.worldphoto.org/sites/default/files/Mohammad%20Reza%20Domiri%20Ganji%2C%20Iran%20%2C%20Shortlist%2C%20Open%2C%20Panoramic%2C%202015%20Sony%20World%20Photography%20Awards%20%282%29.jpg  2000 × 990
+        https://cdn.pixabay.com/photo/2017/03/05/00/34/panorama-2117310_960_720.jpg 960 × 355  2.5
+        https://saffi3d.files.wordpress.com/2011/08/commercial_area_cam_v004.jpg    3072 × 1536 2.697
     */
+    //final String imageUrl = 'https://www.worldphoto.org/sites/default/files/Mohammad%20Reza%20Domiri%20Ganji%2C%20Iran%20%2C%20Shortlist%2C%20Open%2C%20Panoramic%2C%202015%20Sony%20World%20Photography%20Awards%20%282%29.jpg';
+    //final String imageUrl = 'https://cdn.pixabay.com/photo/2017/03/05/00/34/panorama-2117310_960_720.jpg';
     final String imageUrl = 'https://saffi3d.files.wordpress.com/2011/08/commercial_area_cam_v004.jpg';
     NetworkImage networkImage;
     Image testImage;
     Widget test;
-    GlobalKey  imageKeyNormal = GlobalKey();
-    GlobalKey  imageKey = GlobalKey();
+    GlobalKey  imageKey1 = GlobalKey();
+    GlobalKey  imageKey2 = GlobalKey();
 
     Size imageSize;
     Size imageSize2;
 
 
-    @override 
+    @override
     initState() {
         WidgetsBinding.instance.addPostFrameCallback(getimageSize);
         super.initState();
 
         networkImage = NetworkImage(imageUrl);
+
+        var a = networkImage.toString();
+        print(a);
 
         test = SizedBox.expand(
             child: Image(
@@ -56,12 +61,12 @@ class _PanoramaViewState extends State<PanoramaView> {
     }
 
     getimageSize(_){
-        RenderBox renderBoxRed = imageKey.currentContext.findRenderObject();
+        RenderBox renderBoxRed = imageKey1.currentContext.findRenderObject();
         imageSize = renderBoxRed.size;
         print("SIZE of Red: $imageSize");
         print(imageSize.width);
         print(imageSize.width/145.613);
-        RenderBox renderBoxRed2 = imageKeyNormal.currentContext.findRenderObject();
+        RenderBox renderBoxRed2 = imageKey2.currentContext.findRenderObject();
         imageSize2 = renderBoxRed2.size;
         print("SIZE of Red: $imageSize2");
         print(imageSize2.width);
@@ -75,32 +80,24 @@ class _PanoramaViewState extends State<PanoramaView> {
         });
     }
 
-    @override 
+    @override
     Widget build(BuildContext context) {
 
         return Stack(
             children: <Widget>[
-                SizedBox(
+                SizedBox.expand(
                     child: Image(
                         image: networkImage,
                         fit: BoxFit.fitHeight,
                         alignment: _imageAlignment,
+                        key: imageKey1,
                     ),
-                    key: imageKey,
                 ),
                 SizedBox.expand(
                     child: Image(
                         image: networkImage,
                         fit: BoxFit.fitHeight,
                         alignment: _imageAlignment2,
-                    ),
-                ),
-                SizedBox.expand(
-                    child: Image(
-                        image: networkImage,
-                        fit: BoxFit.contain,
-                        alignment: Alignment(3,3),
-                        key: imageKeyNormal,
                     ),
                 ),
                 Scaffold(

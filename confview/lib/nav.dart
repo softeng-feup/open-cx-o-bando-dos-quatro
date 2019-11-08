@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_speed_dial/flutter_speed_dial.dart';
 import 'nfc.dart';
 
 
@@ -65,6 +66,20 @@ class _MapScreenState extends State<MapScreen> {
 
     @override 
     Widget build(BuildContext context) {
+
+        Widget floatingActionButton1 = FloatingActionButton(
+            child: Icon(Icons.nfc),
+            tooltip: 'Read NFC tag',
+            onPressed: _readTag,
+        );
+
+        Widget floatingActionButton2 = FloatingActionButton(
+            child: Icon(Icons.airplay),
+            tooltip: 'Read NFC tag',
+            onPressed: _readTag,
+        );
+
+
         return Scaffold(
             appBar: AppBar(
                 leading: _isSearching ? _buildBackButton() : null,
@@ -84,11 +99,44 @@ class _MapScreenState extends State<MapScreen> {
                 */
             ),
             body: _isSearching ? _buildSuggestions() : _buildMap(),
-            floatingActionButton: FloatingActionButton(
+                floatingActionButton:  _getFAB(),
+
+        );
+    }
+
+    Widget _getFAB() {
+        return SpeedDial(
+            animatedIcon: AnimatedIcons.menu_close,
+            animatedIconTheme: IconThemeData(size: 22),
+            backgroundColor: Color(0xFF801E48),
+            visible: true,
+            curve: Curves.bounceIn,
+            children: [
+                // FAB 1
+                SpeedDialChild(
+                    child: Icon(Icons.directions),
+                    backgroundColor: Colors.blue,
+                    onTap: () { },
+                    label: 'GO',
+                    labelStyle: TextStyle(
+                        fontWeight: FontWeight.w500,
+                        color: Colors.white,
+                        fontSize: 16.0),
+                    labelBackgroundColor: Color(0xFF801E48)),
+                // FAB 2
+                SpeedDialChild(
                     child: Icon(Icons.nfc),
-                    tooltip: 'Read NFC tag',
-                    onPressed: _readTag,
-                ),
+                    backgroundColor: Colors.blue,
+                    onTap: () {
+                        _readTag();
+                            },
+                    label: 'NFC',
+                    labelStyle: TextStyle(
+                        fontWeight: FontWeight.w500,
+                        color: Colors.white,
+                        fontSize: 16.0),
+                    labelBackgroundColor: Color(0xFF801E48))
+            ],
         );
     }
 
