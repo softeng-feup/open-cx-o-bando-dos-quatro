@@ -1,9 +1,26 @@
 import 'package:flutter/material.dart';
 
 
+class Tag {
+    final String text;
+    final double x;
+    final double y;
+    Tag(this.text,this.x,this.y){}
+
+    Alignment getAligment(){
+        return Alignment(x,y);
+    }
+    String getText(){
+        return text;
+    }
+
+}
+
 class PanoramaView extends StatefulWidget {
 
-    PanoramaView({Key key}) : super(key: key);
+    PanoramaView({Key key , this.tags}) : super(key: key);
+
+    final List<Tag> tags;
 
     @override 
     _PanoramaViewState createState() => _PanoramaViewState();
@@ -83,32 +100,76 @@ class _PanoramaViewState extends State<PanoramaView> {
     @override
     Widget build(BuildContext context) {
 
+        List<Widget> stack_children = [
+            SizedBox.expand(
+                child: Image(
+                    image: networkImage,
+                    fit: BoxFit.fitHeight,
+                    alignment: _imageAlignment,
+                    key: imageKey1,
+                ),
+            ),
+            SizedBox.expand(
+
+                child: Image(
+                    image: networkImage,
+                    fit: BoxFit.fitHeight,
+                    alignment: _imageAlignment2,
+                    key: imageKey2,
+                ),
+            ),
+            Scaffold(
+                backgroundColor: Colors.transparent,
+                appBar: _showAppBar ? _buildAppBar() : null,
+                body: GestureDetector(
+                    onTap: _toggleAppBar,
+                    onHorizontalDragUpdate: _dragImage,
+                ),
+            ),
+        ];
+
+        for(int i = 0; i < widget.tags.length;i++){
+            stack_children.add(
+                Align(
+                    alignment: widget.tags[i].getAligment() -_imageAlignment-_imageAlignment - _imageAlignment  -_imageAlignment,
+                    child: FlatButton(
+                        onPressed: () {
+                            print(widget.tags[i].getText());
+                        },
+                        color: Colors.blue,
+                        child: Container(
+                            padding: EdgeInsets.all(8.0),
+                            color: Colors.blue,
+                            child: Text(widget.tags[i].getText()),
+                        ),
+                    )
+                )
+            );
+        }
+
+        for(int i = 0; i < widget.tags.length;i++){
+            stack_children.add(
+                Align(
+                    alignment: widget.tags[i].getAligment() -_imageAlignment2-_imageAlignment2 - _imageAlignment2  -_imageAlignment2,
+                    child: FlatButton(
+                        onPressed: () {
+                            print(widget.tags[i].getText());
+                        },
+                        color: Colors.blue,
+                        child: Container(
+                            padding: EdgeInsets.all(8.0),
+                            color: Colors.blue,
+                            child: Text(widget.tags[i].getText()),
+                        ),
+                    )
+                )
+            );
+        }
+
+
+
         return Stack(
-            children: <Widget>[
-                SizedBox.expand(
-                    child: Image(
-                        image: networkImage,
-                        fit: BoxFit.fitHeight,
-                        alignment: _imageAlignment,
-                        key: imageKey1,
-                    ),
-                ),
-                SizedBox.expand(
-                    child: Image(
-                        image: networkImage,
-                        fit: BoxFit.fitHeight,
-                        alignment: _imageAlignment2,
-                    ),
-                ),
-                Scaffold(
-                    backgroundColor: Colors.transparent,
-                    appBar: _showAppBar ? _buildAppBar() : null,
-                    body: GestureDetector(
-                        onTap: _toggleAppBar,
-                        onHorizontalDragUpdate: _dragImage,
-                    ),
-                ),
-            ]
+            children: stack_children
         );
     }   
 

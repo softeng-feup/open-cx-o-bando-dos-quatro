@@ -1,14 +1,14 @@
 import 'package:flutter/material.dart';
 
 import 'home.dart';
-//import 'panorama_view.dart';
+import 'panorama_view.dart';
 
 /*
 TODO: FIXME:
   This is a very important note!!
   When first compiling to IOS the app must be Swift based and the Podfile must be modified
   to contain the following two lines of code at the top of the file
-    
+
     platform : ios, '8.0'
     use_frameworks!
 
@@ -33,9 +33,9 @@ class ConfView extends StatelessWidget {
 
       ),
 
-      home: HomePage(title: 'Conference Viewer'),
+      //home: HomePage(title: 'Conference Viewer'),
       //home: MapScreen(conferenceId: 0),
-      //home: PanoramaView(),
+      home: PanoramaView(tags: [new Tag("Rotunda",-2,0),new Tag("Carro Cinzento",0.3,0.2),new Tag("Fim de rua",3.5,0)]),
 
     );
   }
