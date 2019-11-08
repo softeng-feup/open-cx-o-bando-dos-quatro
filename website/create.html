@@ -1,50 +1,5 @@
 <!DOCTYPE html>
 
-<!-- 
-<html lang="pt-PT">
-    <head>
-        <title> ConfView Creator </title>
-        <meta charset="UTF_8">
-    </head>
-    <body>
-        <header>
-            <h1> Confview Creator </h1>
-            <h2> Create your own Conference Guide </h2>
-        </header>
-        <nav>
-            <div class="form-group">
-            <form name="add_node" id="add_node" action="script.php">
-                <label> Conference Name:
-                    <input type="text" name="name">
-                </label>
-                 <fieldset> 
-                  <legend>Node:</legend>
-                  <label>x_coordinate: <input type="number"></label>
-                  <label>y_coordinate: <input type="number"></label>
-                  <label>Is this node a tag? <input type="checkbox"></label>
-                </fieldset> 
-                <table class="table table-bordered" id="dynamic_field">
-                        <tr>
-                            <td>
-                                <fieldset>
-                                    <legend>Node:</legend>
-                                    <label>x_coordinate: <input type="number" name="x[]" class="form-control name_list"></label>
-                                    <label>y_coordinate: <input type="number" name="y[]" class="form-control name_list"></label>
-                                    <label>Is this node a tag? <input type="checkbox" class="form-control name_list"></label>
-                                </fieldset>
-                            </td>
-                            <td><button type="button" name="add" id="add" class="btn btn-success">Add Nodes</button></td>
-                        </tr>
-                    </table>
-                    <input type="button" name="submit" id="submit" class="btn btn-info" value="Submit" />
-              </form>
-              </div>
-        </nav>
-    </body>
-</html>
-
--->
-
 <html>
     <head>
         <title> ConfView Creator </title>
@@ -60,53 +15,65 @@
             <h2> Create your own Conference Guide </h2>
         </header>
 
-        <form>
+        <form action="process-conf.php" method="post" enctype="multipart/form-data">
             <label> Conference Name:
                 <input type="text" name="name">
             </label>
-        </form>
+            <label> Code:
+                <input type="text" name="code">
+            </label>
+        <!-- </form> -->
 
-        <div class = "element-wrapper">
+            <div class = "element-wrapper">
 
-            <div class = "node">
-                <form>
-                    <fieldset> 
-                        <legend>Node:</legend>
-                        <label>x_coordinate: <input type="number"></label>
-                        <label>y_coordinate: <input type="number"></label>
-                        <label>Is this node a tag? <input type="checkbox"></label>
-                    </fieldset>
-                </form>
-                <button class = "remove-node">
-                    Remove Node
-                </button>
+                <div class = "node">
+                    <!-- <form> -->
+                        <fieldset> 
+                            <legend>Node:</legend>
+                            <label>x_coordinate: <input type="number" name="x_coordinate"></label>
+                            <label>y_coordinate: <input type="number" name="y_coordinate"></label>
+                            <label>Is this node a tag? <input type="checkbox" name="tag?"></label>
+                            <br>
+                            <label>Photosphere: <input type="file" name="file"></label>
+                        </fieldset>
+                    <!-- </form> -->
+                    <button class = "remove-node">
+                        Remove Node
+                    </button>
+                </div>
+
             </div>
 
+            <div>
+                <input type="submit" value="Submit">
+            </div>
+        </form>
+
+        <div>
+            <button class = "add-node">
+                Add Node
+            </button>
         </div>
-        <button class = "add-node">
-            Add Node
-        </button>
-
-        <script type = "text/javascript">
-
-            /* create new node */
-            $(document).on("click", ".add-node", function(){
-                
-                var node = $(".node").eq(0).clone().show();
-                $(".element-wrapper").append(node);
-
-            });
-            /* removes existing node */
-            $(document).on("click", ".remove-node", function(){
-                
-                var index = $(".remove-node").index(this);
-                $(".node").eq(index).remove();
-
-            });
-
-        </script>
 
     </body>
 
 </html>
 
+<script type = "text/javascript">
+
+    /* create new node */
+    $(document).on("click", ".add-node", function(){
+    
+        var node = $(".node").eq(0).clone().show();
+        $(".element-wrapper").append(node);
+
+    });
+    /* removes existing node */
+     $(document).on("click", ".remove-node", function(){
+    
+        var index = $(".remove-node").index(this);
+        $(".node").eq(index).remove();
+
+    });
+
+</script>
