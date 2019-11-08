@@ -84,6 +84,11 @@ class _MapScreenState extends State<MapScreen> {
                 */
             ),
             body: _isSearching ? _buildSuggestions() : _buildMap(),
+            floatingActionButton: FloatingActionButton(
+                    child: Icon(Icons.nfc),
+                    tooltip: 'Read NFC tag',
+                    onPressed: _readTag,
+                ),
         );
     }
 
@@ -97,12 +102,27 @@ class _MapScreenState extends State<MapScreen> {
     Widget _buildMap() {
         print(_isSearching);
         
-        return FloatingActionButton(
-            child: Icon(Icons.nfc),
-            tooltip: 'Read NFC tag',
-            onPressed: _readTag,
-        );
+        return null;
         
+    }
+
+    Widget _buildButtons() {
+        return Column(
+            children: [
+                FloatingActionButton(
+                    child: Icon(Icons.nfc),
+                    tooltip: 'Read NFC tag',
+                    onPressed: _readTag,
+                ),
+                FloatingActionButton(
+                    child: Icon(Icons.directions),
+                    tooltip: 'Start navigation',
+                    onPressed: (){
+                        print('Pressed START NAVIGATION');
+                    }
+                ),
+            ],
+        );
     }
 
     _readTag() {

@@ -1,5 +1,6 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_nfc_reader/flutter_nfc_reader.dart';
 
 
@@ -16,12 +17,18 @@ class _NfcScanState extends State<NfcScan> {
     @override 
     initState() {
         super.initState();
+
+        try {
         FlutterNfcReader.read().then((data) {
             print('Read a tag');
             print(data.id);
             print(data.content);
             Navigator.pop(context);
         });
+        } on PlatformException catch(exception) {
+            print(exception);
+            // TODO: display a dialog box warning to turn on nfc
+        }
     }
 
     @override 
