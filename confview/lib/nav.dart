@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'nfc.dart';
 
 
 class MapScreen extends StatefulWidget {
@@ -95,9 +96,17 @@ class _MapScreenState extends State<MapScreen> {
 
     Widget _buildMap() {
         print(_isSearching);
-        return Center(
-            child: Text('Map goes here')
+        
+        return FloatingActionButton(
+            child: Icon(Icons.nfc),
+            tooltip: 'Read NFC tag',
+            onPressed: _readTag,
         );
+        
+    }
+
+    _readTag() {
+        Navigator.of(context).push(MaterialPageRoute(builder: (context) => NfcScan()));
     }
 
     List<Widget> _buildActions() {
