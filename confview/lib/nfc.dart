@@ -13,22 +13,13 @@ class NfcScan extends StatefulWidget {
 
 class _NfcScanState extends State<NfcScan> {
 
+    bool _nfcOn = true;
 
     @override 
     initState() {
         super.initState();
-
-        try {
-        FlutterNfcReader.read().then((data) {
-            print('Read a tag');
-            print(data.id);
-            print(data.content);
-            Navigator.pop(context);
-        });
-        } on PlatformException catch(exception) {
-            print(exception);
-            // TODO: display a dialog box warning to turn on nfc
-        }
+        NfcData data;
+        _readTag(data);
     }
 
     @override 
@@ -39,10 +30,7 @@ class _NfcScanState extends State<NfcScan> {
                     icon: Icon(Icons.arrow_back),
                     tooltip: 'Go back',
                     onPressed: (){
-                        FlutterNfcReader.stop().then((response) {
-                            print(response.status.toString());
-                            print('Stopped trying to read a tag');
-                        });
+                        _stopReadingTag();
                         Navigator.pop(context);
                     },
                 ),
@@ -51,5 +39,35 @@ class _NfcScanState extends State<NfcScan> {
                 child: Text('Looking for NFC tag...'),
             )
         );
+    }
+
+    _readTag(data) {
+        try {
+            FlutterNfcReader.read().then((response) {
+                response = data;
+                print('Read a tag');
+                print(data.id);
+                print(data.content);
+            });
+        } catch(exception) {
+            print(exception.toString());
+        } finally {
+            _nfcOn = false;
+            // TODO: show a dialog box that warns when nfc is not on
+        }
+    }
+
+    _stopReadingTag() {
+        if (!_nfcOn)
+            return;
+
+        try {
+            FlutterNfcReader.stop().then((response) {
+                print(response.status.toString());
+                print('Stopped trying to read a tag');
+            });
+        } catch(exception) {
+            print(exception.toString());
+        }
     }
 }
