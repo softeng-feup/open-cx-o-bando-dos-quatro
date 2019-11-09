@@ -12,17 +12,17 @@
     
 
     
-    $array = $_POST["element-wrapper"];
+    $array = $_POST["element"];
     
 
     $counter = 0;
 
-    $x = 0;
-    $y = 0;
+    $x = $_POST["x_coordinate"];
+    $y = $_POST["y_coordinate"];
     $tag = true;
 
     echo ' yey';
-    echo count($array);
+    echo sizeof($array);
 
     while($counter != sizeof($array)){
 
