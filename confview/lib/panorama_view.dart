@@ -5,9 +5,9 @@ class Tag {
     final String text;
     final double x;
     final double y;
-    Tag(this.text,this.x,this.y){}
+    Tag(this.text,this.x,this.y);
 
-    Alignment getAligment(){
+    Alignment getAlignment(){
         return Alignment(x,y);
     }
     String getText(){
@@ -57,7 +57,7 @@ class _PanoramaViewState extends State<PanoramaView> {
 
     @override
     initState() {
-        WidgetsBinding.instance.addPostFrameCallback(getimageSize);
+        WidgetsBinding.instance.addPostFrameCallback(getImageSize);
         super.initState();
 
         networkImage = NetworkImage(imageUrl);
@@ -77,7 +77,7 @@ class _PanoramaViewState extends State<PanoramaView> {
 
     }
 
-    getimageSize(_){
+    getImageSize(_){
         RenderBox renderBoxRed = imageKey1.currentContext.findRenderObject();
         imageSize = renderBoxRed.size;
         print("SIZE of Red: $imageSize");
@@ -100,7 +100,7 @@ class _PanoramaViewState extends State<PanoramaView> {
     @override
     Widget build(BuildContext context) {
 
-        List<Widget> stack_children = [
+        List<Widget> stackChildren = [
             SizedBox.expand(
                 child: Image(
                     image: networkImage,
@@ -129,11 +129,12 @@ class _PanoramaViewState extends State<PanoramaView> {
         ];
 
         for(int i = 0; i < widget.tags.length;i++){
-            stack_children.add(
+            stackChildren.add(
                 Align(
-                    alignment: widget.tags[i].getAligment() -_imageAlignment-_imageAlignment - _imageAlignment  -_imageAlignment,
+                    alignment: widget.tags[i].getAlignment() -_imageAlignment-_imageAlignment - _imageAlignment  -_imageAlignment,
                     child: FlatButton(
                         onPressed: () {
+                            //TODO: place here a useful function
                             print(widget.tags[i].getText());
                         },
                         color: Colors.blue,
@@ -148,11 +149,12 @@ class _PanoramaViewState extends State<PanoramaView> {
         }
 
         for(int i = 0; i < widget.tags.length;i++){
-            stack_children.add(
+            stackChildren.add(
                 Align(
-                    alignment: widget.tags[i].getAligment() -_imageAlignment2-_imageAlignment2 - _imageAlignment2  -_imageAlignment2,
+                    alignment: widget.tags[i].getAlignment() -_imageAlignment2-_imageAlignment2 - _imageAlignment2  -_imageAlignment2,
                     child: FlatButton(
                         onPressed: () {
+                            //TODO: place here a useful function
                             print(widget.tags[i].getText());
                         },
                         color: Colors.blue,
@@ -169,7 +171,7 @@ class _PanoramaViewState extends State<PanoramaView> {
 
 
         return Stack(
-            children: stack_children
+            children: stackChildren
         );
     }   
 
