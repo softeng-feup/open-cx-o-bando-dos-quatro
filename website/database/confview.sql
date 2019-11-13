@@ -21,7 +21,7 @@ CREATE TABLE node (
 
 CREATE TABLE location (
     id                   INTEGER PRIMARY KEY
-    x_coord              INTEGER NOT NULL ON CONFLICT ABORT,
-    y_coord              INTEGER NOT NULL ON CONFLICT ABORT
+    x_coord              REAL NOT NULL ON CONFLICT ABORT,
+    y_coord              REAL NOT NULL ON CONFLICT ABORT
 );
 
