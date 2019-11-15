@@ -1,20 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:confview/conference.dart';
 
-
-class Tag {
-    final String text;
-    final double x;
-    final double y;
-    Tag(this.text,this.x,this.y);
-
-    Alignment getAlignment(){
-        return Alignment(x,y);
-    }
-    String getText(){
-        return text;
-    }
-
-}
 
 class PanoramaView extends StatefulWidget {
 
@@ -135,7 +121,9 @@ class _PanoramaViewState extends State<PanoramaView> {
                     child: FlatButton(
                         onPressed: () {
                             //TODO: place here a useful function
-                            print(widget.tags[i].getText());
+                            Navigator.popAndPushNamed(context, '/' + widget.tags[i].getText());
+                            //Navigator.of(context).pushNamed('/' + widget.tags[i].getText());
+                            //print(widget.tags[i].getText());
                         },
                         color: Colors.blue,
                         child: Container(
@@ -155,7 +143,9 @@ class _PanoramaViewState extends State<PanoramaView> {
                     child: FlatButton(
                         onPressed: () {
                             //TODO: place here a useful function
-                            print(widget.tags[i].getText());
+                            Navigator.popAndPushNamed(context, '/' + widget.tags[i].getText());
+                            //Navigator.of(context).pushNamed('/' + widget.tags[i].getText());
+                            //print(widget.tags[i].getText());
                         },
                         color: Colors.blue,
                         child: Container(

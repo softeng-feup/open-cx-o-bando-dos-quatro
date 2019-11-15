@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 
 import 'home.dart';
 import 'panorama_view.dart';
+import 'conference.dart';
 
 /*
 TODO: FIXME:
@@ -35,7 +36,7 @@ class ConfView extends StatelessWidget {
 
       //home: HomePage(title: 'Conference Viewer'),
       //home: MapScreen(conferenceId: 0),
-      home: PanoramaView(tags: [new Tag("Rotunda",-2,0),new Tag("Carro Cinzento",0.3,0.2),new Tag("Fim de rua",3.5,0)]),
+      home: Conference(),
 
     );
   }
