@@ -1,9 +1,8 @@
 -- DATABASE FOR CONFVIEW WEBSITE & APPLICATION
 
-DROP IF EXISTS conference;
-DROP IF EXISTS node;
-DROP IF EXISTS location;
-
+DROP TABLE IF EXISTS conference;
+DROP TABLE IF EXISTS node;
+DROP TABLE IF EXISTS location;
 
 
 CREATE TABLE conference (
@@ -20,7 +19,7 @@ CREATE TABLE node (
 );
 
 CREATE TABLE location (
-    id                   INTEGER PRIMARY KEY
+    id                   INTEGER PRIMARY KEY,
     x_coord              REAL NOT NULL ON CONFLICT ABORT,
     y_coord              REAL NOT NULL ON CONFLICT ABORT
 );
