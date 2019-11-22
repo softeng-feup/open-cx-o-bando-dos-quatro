@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'graph.dart';
-import 'dart:math';
+
 
 class GraphDraw extends StatefulWidget {
 
@@ -92,8 +92,9 @@ class _GraphDrawState extends State<GraphDraw> {
     }
 
     Widget _buildEdges() {
+
         return CustomPaint(
-            painter: EdgePainter(MediaQuery.of(context).size, _graphAlignment, _graph.getEdges()),
+            painter: EdgePainter(context, _graphAlignment, _graph.getEdges()),
             child: Text('change this'),
         );
     }
@@ -102,31 +103,45 @@ class _GraphDrawState extends State<GraphDraw> {
 
 class EdgePainter extends CustomPainter {
 
-    final Size _screenSize;
+    final BuildContext _context;
     final Alignment _alignment;
     final List<Edge> _edges;
+    
+    Size _screenSize;
+    double _verticalOffset;
 
-    EdgePainter (this._screenSize, this._alignment, this._edges);
+    EdgePainter (this._context, this._alignment, this._edges) {
+        _screenSize = MediaQuery.of(_context).size;
+        _verticalOffset = kToolbarHeight;
+        print(kToolbarHeight);
+        print(MediaQuery.of(_context).padding.top);
+    }
+
+    
 
     @override 
     void paint(Canvas canvas, Size size) {
-        final paint = Paint();
+        final paintNormalEdge = Paint()
+            ..strokeWidth = 3;
+        
         paint.color = Colors.black;
 
         for (Edge edge in _edges) {
             Node src = edge.getSrcNode();
             Node dest = edge.getDestNode();
 
-            double srcX = (src.getX() + _alignment.x) * _screenSize.width / 2.0 + _screenSize.width / 2.0;
-            double srcY = (src.getY() + _alignment.y) * _screenSize.height / 2.0 + _screenSize.height / 2.0 - kToolbarHeight;
+            double srcX = ((src.getX() + _alignment.x) * _screenSize.width / 2.0 + _screenSize.width / 2.0) / 1.27;
+            double srcY = (src.getY() + _alignment.y) * _screenSize.height / (2.0 * 1.1) + _screenSize.height / 2.0;
+            print('srcX : $srcX');
+            print('srcY : $srcY');
 
-            double destX = (dest.getX() + _alignment.x) * _screenSize.width / 2.0 + _screenSize.width / 2.0;
-            double destY = (dest.getY() + _alignment.y) * _screenSize.height / 2.0 + _screenSize.height / 2.0 - kToolbarHeight;
+            double destX = (dest.getX() + _alignment.x) * _screenSize.width / (2.0 * 1.3) + _screenSize.width / 2.0;
+            double destY = (dest.getY() + _alignment.y) * _screenSize.height / (2.0 * 1.1) + _screenSize.height / 2.0;
 
             Offset srcOffset = Offset(srcX, srcY);
             Offset destOffset = Offset(destX, destY);
 
-            canvas.drawLine(srcOffset, destOffset, paint);
+            canvas.drawLine(srcOffset, destOffset, paintNormalEdge);
         }
     }
 
