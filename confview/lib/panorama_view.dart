@@ -25,14 +25,6 @@ class _PanoramaViewState extends State<PanoramaView> {
     bool _showAppBar = true;
     final double dragResistance = 200;
 
-    /*  Some test image urls
-        https://www.worldphoto.org/sites/default/files/Mohammad%20Reza%20Domiri%20Ganji%2C%20Iran%20%2C%20Shortlist%2C%20Open%2C%20Panoramic%2C%202015%20Sony%20World%20Photography%20Awards%20%282%29.jpg  2000 × 990
-        https://cdn.pixabay.com/photo/2017/03/05/00/34/panorama-2117310_960_720.jpg 960 × 355  2.5
-        https://saffi3d.files.wordpress.com/2011/08/commercial_area_cam_v004.jpg    3072 × 1536 2.697
-    */
-    //final String imageUrl = 'https://www.worldphoto.org/sites/default/files/Mohammad%20Reza%20Domiri%20Ganji%2C%20Iran%20%2C%20Shortlist%2C%20Open%2C%20Panoramic%2C%202015%20Sony%20World%20Photography%20Awards%20%282%29.jpg';
-    final String imageUrl = 'https://cdn.pixabay.com/photo/2017/03/05/00/34/panorama-2117310_960_720.jpg';
-    //final String imageUrl = 'https://d159gdcp8gotlc.cloudfront.net/assets/banner/2742561_1.jpg';
     NetworkImage networkImage;
 
 
@@ -40,8 +32,8 @@ class _PanoramaViewState extends State<PanoramaView> {
 
     double imageWidth;
     double imageHeight;
-    double screenWidth;
-    double screenHeight;
+    static double screenWidth;
+    static double screenHeight;
 
     GlobalKey imageKey1 = new GlobalKey();
 
@@ -49,8 +41,8 @@ class _PanoramaViewState extends State<PanoramaView> {
 
     @override
     initState() {
-
-        WidgetsBinding.instance.addPostFrameCallback(getImageSize);
+        if(!this.widget.panoramaImage.loaded)
+            WidgetsBinding.instance.addPostFrameCallback(getImageSize);
 
 
         super.initState();
@@ -66,25 +58,17 @@ class _PanoramaViewState extends State<PanoramaView> {
     getImageSize(_){
         RenderBox renderBoxRed = imageKey1.currentContext.findRenderObject();
         final imageSize = renderBoxRed.size;
-        print("SIZE of Red: $imageSize");
-        this.screenWidth = imageSize.width;
-        this.screenHeight = imageSize.height;
-        print(imageSize.width);
-        print(imageSize.height);
-        print(delta);
 
-        //this._imageAlignment2 -= Alignment(delta,0);
+        screenWidth = imageSize.width;
+        screenHeight = imageSize.height;
 
-        //double a = 1.745718*(imageSize.width / imageSize.height - 0.51718);
 
-        //this.delta = this.delta + a;
         if(this.imageWidth != null && this.imageHeight != null)
-            this.delta = 1.99068/((this.imageWidth * this.screenHeight) / (this.imageHeight * this.screenWidth) + -1.0072) + 2.00054;
+            this.delta = 1.99068/((this.imageWidth * screenHeight) / (this.imageHeight * screenWidth) + -1.0072) + 2.00054;
 
         this._imageAlignment = Alignment(0,0);
         this._imageAlignment2 = Alignment(this.delta,0);
 
-        print(delta);
     }
 
     void loadImage() async{
@@ -92,34 +76,25 @@ class _PanoramaViewState extends State<PanoramaView> {
             this.networkImage = this.widget.panoramaImage.networkImage;
             this.imageWidth = this.widget.panoramaImage.width;
             this.imageHeight = this.widget.panoramaImage.height;
-            double x = this.imageWidth / this.imageHeight ;
-
-            //this.delta = 1.03041/(x + -0.520507) + 2.00104;
-            print("Calculation of delta: " + this.delta.toString());
-
-            //this._imageAlignment2 += Alignment(this.delta,0);
-            this.loaded = true;
+            setValues(true);
             return;
+        }else {
+            final myFuture = getImage();
+            myFuture.then(setValues);
         }
-        final myFuture = getImage();
-        myFuture.then(setValues);
-        this.loaded = true;
     }
 
     void setValues(bool data) async{
 
-        double x = this.imageWidth / this.imageHeight ;
+        this.delta = 1.99068/((this.imageWidth * screenHeight) / (this.imageHeight * screenWidth) + -1.0072) + 2.00054;
 
-        //this.delta += 1.03041/(x + -0.520507) + 2.00104;
-        //delta -=0.0265;
-        print("Calculation of delta: " + delta.toString());
-
-        this.delta = 1.99068/((this.imageWidth * this.screenHeight) / (this.imageHeight * this.screenWidth) + -1.0072) + 2.00054;
+        //print("Calculation of delta: " + this.delta.toString());
 
         this._imageAlignment = Alignment(0,0);
         this._imageAlignment2 = Alignment(this.delta,0);
 
-        //setState(() {   });
+        this.loaded = true;
+        setState(() {   });
 
         return;
     }
@@ -161,11 +136,12 @@ class _PanoramaViewState extends State<PanoramaView> {
     @override
     Widget build(BuildContext context) {
 
-
         if(this.loaded == false){
-            List<Widget> stackChildren =  [];
-            return Stack(
-                children: stackChildren
+            return Scaffold(
+                key : imageKey1,
+                backgroundColor: Colors.white10,
+                body: Center(
+                    child: Text('Loading' , style: TextStyle(color: Colors.white, fontSize: 20),)),
             );
         }
 
@@ -176,7 +152,7 @@ class _PanoramaViewState extends State<PanoramaView> {
                     image: networkImage,
                     fit: BoxFit.fitHeight,
                     alignment: _imageAlignment,
-                    key : imageKey1,
+
                 ),
             ),
             Container(
@@ -228,6 +204,7 @@ class _PanoramaViewState extends State<PanoramaView> {
                     child: FlatButton(
                         onPressed: () {
                             //TODO: place here a useful function
+                            Navigator.pop(context);
                             Navigator.pushNamed(context, '/' + widget.tags[i].getText());
                             //Navigator.of(context).pushNamed('/' + widget.tags[i].getText());
                             //print(widget.tags[i].getText());
@@ -283,7 +260,7 @@ class _PanoramaViewState extends State<PanoramaView> {
             _imageAlignment2 = Alignment(dx2, 0.0);
         });
 
-        print(_imageAlignment);
+        //print(_imageAlignment);
         /*print(testImage);*/
     }
 

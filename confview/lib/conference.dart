@@ -89,8 +89,9 @@ class Router {
           return MaterialPageRoute(builder: (_) => previous);
         return MaterialPageRoute(
             builder: (_) => Scaffold(
+              backgroundColor: Colors.white10,
               body: Center(
-                  child: Text('No route defined for ${settings.name}')),
+                  child: Text('No route defined for ${settings.name}' , style: TextStyle(color: Colors.white, fontSize: 15),)),
             ));
       }else {
         previous = view;
