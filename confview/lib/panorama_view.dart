@@ -1,26 +1,15 @@
+import 'dart:async';
+
 import 'package:flutter/material.dart';
+import 'package:confview/conference.dart';
 
-
-class Tag {
-    final String text;
-    final double x;
-    final double y;
-    Tag(this.text,this.x,this.y);
-
-    Alignment getAlignment(){
-        return Alignment(x,y);
-    }
-    String getText(){
-        return text;
-    }
-
-}
 
 class PanoramaView extends StatefulWidget {
 
-    PanoramaView({Key key , this.tags}) : super(key: key);
+    PanoramaView({Key key , this.panoramaImage,this.tags}) : super(key: key);
 
     final List<Tag> tags;
+    final PanoramaViewImage panoramaImage;
 
     @override 
     _PanoramaViewState createState() => _PanoramaViewState();
@@ -29,12 +18,11 @@ class PanoramaView extends StatefulWidget {
 
 class _PanoramaViewState extends State<PanoramaView> {
 
-    static double delta = 2.697;
+    double delta = 2.8;
 
-    Alignment _imageAlignment = Alignment.center;
-    Alignment _imageAlignment2 = Alignment(delta,0);
+    Alignment _imageAlignment = new Alignment(0,0);
+    Alignment _imageAlignment2 = new Alignment(0,0);
     bool _showAppBar = true;
-    
     final double dragResistance = 200;
 
     /*  Some test image urls
@@ -43,52 +31,125 @@ class _PanoramaViewState extends State<PanoramaView> {
         https://saffi3d.files.wordpress.com/2011/08/commercial_area_cam_v004.jpg    3072 × 1536 2.697
     */
     //final String imageUrl = 'https://www.worldphoto.org/sites/default/files/Mohammad%20Reza%20Domiri%20Ganji%2C%20Iran%20%2C%20Shortlist%2C%20Open%2C%20Panoramic%2C%202015%20Sony%20World%20Photography%20Awards%20%282%29.jpg';
-    //final String imageUrl = 'https://cdn.pixabay.com/photo/2017/03/05/00/34/panorama-2117310_960_720.jpg';
-    final String imageUrl = 'https://saffi3d.files.wordpress.com/2011/08/commercial_area_cam_v004.jpg';
+    final String imageUrl = 'https://cdn.pixabay.com/photo/2017/03/05/00/34/panorama-2117310_960_720.jpg';
+    //final String imageUrl = 'https://d159gdcp8gotlc.cloudfront.net/assets/banner/2742561_1.jpg';
     NetworkImage networkImage;
-    Image testImage;
-    Widget test;
-    GlobalKey  imageKey1 = GlobalKey();
-    GlobalKey  imageKey2 = GlobalKey();
 
-    Size imageSize;
-    Size imageSize2;
+
+    bool loaded = false;
+
+    double imageWidth;
+    double imageHeight;
+    double screenWidth;
+    double screenHeight;
+
+    GlobalKey imageKey1 = new GlobalKey();
+
 
 
     @override
     initState() {
+
         WidgetsBinding.instance.addPostFrameCallback(getImageSize);
+
+
         super.initState();
 
-        networkImage = NetworkImage(imageUrl);
+        this.delta = 2.455;
 
-        var a = networkImage.toString();
-        print(a);
+        loadImage();
 
-        test = SizedBox.expand(
-            child: Image(
-                image: networkImage,
-                fit: BoxFit.fitHeight,
-
-                alignment: _imageAlignment,
-            ),
-        );
 
 
     }
 
     getImageSize(_){
         RenderBox renderBoxRed = imageKey1.currentContext.findRenderObject();
-        imageSize = renderBoxRed.size;
+        final imageSize = renderBoxRed.size;
         print("SIZE of Red: $imageSize");
+        this.screenWidth = imageSize.width;
+        this.screenHeight = imageSize.height;
         print(imageSize.width);
-        print(imageSize.width/145.613);
-        RenderBox renderBoxRed2 = imageKey2.currentContext.findRenderObject();
-        imageSize2 = renderBoxRed2.size;
-        print("SIZE of Red: $imageSize2");
-        print(imageSize2.width);
-        print(imageSize2.width/145.613);
+        print(imageSize.height);
+        print(delta);
+
+        //this._imageAlignment2 -= Alignment(delta,0);
+
+        //double a = 1.745718*(imageSize.width / imageSize.height - 0.51718);
+
+        //this.delta = this.delta + a;
+        if(this.imageWidth != null && this.imageHeight != null)
+            this.delta = 1.99068/((this.imageWidth * this.screenHeight) / (this.imageHeight * this.screenWidth) + -1.0072) + 2.00054;
+
+        this._imageAlignment = Alignment(0,0);
+        this._imageAlignment2 = Alignment(this.delta,0);
+
+        print(delta);
     }
+
+    void loadImage() async{
+        if(this.widget.panoramaImage.loaded){
+            this.networkImage = this.widget.panoramaImage.networkImage;
+            this.imageWidth = this.widget.panoramaImage.width;
+            this.imageHeight = this.widget.panoramaImage.height;
+            double x = this.imageWidth / this.imageHeight ;
+
+            //this.delta = 1.03041/(x + -0.520507) + 2.00104;
+            print("Calculation of delta: " + this.delta.toString());
+
+            //this._imageAlignment2 += Alignment(this.delta,0);
+            this.loaded = true;
+            return;
+        }
+        final myFuture = getImage();
+        myFuture.then(setValues);
+        this.loaded = true;
+    }
+
+    void setValues(bool data) async{
+
+        double x = this.imageWidth / this.imageHeight ;
+
+        //this.delta += 1.03041/(x + -0.520507) + 2.00104;
+        //delta -=0.0265;
+        print("Calculation of delta: " + delta.toString());
+
+        this.delta = 1.99068/((this.imageWidth * this.screenHeight) / (this.imageHeight * this.screenWidth) + -1.0072) + 2.00054;
+
+        this._imageAlignment = Alignment(0,0);
+        this._imageAlignment2 = Alignment(this.delta,0);
+
+        //setState(() {   });
+
+        return;
+    }
+
+    Future<bool> getImage() async {
+
+        Completer<bool> completer = Completer();
+
+        this.networkImage = NetworkImage(widget.panoramaImage.imageUrl);
+
+        NetworkImage config = await this.networkImage.obtainKey(const ImageConfiguration());
+        ImageStreamCompleter load = networkImage.load(config);
+
+        ImageStreamListener listener = new ImageStreamListener((ImageInfo info, isSync) async {
+            //print(info.image.width);
+            //print(info.image.height);
+            this.imageWidth = info.image.width.toDouble();
+            this.imageHeight = info.image.height.toDouble();
+            widget.panoramaImage.networkImage = this.networkImage;
+            widget.panoramaImage.width = this.imageWidth;
+            widget.panoramaImage.height = this.imageHeight;
+            widget.panoramaImage.loaded = true;
+            completer.complete(true);
+        });
+
+        load.addListener(listener);
+        return completer.future;
+    }
+
+
 
     _toggleAppBar() {
         print('toggled the AppBar');
@@ -100,24 +161,33 @@ class _PanoramaViewState extends State<PanoramaView> {
     @override
     Widget build(BuildContext context) {
 
-        List<Widget> stackChildren = [
-            SizedBox.expand(
+
+        if(this.loaded == false){
+            List<Widget> stackChildren =  [];
+            return Stack(
+                children: stackChildren
+            );
+        }
+
+        List<Widget> stackChildren =  [
+            Container(
+                constraints: BoxConstraints.expand(),
                 child: Image(
                     image: networkImage,
                     fit: BoxFit.fitHeight,
                     alignment: _imageAlignment,
-                    key: imageKey1,
+                    key : imageKey1,
                 ),
             ),
-            SizedBox.expand(
-
+            Container(
+                constraints: BoxConstraints.expand(),
                 child: Image(
                     image: networkImage,
                     fit: BoxFit.fitHeight,
                     alignment: _imageAlignment2,
-                    key: imageKey2,
                 ),
             ),
+
             Scaffold(
                 backgroundColor: Colors.transparent,
                 appBar: _showAppBar ? _buildAppBar() : null,
@@ -135,7 +205,10 @@ class _PanoramaViewState extends State<PanoramaView> {
                     child: FlatButton(
                         onPressed: () {
                             //TODO: place here a useful function
-                            print(widget.tags[i].getText());
+                            Navigator.pop(context);
+                            Navigator.pushNamed(context, '/' + widget.tags[i].getText());
+                            //Navigator.of(context).pushNamed('/' + widget.tags[i].getText());
+                            //print(widget.tags[i].getText());
                         },
                         color: Colors.blue,
                         child: Container(
@@ -155,7 +228,9 @@ class _PanoramaViewState extends State<PanoramaView> {
                     child: FlatButton(
                         onPressed: () {
                             //TODO: place here a useful function
-                            print(widget.tags[i].getText());
+                            Navigator.pushNamed(context, '/' + widget.tags[i].getText());
+                            //Navigator.of(context).pushNamed('/' + widget.tags[i].getText());
+                            //print(widget.tags[i].getText());
                         },
                         color: Colors.blue,
                         child: Container(

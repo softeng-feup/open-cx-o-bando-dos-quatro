@@ -1,3 +1,4 @@
+import 'package:confview/conference.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_speed_dial/flutter_speed_dial.dart';
 import 'nfc.dart';
@@ -116,7 +117,9 @@ class _MapScreenState extends State<MapScreen> {
                 SpeedDialChild(
                     child: Icon(Icons.directions),
                     backgroundColor: Colors.blue,
-                    onTap: () { },
+                    onTap: () {
+                        Navigator.of(context).push(MaterialPageRoute(builder: (context) => Conference()));
+                    },
                     label: 'GO',
                     labelStyle: TextStyle(
                         fontWeight: FontWeight.w500,
