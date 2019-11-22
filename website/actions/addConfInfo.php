@@ -7,7 +7,7 @@ $conf_code = $_POST['password'];
 
 if($conf_name && $conf_code){
    if(validInfo($conf_name, $conf_code)){
-       if(!confNameExists()){
+       if(!confNameExists($conf_name)){
             if(addNewConf($conf_name, $conf_code) != -1){
 
             }
@@ -20,11 +20,12 @@ if($conf_name && $conf_code){
        }
    }
    else{
-
+    header('Location: ../create.html'); 
+    $_SESSION["ERROR"] = "Conference Name or Conference Code do not follow required parameters.";
    }
 }
 else{
-    header('Location: ../create.html'); //se der erro redirecionar novamente para signup page
+    header('Location: ../create.html'); 
     $_SESSION["ERROR"] = "Conference Name and Conference Code must be field.";
 }
 
