@@ -9,14 +9,14 @@ if($conf_name && $conf_code){
    if(validInfo($conf_name, $conf_code)){
        if(!confNameExists($conf_name)){
             if(addNewConf($conf_name, $conf_code) != -1){
-
+                //mensagens
             }
             else{
-
+                //mensagens
             }
        }
        else{
-
+        $_SESSION["ERROR"] = "This conference already exists...";
        }
    }
    else{

@@ -17,8 +17,8 @@ include_once('../includes/include_data_base.php');
 
         $db = Database::instance()->db();
 
-        $stmt = $db->prepare('SELECT * FROM conference WHERE username = ?');
-        $stmt->execute([$username]);
+        $stmt = $db->prepare('SELECT * FROM conference WHERE confName = ?');
+        $stmt->execute([$conf_name]);
 
         return $stmt->fetch();
     }

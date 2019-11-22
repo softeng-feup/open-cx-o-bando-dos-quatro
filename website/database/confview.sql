@@ -6,7 +6,7 @@ DROP TABLE IF EXISTS location;
 
 
 CREATE TABLE conference (
-    name            VARCHAR PRIMARY KEY,
+    confName            VARCHAR PRIMARY KEY,
     code            INTEGER UNIQUE NOT NULL ON CONFLICT ABORT
 );
 
