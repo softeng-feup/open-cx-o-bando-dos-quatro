@@ -6,14 +6,13 @@ DROP TABLE IF EXISTS location;
 
 
 CREATE TABLE conference (
-    id              INTEGER PRIMARY KEY,
-    name            VARCHAR UNIQUE NOT NULL ON CONFLICT ABORT,
+    name            VARCHAR PRIMARY KEY,
     code            INTEGER UNIQUE NOT NULL ON CONFLICT ABORT
 );
 
 CREATE TABLE node (
     id              INTEGER PRIMARY KEY,
-    conference_id   INTEGER REFERENCES conference(id) ON DELETE CASCADE,
+    conference_name   INTEGER REFERENCES conference(name) ON DELETE CASCADE,
     location_id     INTEGER REFERENCES location(id) ON DELETE CASCADE,
     isTag           BOOLEAN DEFAULT FALSE
 );
