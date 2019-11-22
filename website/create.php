@@ -26,17 +26,20 @@
 
         $keysOne = array_keys($x);
         $keysTwo = array_keys($y);
-        //$keysThree = array_keys($tag);
+        $keysThree = array_keys($tag);
 
         $min = min(count($x), count($y));
 
         for($i = 0; $i < $min; $i++) {
             echo $x[$keysOne[$i]] . "<br>";
             echo $y[$keysTwo[$i]] . "<br><br>";
-            //echo $tag[$keysThree[$i]] . "<br><br>";
+            echo $tag[$keysThree[$i]] . "<br><br>";
         }
+
+       
 
     }
 
 
 ?>
+
