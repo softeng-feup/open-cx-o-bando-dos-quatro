@@ -29,10 +29,12 @@ class PanoramaViewImage{
   NetworkImage networkImage;
   double width;
   double height;
+  bool loaded;
   PanoramaViewImage(this.imageUrl){
     this.networkImage = null;
     this.width = null;
     this.height = null;
+    this.loaded = false;
   }
 
 }
@@ -117,13 +119,25 @@ class _ConferenceState extends State<Conference> {
   initState() {
     super.initState();
 
+    widget.locations.add(new Location("Praia",
+        new PanoramaViewImage("https://upload.wikimedia.org/wikipedia/commons/3/3e/Croatia_Ribarica_beach_panorama_360.jpg"),
+        [new Tag("India",-2,0),new Tag("Cidade",0.3,0.2),new Tag("Rua",3.5,0)]));
+
+    widget.locations.add(new Location("India",
+        new PanoramaViewImage("https://l13.alamy.com/360/PN0HYA/ganesh-pol-amber-palace-rajasthan-india-PN0HYA.jpg"),
+          [new Tag("Praia",-2,0),new Tag("Cidade",0.3,0.2),new Tag("Rua",3.5,0)]));
+
     widget.locations.add(new Location("Rua",
         new PanoramaViewImage("https://saffi3d.files.wordpress.com/2011/08/commercial_area_cam_v004.jpg"),
-        [new Tag("Rotunda",-2,0),new Tag("Carro Cinzento",0.3,0.2),new Tag("Fim de rua",3.5,0)]));
+        [new Tag("India",-2,0),new Tag("Cidade",0.3,0.2),new Tag("Praia",3.5,0)]));
 
-    widget.locations.add(new Location("Rotunda",
-        new PanoramaViewImage("https://www.worldphoto.org/sites/default/files/Mohammad%20Reza%20Domiri%20Ganji%2C%20Iran%20%2C%20Shortlist%2C%20Open%2C%20Panoramic%2C%202015%20Sony%20World%20Photography%20Awards%20%282%29.jpg"),
-          [new Tag("Rua",-2,0),new Tag("Carro Cinzento",0.3,0.2),new Tag("Fim de rua",3.5,0)]));
+    widget.locations.add(new Location("Cidade",
+        new PanoramaViewImage("https://c1.staticflickr.com/5/4302/35137573294_1287bfd0ae_k.jpg"),
+        [new Tag("India",-2,0),new Tag("Rua",0.3,0.2),new Tag("Cidade2",3.5,0)]));
+
+    widget.locations.add(new Location("Cidade2",
+        new PanoramaViewImage("https://d36tnp772eyphs.cloudfront.net/blogs/1/2006/11/360-panorama-matador-seo.jpg"),
+        [new Tag("Cidade",-2,0)]));
 
 
     router = new Router(widget.locations);

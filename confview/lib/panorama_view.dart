@@ -18,10 +18,10 @@ class PanoramaView extends StatefulWidget {
 
 class _PanoramaViewState extends State<PanoramaView> {
 
-    double delta = 2.4733;
+    double delta = 2.8;
 
     Alignment _imageAlignment = new Alignment(0,0);
-    Alignment _imageAlignment2 = new Alignment(2.4733,0);
+    Alignment _imageAlignment2 = new Alignment(0,0);
     bool _showAppBar = true;
     final double dragResistance = 200;
 
@@ -38,16 +38,24 @@ class _PanoramaViewState extends State<PanoramaView> {
 
     bool loaded = false;
 
-    double width;
-    double height;
+    double imageWidth;
+    double imageHeight;
+    double screenWidth;
+    double screenHeight;
+
+    GlobalKey imageKey1 = new GlobalKey();
 
 
 
     @override
     initState() {
 
+        WidgetsBinding.instance.addPostFrameCallback(getImageSize);
+
+
         super.initState();
 
+        this.delta = 2.455;
 
         loadImage();
 
@@ -55,9 +63,44 @@ class _PanoramaViewState extends State<PanoramaView> {
 
     }
 
+    getImageSize(_){
+        RenderBox renderBoxRed = imageKey1.currentContext.findRenderObject();
+        final imageSize = renderBoxRed.size;
+        print("SIZE of Red: $imageSize");
+        this.screenWidth = imageSize.width;
+        this.screenHeight = imageSize.height;
+        print(imageSize.width);
+        print(imageSize.height);
+        print(delta);
+
+        //this._imageAlignment2 -= Alignment(delta,0);
+
+        //double a = 1.745718*(imageSize.width / imageSize.height - 0.51718);
+
+        //this.delta = this.delta + a;
+        if(this.imageWidth != null && this.imageHeight != null)
+            this.delta = 1.99068/((this.imageWidth * this.screenHeight) / (this.imageHeight * this.screenWidth) + -1.0072) + 2.00054;
+
+        this._imageAlignment = Alignment(0,0);
+        this._imageAlignment2 = Alignment(this.delta,0);
+
+        print(delta);
+    }
+
     void loadImage() async{
-        if(this.loaded)
+        if(this.widget.panoramaImage.loaded){
+            this.networkImage = this.widget.panoramaImage.networkImage;
+            this.imageWidth = this.widget.panoramaImage.width;
+            this.imageHeight = this.widget.panoramaImage.height;
+            double x = this.imageWidth / this.imageHeight ;
+
+            //this.delta = 1.03041/(x + -0.520507) + 2.00104;
+            print("Calculation of delta: " + this.delta.toString());
+
+            //this._imageAlignment2 += Alignment(this.delta,0);
+            this.loaded = true;
             return;
+        }
         final myFuture = getImage();
         myFuture.then(setValues);
         this.loaded = true;
@@ -65,21 +108,23 @@ class _PanoramaViewState extends State<PanoramaView> {
 
     void setValues(bool data) async{
 
-        print("Cheguei aqui!");
+        double x = this.imageWidth / this.imageHeight ;
 
-        double x = this.width / this.height ;
+        //this.delta += 1.03041/(x + -0.520507) + 2.00104;
+        //delta -=0.0265;
+        print("Calculation of delta: " + delta.toString());
 
-        delta = 1.03041/(x + -0.520507) + 2.00104;
+        this.delta = 1.99068/((this.imageWidth * this.screenHeight) / (this.imageHeight * this.screenWidth) + -1.0072) + 2.00054;
 
         this._imageAlignment = Alignment(0,0);
-        this._imageAlignment2 = Alignment(delta,0);
+        this._imageAlignment2 = Alignment(this.delta,0);
 
+        //setState(() {   });
 
         return;
     }
 
     Future<bool> getImage() async {
-
 
         Completer<bool> completer = Completer();
 
@@ -89,10 +134,14 @@ class _PanoramaViewState extends State<PanoramaView> {
         ImageStreamCompleter load = networkImage.load(config);
 
         ImageStreamListener listener = new ImageStreamListener((ImageInfo info, isSync) async {
-            print(info.image.width);
-            print(info.image.height);
-            this.width = info.image.width.toDouble();
-            this.height = info.image.height.toDouble();
+            //print(info.image.width);
+            //print(info.image.height);
+            this.imageWidth = info.image.width.toDouble();
+            this.imageHeight = info.image.height.toDouble();
+            widget.panoramaImage.networkImage = this.networkImage;
+            widget.panoramaImage.width = this.imageWidth;
+            widget.panoramaImage.height = this.imageHeight;
+            widget.panoramaImage.loaded = true;
             completer.complete(true);
         });
 
@@ -127,6 +176,7 @@ class _PanoramaViewState extends State<PanoramaView> {
                     image: networkImage,
                     fit: BoxFit.fitHeight,
                     alignment: _imageAlignment,
+                    key : imageKey1,
                 ),
             ),
             Container(

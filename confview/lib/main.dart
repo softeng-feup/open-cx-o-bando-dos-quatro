@@ -34,9 +34,9 @@ class ConfView extends StatelessWidget {
 
       ),
 
-      //home: HomePage(title: 'Conference Viewer'),
+      home: HomePage(title: 'Conference Viewer'),
       //home: MapScreen(conferenceId: 0),
-      home: Conference(),
+      //home: Conference(),
 
     );
   }
