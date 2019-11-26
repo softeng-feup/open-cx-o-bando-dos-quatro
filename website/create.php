@@ -15,6 +15,10 @@
         $y = $_POST['y'];
         $tag = $_POST['tag'];
 
+        $first_id = $_POST['first_id'];
+        $second_id = $_POST['second_id'];
+
+
         echo "Conference name: ";
         echo $name;
         echo "<br>";
@@ -22,6 +26,7 @@
         echo "Conference code: ";
         echo $code;
         echo "<br>";
+
 
 
         $keysOne = array_keys($x);
@@ -36,10 +41,21 @@
             echo $tag[$keysThree[$i]] . "<br><br>";
         }
 
+
+        $keysOne_edge = array_keys($first_id);
+        $keysTwo_edge = array_keys($second_id);
+
+        $min_edge = min(count($first_id), count($second_id));
+
+        for($j = 0; $j < $min_edge; $j++) {
+            echo $first_id[$keysOne_edge[$j]] . "<br>";
+            echo $second_id[$keysTwo_edge[$j]] . "<br><br>";
+        }
+
+
        
 
     }
-
 
 ?>
 
