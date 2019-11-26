@@ -14,8 +14,8 @@ if($conf_name && $conf_code){
    if(validInfo($conf_name, $conf_code)){
        if(!confNameExists($conf_name)){
             addNewConf($conf_name, $conf_code);
-            addNodesToConf($conf_name,$x_coords, $y_coords, $tags);
-            addEdges();
+            //addNodesToConf($conf_name,$x_coords, $y_coords, $tags);
+            //addEdges();
         }
        else{
         $_SESSION["ERROR"] = "This conference already exists...";
