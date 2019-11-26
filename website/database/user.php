@@ -23,4 +23,17 @@ include_once('../includes/include_data_base.php');
         return $stmt->fetch();
     }
 
+    function addNewConf($conf_name, $conf_code){
+
+        $db = Database::instance()->db();
+
+        $stmt = $db->prepare('INSERT INTO conference VALUE(?,?)');
+        if($stmt->execute(array($conf_name, $conf_code))){
+            echo 'User Registered successfully';
+        }
+        else{
+            $_SESSION['ERROR'] = 'ERROR';
+        }
+    }
+
 ?>

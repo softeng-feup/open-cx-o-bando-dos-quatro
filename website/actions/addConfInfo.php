@@ -8,25 +8,20 @@ $conf_code = $_POST['password'];
 if($conf_name && $conf_code){
    if(validInfo($conf_name, $conf_code)){
        if(!confNameExists($conf_name)){
-            if(addNewConf($conf_name, $conf_code) != -1){
-                //mensagens
-            }
-            else{
-                //mensagens
-            }
-       }
+            addNewConf($conf_name, $conf_code);
+        }
        else{
         $_SESSION["ERROR"] = "This conference already exists...";
        }
    }
    else{
-    header('Location: ../create.html'); 
-    $_SESSION["ERROR"] = "Conference Name or Conference Code do not follow required parameters.";
+        $_SESSION["ERROR"] = "Conference Name or Conference Code do not follow required parameters.";
+        header('Location: ../create.html'); 
    }
 }
 else{
-    header('Location: ../create.html'); 
     $_SESSION["ERROR"] = "Conference Name and Conference Code must be field.";
+    header('Location: ../create.html'); 
 }
 
 
