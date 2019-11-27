@@ -14,7 +14,7 @@
                 /* ------------------------------------- */
 
                 // Variables
-                var html = '<p/><div>x_coordinate: <input type="number" name="x[]" id="child_x_coordinate"/>y_coordinate: <input type="number" name="y[]" id="child_y_coordinate"/>Tag? <input type="checkbox" name="tag[]" id="child_tag"/><a href="#" id="remove">x</a></div>';
+                var html = '<p/><div>x_coordinate: <input type="number" name="x[]" id="child_x_coordinate"/>y_coordinate: <input type="number" name="y[]" id="child_y_coordinate"/>Tag (y/n)? <input type="text" name="tag[]" id="child_tag"/><a href="#" id="remove">x</a></div>';
 
                 // Add nodes
                 $("#add").click(function(e){
@@ -64,7 +64,7 @@
         <form action="create.php" method="POST">
 
             Conference Name: <input type="text" name="name"/>
-            Conference Code: <input type="text" name="code"/>
+            Conference Code: <input type="number" name="code"/>
             
             <br>
             <br>
@@ -76,7 +76,8 @@
             <div id="container">
                 x_coordinate: <input type="number" name="x[]" id="x_coordinate"/>
                 y_coordinate: <input type="number" name="y[]" id="y_coordinate"/>
-                Tag? <input type="checkbox" name="tag[]" id="tag" value="false"/>
+                <!--Tag (y/n)? <input type="checkbox" name="tag[]" id="tag" value="false"/>-->
+                Tag (y/n)? <input type="text" name="tag[]" id="tag2"/>
                 <a href="#" id="add">
                     Add Node
                 </a>
