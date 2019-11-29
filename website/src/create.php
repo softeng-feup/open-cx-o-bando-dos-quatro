@@ -43,7 +43,10 @@
 
 
         
-
+        // insert function here
+        // code to input into the databse hardcoded for now
+        $stmt = $db->prepare('INSERT INTO conference(confName, code) VALUES(?, ?)');
+        $stmt->execute(array($name, $code));
 
 
         $keysOne = array_keys($x);
@@ -56,6 +59,18 @@
             echo $x[$keysOne[$i]] . "<br>";
             echo $y[$keysTwo[$i]] . "<br>";
             echo $tag[$keysThree[$i]] . "<br><br>";
+
+            // code to input the nodes into the database
+            // hardcoded for now, to test the for cycle
+            
+            $stmt = $db->prepare('INSERT INTO node(conference_id, x_coord, y_coord, isTag) VALUES(?, ?, ?, ?)');
+            if($tag[$keysThree[$i]] == "y"){
+                $stmt->execute(array(1, $x[$keysOne[$i]], $y[$keysTwo[$i]], true));
+            }
+            else{
+                $stmt->execute(array(1, $x[$keysOne[$i]], $y[$keysTwo[$i]],false));
+            }
+            
         }
 
 
@@ -70,15 +85,13 @@
 
             // code to input the edges into the database
             // hardcoded for now, to test the for cycle
-
+            $stmt = $db->prepare('INSERT INTO edge(origin_node, dest_node) VALUES(?, ?)');
+            $stmt->execute(array($first_id[$keysOne_edge[$j]], $second_id[$keysTwo_edge[$j]]));
         }
 
 
        
-        // insert function here
-        // code to input into the databse hardcoded for now
-        $stmt = $db->prepare('INSERT INTO conference VALUES(?, ?)');
-        $stmt->execute(array($name, $code));
+        
     }
 
 ?>
