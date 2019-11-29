@@ -1,34 +1,43 @@
 <?php
 
-include_once('../database/user.php');
+include_once('../database/conference.php');
+include_once('../debug/debug.php');
+
+
 
 $conf_name = $_POST['name'];
 $conf_code = $_POST['code'];
-$x_coords = $_POST['x'];
-$y_coords = $_POST['y'];
-$tags = $_POST['tag'];
-$first_ids = $_POST['first_id'];
-$second_ids = $_POST['second_id'];
+$x = $_POST['x'];
+$y = $_POST['y'];
+$tag = $_POST['tag'];
+$first_id = $_POST['first_id'];
+$second_id = $_POST['second_id'];
+
 
 if($conf_name && $conf_code){
    if(validInfo($conf_name, $conf_code)){
        if(!confNameExists($conf_name)){
-            addNewConf($conf_name, $conf_code);
-            //addNodesToConf($conf_name,$x_coords, $y_coords, $tags);
-            //addEdges();
+           if(!confCodeExists($conf_code)){
+                addNewConf($conf_name, $conf_code);
+                addNodes($conf_name, $x, $y, $tag);
+                addEdges($first_id, $second_id);
+            }
+           else{
+            $_SESSION['messages'][] = array('type' => 'error', 'content' => 'This code is already associated with a conference...');
+           }
         }
        else{
-        $_SESSION["ERROR"] = "This conference already exists...";
+        $_SESSION['messages'][] = array('type' => 'error', 'content' => 'This conference already exists!');
        }
    }
    else{
-        $_SESSION["ERROR"] = "Conference Name or Conference Code do not follow required parameters.";
-        header('Location: ../create.html'); 
+    $_SESSION['messages'][] = array('type' => 'error', 'content' => 'Conference name or conference code do not follow the rules!');
+        //header('Location: ../create.html'); 
    }
 }
 else{
-    $_SESSION["ERROR"] = "Conference Name and Conference Code must be field.";
-    header('Location: ../create.html'); 
+    $_SESSION['messages'][] = array('type' => 'error', 'content' => 'Conference name and conference code must be field');
+   // header('Location: ../create.html'); 
 }
 
 

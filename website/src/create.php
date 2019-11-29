@@ -16,10 +16,6 @@
         $name = $_POST['name'];
         $code = $_POST['code'];
 
-        
-
-        
-
         echo "Conference name: ";
         echo $name;
         echo "<br>";
@@ -30,19 +26,14 @@
 
         $db = Database::instance()->db();
 
-        
-
-        
-
+    
         $x = $_POST['x'];
         $y = $_POST['y'];
         $tag = $_POST['tag'];
 
         $first_id = $_POST['first_id'];
         $second_id = $_POST['second_id'];
-
-
-        
+    
         // insert function here
         // code to input into the databse hardcoded for now
         $stmt = $db->prepare('INSERT INTO conference(confName, code) VALUES(?, ?)');
@@ -60,8 +51,7 @@
             echo $y[$keysTwo[$i]] . "<br>";
             echo $tag[$keysThree[$i]] . "<br><br>";
 
-            // code to input the nodes into the database
-            // hardcoded for now, to test the for cycle
+            
             
             $stmt = $db->prepare('INSERT INTO node(conference_id, x_coord, y_coord, isTag) VALUES(?, ?, ?, ?)');
             if($tag[$keysThree[$i]] == "y"){
