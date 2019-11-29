@@ -1,6 +1,6 @@
 <?php
 
-include_once('../includes/include_data_base.php');
+    include_once('../includes/include_data_base.php');
 
     function validInfo($conf_name, $conf_code){
         if(preg_match ("/^[a-zA-Z0-9]+$/", $conf_name)){
