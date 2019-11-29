@@ -1,88 +1,108 @@
-<?php
+<html>
+    <head>
+        <title> ConfView Creator </title>
+        <meta charset="UTF_8">
+        <script type="text/javascript" src="jquery-3.2.1.min.js"></script>
 
-    // placeholder
-    //$output = NULL;
-
-    // include the database
-    include_once('../includes/include_data_base.php');
-
-    // access database
-    
-
-
-    if(isset($_POST['submit'])){
-
-        //when submitted
-        $name = $_POST['name'];
-        $code = $_POST['code'];
-
-        echo "Conference name: ";
-        echo $name;
-        echo "<br>";
-        
-        echo "Conference code: ";
-        echo $code;
-        echo "<br>";
-
-        $db = Database::instance()->db();
-
-    
-        $x = $_POST['x'];
-        $y = $_POST['y'];
-        $tag = $_POST['tag'];
-
-        $first_id = $_POST['first_id'];
-        $second_id = $_POST['second_id'];
-    
-        // insert function here
-        // code to input into the databse hardcoded for now
-        $stmt = $db->prepare('INSERT INTO conference(confName, code) VALUES(?, ?)');
-        $stmt->execute(array($name, $code));
-
-
-        $keysOne = array_keys($x);
-        $keysTwo = array_keys($y);
-        $keysThree = array_keys($tag);
-
-        $min = min(count($x), count($y));
-
-        for($i = 0; $i < $min; $i++) {
-            echo $x[$keysOne[$i]] . "<br>";
-            echo $y[$keysTwo[$i]] . "<br>";
-            echo $tag[$keysThree[$i]] . "<br><br>";
-
+        <!-- javascript -->
+        <script>
             
+            $(document).ready(function(e){
+
+                /* ------------------------------------- */
+                /* --------------- NODES --------------- */
+                /* ------------------------------------- */
+
+                // Variables
+                var html = '<p/><div>x_coordinate: <input type="number" name="x[]" id="child_x_coordinate"/>y_coordinate: <input type="number" name="y[]" id="child_y_coordinate"/>Tag (y/n)? <input type="text" name="tag[]" id="child_tag"/><a href="#" id="remove">x</a></div>';
+
+                // Add nodes
+                $("#add").click(function(e){
+                    $("#container").append(html);
+                });
+
+                // remove nodes
+                $("#container").on('click', '#remove', function(e){
+                    $(this).parent('div').remove();
+                });
+
+
+                
+                
+                /* ------------------------------------- */
+                /* --------------- EDGES --------------- */
+                /* ------------------------------------- */
+
+                // Variables
+                var edges = '<p/><div>Node id: <input type="number" name="first_id[]" id="child_id1"/>connects to Node id: <input type="number" name="second_id[]" id="child_id2"/><a href="#" id="remove_edge">x</a></div>';
+
+                // Add Edges
+                $("#add_edge").click(function(e){
+                    $("#edge_container").append(edges);
+                });
+
+                // remove nodes
+                $("#edge_container").on('click', '#remove_edge', function(e){
+                    $(this).parent('div').remove();
+                });
+
+            });
+
+        </script>
+
+    </head>
+
+    <body>
+
+        <header>
+            <h1> Confview Creator </h1>
+            <h2> Create your own Conference Guide </h2>
+            <h3> Welcome to ConfView, here you can map your event's venue. </h3>
+        </header>
+
+
+        <section id="form">
+            <form action="../actions/addConfInfo.php" method="POST">
+
+                <label></label>Conference Name: <input type="text" name="name"/></label>
+                <label></label>Conference Code: <input type="number" name="code"/></label>
+                <label>Start Date<input id="check-in" type="date" value="<?php echo date('Y-m-d');?>"></label>
+                <label>End Date<input id="check-out" type="date" value="<?php echo date('Y-m-d', strtotime('tomorrow'));?>"></label>
+                
+                <br>
+                <br>
+
+                <!-- container for the nodes -->
+                Here you should fill out information about each node of the conference venue.
+                <br>
+                You must tell us the coordinates of each point of the map in order for us to generate it.
+                <div id="container">
+                    x_coordinate: <input type="number" name="x[]" id="x_coordinate"/>
+                    y_coordinate: <input type="number" name="y[]" id="y_coordinate"/>
+                    Tag (y/n)? <input type="text" name="tag[]" id="tag2"/>
+                    <a href="#" id="add">
+                        Add Node
+                    </a>
+                </div>
+
+                <br>
+                <br>
+
+                <!-- container for the edges -->
+                Here you should tell us which nodes are connected. The id of each node is a reference to the way they were input before (the id of the first node is 1, of the second node is 2, ...).
+                <div id="edge_container">
+                    Node id: <input type="number" name="first_id[]" id="id1"/>
+                    connects to
+                    Node id: <input type="number" name="second_id[]" id="id2"/>
+                    <a href="#" id="add_edge">
+                        Add Edge
+                    </a>
+                </div>
+
+                <br>
+                <input type="submit" name="submit"/>
             
-            $stmt = $db->prepare('INSERT INTO node(conference_id, x_coord, y_coord, isTag) VALUES(?, ?, ?, ?)');
-            if($tag[$keysThree[$i]] == "y"){
-                $stmt->execute(array(1, $x[$keysOne[$i]], $y[$keysTwo[$i]], true));
-            }
-            else{
-                $stmt->execute(array(1, $x[$keysOne[$i]], $y[$keysTwo[$i]],false));
-            }
-            
-        }
-
-
-        $keysOne_edge = array_keys($first_id);
-        $keysTwo_edge = array_keys($second_id);
-
-        $min_edge = min(count($first_id), count($second_id));
-
-        for($j = 0; $j < $min_edge; $j++) {
-            echo $first_id[$keysOne_edge[$j]] . "<br>";
-            echo $second_id[$keysTwo_edge[$j]] . "<br><br>";
-
-            // code to input the edges into the database
-            // hardcoded for now, to test the for cycle
-            $stmt = $db->prepare('INSERT INTO edge(origin_node, dest_node) VALUES(?, ?)');
-            $stmt->execute(array($first_id[$keysOne_edge[$j]], $second_id[$keysTwo_edge[$j]]));
-        }
-
-
-       
-        
-    }
-
-?>
-
+            </form>
+        </section>
+    </body>
+</html>
