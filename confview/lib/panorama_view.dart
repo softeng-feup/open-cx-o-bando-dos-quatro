@@ -6,10 +6,13 @@ import 'package:confview/conference.dart';
 
 class PanoramaView extends StatefulWidget {
 
-    PanoramaView({Key key , this.panoramaImage,this.tags}) : super(key: key);
+    PanoramaView({Key key , Location location}) : super(key: key){
+        this.panoramaImage = location.image;
+        this.tags = location.tags;
+    }
 
-    final List<Tag> tags;
-    final PanoramaViewImage panoramaImage;
+    List<Tag> tags;
+    PanoramaViewImage panoramaImage;
 
     @override 
     _PanoramaViewState createState() => _PanoramaViewState();
@@ -180,9 +183,30 @@ class _PanoramaViewState extends State<PanoramaView> {
                     alignment: widget.tags[i].getAlignment() -_imageAlignment-_imageAlignment - _imageAlignment  -_imageAlignment,
                     child: FlatButton(
                         onPressed: () {
-                            //TODO: place here a useful function
+                            //Navigator.pushNamed(context, '/' + widget.tags[i].getText());
+                            //Navigator.pushReplacementNamed(context, widget.tags[i].getText());
                             Navigator.pop(context);
-                            Navigator.pushNamed(context, '/' + widget.tags[i].getText());
+                            Navigator.of(context).push(MaterialPageRoute(builder: (context) => PanoramaView(location : widget.tags[i].location)));
+                            //Navigator.of(context).pushNamed('/' + widget.tags[i].getText());
+                            //print(widget.tags[i].getText());
+                        },
+                        color: Colors.blue,
+                        child: Container(
+                            padding: EdgeInsets.all(8.0),
+                            color: Colors.blue,
+                            child: Text(widget.tags[i].getText()),
+                        ),
+                    )
+                )
+            );
+            stackChildren.add(
+                Align(
+                    alignment: widget.tags[i].getAlignment() -_imageAlignment2-_imageAlignment2 - _imageAlignment2  -_imageAlignment2,
+                    child: FlatButton(
+                        onPressed: () {
+                            //Navigator.pop(context);
+                            Navigator.pop(context);
+                            Navigator.of(context).push(MaterialPageRoute(builder: (context) => PanoramaView(location : widget.tags[i].location)));
                             //Navigator.of(context).pushNamed('/' + widget.tags[i].getText());
                             //print(widget.tags[i].getText());
                         },
@@ -197,28 +221,6 @@ class _PanoramaViewState extends State<PanoramaView> {
             );
         }
 
-        for(int i = 0; i < widget.tags.length;i++){
-            stackChildren.add(
-                Align(
-                    alignment: widget.tags[i].getAlignment() -_imageAlignment2-_imageAlignment2 - _imageAlignment2  -_imageAlignment2,
-                    child: FlatButton(
-                        onPressed: () {
-                            //TODO: place here a useful function
-                            Navigator.pop(context);
-                            Navigator.pushNamed(context, '/' + widget.tags[i].getText());
-                            //Navigator.of(context).pushNamed('/' + widget.tags[i].getText());
-                            //print(widget.tags[i].getText());
-                        },
-                        color: Colors.blue,
-                        child: Container(
-                            padding: EdgeInsets.all(8.0),
-                            color: Colors.blue,
-                            child: Text(widget.tags[i].getText()),
-                        ),
-                    )
-                )
-            );
-        }
 
 
 

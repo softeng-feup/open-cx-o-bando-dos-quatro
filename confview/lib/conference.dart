@@ -1,6 +1,19 @@
 import 'package:confview/panorama_view.dart';
-import 'dart:async';
 import 'package:flutter/material.dart';
+
+class PanoramaViewImage{
+  String imageUrl;
+  NetworkImage networkImage;
+  double width;
+  double height;
+  bool loaded;
+  PanoramaViewImage(this.imageUrl){
+    this.networkImage = null;
+    this.width = null;
+    this.height = null;
+    this.loaded = false;
+  }
+}
 
 class Location{
 
@@ -22,27 +35,18 @@ class Location{
     return this.name;
   }
 
-}
-
-class PanoramaViewImage{
-  String imageUrl;
-  NetworkImage networkImage;
-  double width;
-  double height;
-  bool loaded;
-  PanoramaViewImage(this.imageUrl){
-    this.networkImage = null;
-    this.width = null;
-    this.height = null;
-    this.loaded = false;
+  void tagsLocationReferences(List<Location> locs){
+    for(int i = 0; i<this.tags.length;i++)
+      this.tags[i].getLocationReference(locs);
   }
 
 }
 
 class Tag {
   final String text;
-  final double x;
-  final double y;
+  Location location;
+  final double x; //X on the image
+  final double y; //Y on the image
   Tag(this.text,this.x,this.y);
 
   Alignment getAlignment(){
@@ -50,6 +54,14 @@ class Tag {
   }
   String getText(){
     return text;
+  }
+  void getLocationReference(List<Location> locs){
+      for(int i = 0; i < locs.length;i++){
+        if(locs[i].getName() == this.text) {
+          this.location = locs[i];
+          break;
+        }
+      }
   }
 
 }
@@ -69,8 +81,9 @@ class Router {
     }
 
     void generateRoutes(List<Location> locations){
+      //this.views['/'] = new PanoramaView(panoramaImage: locations[0].image, tags:  locations[0].getTags());
       for(Location loc in locations)
-        this.views['/' + loc.getName()] = new PanoramaView(panoramaImage: loc.image,tags: loc.getTags());
+        this.views['/' + loc.getName()] = new PanoramaView(location: loc);
     }
 
     Route<dynamic> getRoute(RouteSettings settings) {
@@ -140,6 +153,9 @@ class _ConferenceState extends State<Conference> {
         new PanoramaViewImage("https://d36tnp772eyphs.cloudfront.net/blogs/1/2006/11/360-panorama-matador-seo.jpg"),
         [new Tag("Cidade",-2,0)]));
 
+    for(int i = 0; i < widget.locations.length;i++){
+      widget.locations[i].tagsLocationReferences(widget.locations);
+    }
 
     router = new Router(widget.locations);
 
@@ -149,11 +165,11 @@ class _ConferenceState extends State<Conference> {
   @override
   Widget build(BuildContext context) {
 
-    //return PanoramaView(tags: [new Tag("Rotunda",-2,0),new Tag("Carro Cinzento",0.3,0.2),new Tag("Fim de rua",3.5,0)]);
-    return MaterialApp(
+    return PanoramaView(location : this.widget.locations[0]);
+    /*return MaterialApp(
       onGenerateRoute: router.getRoute,
       initialRoute: '/Rua',
-    );
+    );*/
 
   }
 
