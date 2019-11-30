@@ -19,8 +19,9 @@ if($conf_name && $conf_code){
        if(!confNameExists($conf_name)){
            if(!confCodeExists($conf_code)){
                 addNewConf($conf_name, $conf_code);
+                $number_nodes = countNodes();
                 addNodes($conf_name, $x, $y, $tag);
-                addEdges($first_id, $second_id);
+                addEdges($first_id, $second_id, $number_nodes);
             }
            else{
             $_SESSION['messages'][] = array('type' => 'error', 'content' => 'This code is already associated with a conference...');

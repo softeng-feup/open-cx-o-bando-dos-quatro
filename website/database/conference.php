@@ -1,6 +1,7 @@
 <?php
 
     include_once('../includes/include_data_base.php');
+    include_once('../debug/debug.php');
 
     function validInfo($conf_name, $conf_code){
         if(preg_match ("/^[a-zA-Z0-9]+$/", $conf_name)){
@@ -76,21 +77,43 @@
         }
     }
 
-    function addEdges($first_id, $second_id){
+    function addEdges($first_id, $second_id, $nodes_number){
 
         $db = Database::instance()->db();
 
         $keys1_edge = array_keys($first_id);
         $keys2_edge = array_keys($second_id);
+        
 
         $min_edge = min(count($first_id), count($second_id));
-
+    
         for($j = 0; $j < $min_edge; $j++) {
             
+            $nodeX = $first_id[$keys1_edge[$j]];
+            $sum_nodesX = $nodeX + $nodes_number;
+            console_log($nodeX);
+            console_log($sum_nodesX);
+
+            $nodeY = $second_id[$keys2_edge[$j]];
+            $sum_nodesY = $nodeY + $nodes_number;
+            console_log($nodeY);
+            console_log($sum_nodesY);
+
+
             $stmt = $db->prepare('INSERT INTO edge(origin_node, dest_node) VALUES(?, ?)');
-            $stmt->execute(array($first_id[$keys1_edge[$j]], $second_id[$keys2_edge[$j]]));
+            $stmt->execute(array($sum_nodesX, $sum_nodesY));
         }
 
+    }
+
+    function countNodes(){
+
+        $db = Database::instance()->db();
+
+        $stmt = $db->prepare('SELECT COUNT(id) AS num FROM node');
+        $stmt->execute();
+
+        return $stmt->fetch()['num'];
     }
 
 ?>
