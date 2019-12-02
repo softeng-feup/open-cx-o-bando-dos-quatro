@@ -116,4 +116,39 @@
         return $stmt->fetch()['num'];
     }
 
+    function available_username($username){
+
+        $db = Database::instance()->db();
+        $stmt = $db->prepare('SELECT * FROM user WHERE username = ?');
+        $stmt->execute(array($username));
+
+        return $stmt->fetch() ? false : true;
+
+    }
+
+    function insert_user($username, $password){
+
+        $db = Database::instance()->db();
+
+        $hash_password = password_hash($password, PASSWORD_DEFAULT);
+
+        $stmt = $db->prepare('INSERT INTO user(username, password) VALUES(?, ?)');
+        $stmt->execute(array($username, $hash_password));
+
+    }
+
+
+    function valid_login($username, $password){
+
+        $db = Database::instance()->db();
+        
+        $stmt = $db->prepare('SELECT * FROM user WHERE username = ?');
+        $stmt->execute(array($username));
+
+        $user = $stmt->fetch();
+
+        return $user !== false && password_verify($password, $user['password']);
+
+    }
+
 ?>
