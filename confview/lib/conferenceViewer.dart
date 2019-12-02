@@ -87,14 +87,15 @@ class Tag {
   double y; //Y on the image
   Tag(this.origin,this.dest){
 
-    double vx = this.origin.getX() - this.dest.getX();
-    double vy = this.origin.getY() - this.dest.getY();
+    //TODO:: Find a way to calculate alignement
+    double vx = this.dest.getX() - this.origin.getX();
+    double vy = this.dest.getY() - this.origin.getY();
 
     double ang = atan(vy/vx);
-    if(vx < 0) ang + pi;
+    if(vx < 0) ang += pi;
 
 
-    this.x =  ang/(2*pi);
+    this.x =  -ang/(2*pi);
     this.y = 0;
   }
 

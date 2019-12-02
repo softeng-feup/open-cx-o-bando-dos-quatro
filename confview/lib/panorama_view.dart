@@ -221,9 +221,10 @@ class _PanoramaViewState extends State<PanoramaView> {
         child: Text(widget.location.tags[i].getText()),
       );
       Widget child1;
+      print(widget.location.tags[i].getText()+ "->" + widget.location.tags[i].getAlignment().toString());
       if (widget.location.tags[i].getText() == widget.location.path) {
         child1 = Align(
-            alignment: widget.location.tags[i].getAlignment() * this.delta * this.delta -
+            alignment: widget.location.tags[i].getAlignment() * this.delta -
                 _imageAlignment -
                 _imageAlignment -
                 _imageAlignment -
@@ -240,7 +241,7 @@ class _PanoramaViewState extends State<PanoramaView> {
                 child: tagContainer));
       } else {
         child1 = Align(
-            alignment: widget.location.tags[i].getAlignment() * this.delta * this.delta -
+            alignment: widget.location.tags[i].getAlignment() * this.delta -
                 _imageAlignment -
                 _imageAlignment -
                 _imageAlignment -
@@ -261,7 +262,7 @@ class _PanoramaViewState extends State<PanoramaView> {
       Widget child2;
       if (widget.location.tags[i].getText() == widget.location.path) {
         child2 = Align(
-            alignment: widget.location.tags[i].getAlignment() * this.delta * this.delta -
+            alignment: widget.location.tags[i].getAlignment() * this.delta -
                 _imageAlignment2 -
                 _imageAlignment2 -
                 _imageAlignment2 -
@@ -278,7 +279,7 @@ class _PanoramaViewState extends State<PanoramaView> {
                 child: tagContainer));
       } else {
         child2 = Align(
-            alignment: widget.location.tags[i].getAlignment() * this.delta * this.delta -
+            alignment: widget.location.tags[i].getAlignment() * this.delta -
                 _imageAlignment2 -
                 _imageAlignment2 -
                 _imageAlignment2 -
