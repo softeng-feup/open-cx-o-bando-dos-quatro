@@ -1,13 +1,22 @@
 -- DATABASE FOR CONFVIEW WEBSITE & APPLICATION
 
+DROP TABLE IF EXISTS user;
 DROP TABLE IF EXISTS conference;
 DROP TABLE IF EXISTS node;
 DROP TABLE IF EXISTS location;
 DROP TABLE IF EXISTS edge;
 
+CREATE TABLE user (
+
+    id                  INTEGER PRIMARY KEY,
+    username            VARCHAR UNIQUE NOT NULL ON CONFLICT ABORT,
+    password            VARCHAR NOT NULL ON CONFLICT ABORT
+
+);
 
 CREATE TABLE conference (
     id                  INTEGER PRIMARY KEY,
+    user_id             INTEGER NOT NULL REFERENCES user(id), 
     confName            VARCHAR UNIQUE NOT NULL ON CONFLICT ABORT,
     code                INTEGER UNIQUE NOT NULL ON CONFLICT ABORT
 );
