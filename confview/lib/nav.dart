@@ -1,4 +1,8 @@
+
+import 'package:confview/graph_draw.dart';
+
 import 'package:confview/conferenceViewer.dart';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_speed_dial/flutter_speed_dial.dart';
 
@@ -88,8 +92,7 @@ class _MapScreenState extends State<MapScreen> {
   bool _isSearching = false;
   String searchQuery = "Search query";
   FocusNode _searchFocus;
-
-  @override
+  
   initState() {
     super.initState();
     _searchQuery = new TextEditingController();
@@ -168,6 +171,7 @@ class _MapScreenState extends State<MapScreen> {
     );
   }
 
+  
   Widget _getFAB() {
     return SpeedDial(
       animatedIcon: AnimatedIcons.menu_close,
@@ -209,16 +213,17 @@ class _MapScreenState extends State<MapScreen> {
     );
   }
 
+
   Widget _buildSuggestions() {
     print(searchQuery);
     return Center(child: Text('Suggestions go here : ' + searchQuery));
   }
 
-  Widget _buildMap() {
-    print(_isSearching);
 
-    return null;
+  Widget _buildMap() {
+      return GraphDraw();
   }
+
 
   Widget _buildButtons() {
     return Column(
