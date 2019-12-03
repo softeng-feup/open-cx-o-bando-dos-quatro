@@ -1,3 +1,5 @@
+import 'dart:math';
+
 import 'package:flutter/material.dart';
 import 'graph.dart';
 
@@ -13,6 +15,7 @@ class GraphDraw extends StatefulWidget {
 class _GraphDrawState extends State<GraphDraw> {
 
     Graph _graph = new Graph();
+    bool _addScreenOffset = true;
     
     @override
     void initState() {
@@ -22,132 +25,112 @@ class _GraphDrawState extends State<GraphDraw> {
 
     // TODO: this is a testing function to build a graph
     void _buildGraph() {
-        _graph.addNode(Node(1, 0.0, 0.0));
-        _graph.addNode(Node(2, 1.0, 0.5));
-        _graph.addNode(Node(3, 2.0, 0.0));
-        _graph.addNode(Node(4, 1.0, 1.0));
+        _graph.addNode(Node(1, 0, 0));
+        _graph.addNode(Node(2, 90, 45));
+        _graph.addNode(Node(3, 180, 0));
+        _graph.addNode(Node(4, 90, 90));
 
         _graph.addEdge(1, 2);
         _graph.addEdge(1, 3);
     }
-    
-
-    final double _dragResistance = 200.0; 
-    Alignment _graphAlignment = Alignment(0.0, 0.0); 
+    // offset in pixels
+    Offset _graphHorizontalOffset = Offset(0.0, 0.0);
+    Offset _graphVerticalOffset = Offset(0.0, 0.0);
+    Offset _graphOffset = Offset(0.0, 0.0);
 
     @override 
     Widget build(BuildContext context) {
-        List<Widget> stack = [];
-
-        stack.add(_buildEdges());
-
-        List<Node> nodes = _graph.getNodes();
-
-        for (Node node in nodes) {
-            stack.add(
-                Container(
-                    alignment: Alignment(node.getX(), node.getY()) + _graphAlignment,
-                    child: _buildNode(node),
-                ),
-            );
+        
+        if (_addScreenOffset) { 
+            _graphOffset += Offset(MediaQuery.of(context).size.width / 2.0, MediaQuery.of(context).size.height / 2.0 - kToolbarHeight);
+            _addScreenOffset = false;
         }
 
-        stack.add(
-            GestureDetector(
-                onHorizontalDragUpdate: _dragGraph,
-                onVerticalDragUpdate: _dragGraph,
+        return Container(
+            child: CustomPaint(
+            painter: GraphPainter(context, _graph, _graphOffset),
+            child: GestureDetector(
+                onVerticalDragStart: (details) {
+                    _graphVerticalOffset = details.globalPosition; 
+                },
+                onVerticalDragUpdate: (details) {
+                    _graphOffset += details.globalPosition - _graphVerticalOffset;
+                    _graphVerticalOffset = details.globalPosition;
+                    setState(() {});
+                    print('graph offset : ' + _graphOffset.toString());
+                },
+                onHorizontalDragStart: (details) {
+                    _graphHorizontalOffset = details.globalPosition;
+                },
+                onHorizontalDragUpdate: (details) {
+                    _graphOffset += details.globalPosition - _graphHorizontalOffset;
+                    _graphHorizontalOffset = details.globalPosition;
+                    setState(() {});
+                    print('graph offset : ' + _graphOffset.toString());
+                },
+                onTapDown: _tap,
+                ),
             )
         );
-        
-        return Stack(
-            children: stack,
-        );
-        
     }
 
-    _dragGraph(DragUpdateDetails details) {
-        double dx = _graphAlignment.x + details.delta.dx / _dragResistance;
-        double dy = _graphAlignment.y + details.delta.dy / _dragResistance;
+    void _tap(TapDownDetails details) {
 
-        setState(() {
-            _graphAlignment = Alignment(dx, dy); 
-        });
+        Offset tap = details.localPosition;
 
-        print(_graphAlignment);
-    }
+        for (Node node in _graph.getNodes()) {
+            Offset nodeOffset = node.getPosition() + _graphOffset;
+            double distance = sqrt(pow(tap.dx - nodeOffset.dx, 2) + pow(tap.dy - nodeOffset.dy, 2));
 
-    Widget _buildNode(Node node) {
-
-        return RawMaterialButton(
-            shape: CircleBorder(),
-            child: Text(node.getID().toString()),
-            elevation: 2.0,
-            fillColor: Colors.red,
-            autofocus: false,
-            padding: const EdgeInsets.all(15.0),
-            onPressed: (){
-                print('Pressed Node');
-            },
-        );
-    }
-
-    Widget _buildEdges() {
-
-        return CustomPaint(
-            painter: EdgePainter(context, _graphAlignment, _graph.getEdges()),
-            child: Text('change this'),
-        );
+            if (distance <= 17) {
+                print("pressed node with id : " + node.getID().toString());
+                break;
+            }
+        }
     }
 }
 
+class GraphPainter extends CustomPainter {
 
-class EdgePainter extends CustomPainter {
-
+    final Graph _graph;
     final BuildContext _context;
-    final Alignment _alignment;
-    final List<Edge> _edges;
+    final Offset _offset;
+    Offset _screenOffset;   
     
-    Size _screenSize;
-    double _verticalOffset;
 
-    EdgePainter (this._context, this._alignment, this._edges) {
-        _screenSize = MediaQuery.of(_context).size;
-        _verticalOffset = kToolbarHeight;
-        print(kToolbarHeight);
-        print(MediaQuery.of(_context).padding.top);
+    GraphPainter(this._context, this._graph, this._offset) {
+        Size size = MediaQuery.of(_context).size;
+        _screenOffset = Offset(size.width / 2.0, size.height / 2.0 - kToolbarHeight);
     }
 
-    
-
-    @override 
+    @override
     void paint(Canvas canvas, Size size) {
+        print('inside paint');
         final paintNormalEdge = Paint()
-            ..strokeWidth = 3;
-        
-        paint.color = Colors.black;
+            ..strokeWidth = 5;
+        paintNormalEdge.color = Colors.black;
 
-        for (Edge edge in _edges) {
-            Node src = edge.getSrcNode();
-            Node dest = edge.getDestNode();
+        final paintNormalNode = Paint();
+        paintNormalNode.color = Colors.orangeAccent;
 
-            double srcX = ((src.getX() + _alignment.x) * _screenSize.width / 2.0 + _screenSize.width / 2.0) / 1.27;
-            double srcY = (src.getY() + _alignment.y) * _screenSize.height / (2.0 * 1.1) + _screenSize.height / 2.0;
-            print('srcX : $srcX');
-            print('srcY : $srcY');
+        for (Edge edge in _graph.getEdges()) {
+            Node srcNode = edge.getSrcNode();
+            Node destNode = edge.getDestNode();
 
-            double destX = (dest.getX() + _alignment.x) * _screenSize.width / (2.0 * 1.3) + _screenSize.width / 2.0;
-            double destY = (dest.getY() + _alignment.y) * _screenSize.height / (2.0 * 1.1) + _screenSize.height / 2.0;
-
-            Offset srcOffset = Offset(srcX, srcY);
-            Offset destOffset = Offset(destX, destY);
+            Offset srcOffset = srcNode.getPosition() /*+ _screenOffset*/ + _offset;
+            Offset destOffset = destNode.getPosition() /*+ _screenOffset*/ + _offset;
 
             canvas.drawLine(srcOffset, destOffset, paintNormalEdge);
         }
+
+        for (Node node in _graph.getNodes()) {
+            Offset nodeOffset = node.getPosition() + /*_screenOffset +*/ _offset;
+            canvas.drawCircle(nodeOffset, 15, paintNormalNode);
+        }
     }
 
-
-    @override 
-    bool shouldRepaint(CustomPainter oldDelegate) {
-        return true;
+    @override
+    bool shouldRepaint(GraphPainter oldDelegate) {
+        return oldDelegate._offset != _offset;
     }
 }

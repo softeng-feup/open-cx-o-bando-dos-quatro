@@ -1,4 +1,6 @@
 import 'dart:math';
+import 'package:flutter/material.dart';
+
 
 class Graph {
 
@@ -40,19 +42,29 @@ class Graph {
     List<Edge> getEdges() {
         return _edges;
     }
+
+    void updatePositions(Offset offset) {
+        for (Node node in _nodes) {
+            node.updatePosition(offset);
+        }
+    }
 }
 
 class Node {
     final int _id;
-    final double _x;
-    final double _y;
+    Offset _position;
     List<Edge> _edges = [];
 
-    Node(this._id, this._x, this._y);
+    Node(this._id, double x, double y) {
+        _position = Offset(x, y);
+    }
 
-    int getID() { return _id; }
-    double getX() { return _x; }
-    double getY() { return _y; }
+    int getID() { 
+        return _id;
+    }
+    Offset getPosition() {
+        return _position;
+    }
 
     bool addEdge(Edge edge) {
         if (edge.getSrcNode() != this) {
@@ -61,6 +73,10 @@ class Node {
         _edges.add(edge);
         return true;
     }
+
+    void updatePosition(Offset offset) {
+        this._position += offset;
+    }
 }
 
 class Edge {
@@ -68,7 +84,8 @@ class Edge {
     double _distance;
 
     Edge(this._src, this._dest) {
-        _distance = sqrt(pow(_src.getX() - _dest.getX(), 2) + pow(_src.getY() - _dest.getY(), 2));
+        
+        _distance = sqrt(pow(_src.getPosition().dx- _dest.getPosition().dx, 2) + pow(_src.getPosition().dy - _dest.getPosition().dy, 2));
     }
 
     Node getSrcNode() { return _src; }
