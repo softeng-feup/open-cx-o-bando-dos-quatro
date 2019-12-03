@@ -1,0 +1,52 @@
+body > header{
+    background-color: green;
+    pointer-events: none;
+    text-decoration: none;
+    color: white;
+    font-style: normal;
+    text-align: center;
+    margin: 5px;
+}
+
+#container > p{
+    font-weight: bold;
+}
+
+#edge_container > p{
+    font-weight: bold;
+}
+
+input[type=submit]{
+    background-color: green;
+    border: none;
+    color: white;
+    padding: 16px 32px;
+    text-decoration: none;
+    margin: 25px;
+    cursor: pointer;
+}
+
+#submit{
+    position: relative;
+    left: 1%;
+    top: 70%;
+    width: 200px;
+    height: 60px;
+}
+
+#display_conferences{
+    position: relative;
+    left: 5%;
+}
+
+#create{
+    position: relative;
+    left: 0%;
+    font-weight: bold;
+}
+
+
+#logout{
+    position: absolute;
+    bottom: 5%;
+}

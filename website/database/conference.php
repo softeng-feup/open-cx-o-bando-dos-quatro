@@ -44,12 +44,12 @@
 
     }
 
-    function addNewConf($conf_name, $conf_code){
+    function addNewConf($user_id, $conf_name, $conf_code){
 
         $db = Database::instance()->db();
 
-        $stmt = $db->prepare('INSERT INTO conference(confName, code) VALUES(?,?)');
-        $stmt->execute(array($conf_name, $conf_code));
+        $stmt = $db->prepare('INSERT INTO conference(user_id, confName, code) VALUES(?, ?,?)');
+        $stmt->execute(array($user_id, $conf_name, $conf_code));
        
      
     }
@@ -135,6 +135,8 @@
         $stmt = $db->prepare('INSERT INTO user(username, password) VALUES(?, ?)');
         $stmt->execute(array($username, $hash_password));
 
+        return true;
+
     }
 
 
@@ -150,5 +152,41 @@
         return $user !== false && password_verify($password, $user['password']);
 
     }
+
+    function get_user_id($username){
+
+        $db = Database::instance()->db();
+        
+        $stmt = $db->prepare('SELECT id FROM user WHERE username = ?');
+        $stmt->execute(array($username));
+
+        return $stmt->fetch()['id'];
+
+    }
+
+    function get_user_name($id){
+
+        $db = Database::instance()->db();
+        
+        $stmt = $db->prepare('SELECT username FROM user WHERE id = ?');
+        $stmt->execute(array($id));
+
+        return $stmt->fetch()['username'];
+
+    }
+
+
+    function list_conferences($user_id){
+
+        $db = Database::instance()->db();
+        
+        $stmt = $db->prepare('SELECT * FROM conference WHERE user_id = ?');
+        $stmt->execute(array($user_id));
+
+        return $stmt->fetchAll();
+
+    }
+
+
 
 ?>
