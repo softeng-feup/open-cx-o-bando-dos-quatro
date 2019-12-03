@@ -183,10 +183,8 @@ class _PanoramaViewState extends State<PanoramaView> {
         key: imageKey1,
         backgroundColor: Colors.white10,
         body: Center(
-            child: Text(
-          'Loading',
-          style: TextStyle(color: Colors.white, fontSize: 20),
-        )),
+            child: CircularProgressIndicator()
+        ),
       );
     }
 

@@ -255,7 +255,7 @@ class _MapScreenState extends State<MapScreen> {
 
   _readTag() {
     Navigator.of(context)
-        .push(MaterialPageRoute(builder: (context) => NfcScan()));
+        .push(MaterialPageRoute(builder: (context) => NfcScan(locations: widget.graph.getNodes())));
   }
 
   List<Widget> _buildActions() {
