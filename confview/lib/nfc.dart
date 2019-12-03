@@ -3,16 +3,14 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_nfc_reader/flutter_nfc_reader.dart';
 
-
 class NfcScan extends StatefulWidget {
-    NfcScan({Key key}) : super(key: key);
+  NfcScan({Key key}) : super(key: key);
 
-    @override 
-    _NfcScanState createState() => _NfcScanState();
+  @override
+  _NfcScanState createState() => _NfcScanState();
 }
 
 class _NfcScanState extends State<NfcScan> {
-
     bool _nfcOn = true;
 
     @override 
@@ -71,3 +69,4 @@ class _NfcScanState extends State<NfcScan> {
         }
     }
 }
+
