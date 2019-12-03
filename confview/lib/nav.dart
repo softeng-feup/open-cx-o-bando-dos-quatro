@@ -1,5 +1,7 @@
 
 import 'package:confview/graph_draw.dart';
+import 'package:confview/graph.dart';
+import 'package:confview/map_data.dart';
 
 import 'package:confview/conferenceViewer.dart';
 
@@ -11,7 +13,9 @@ import 'nfc.dart';
 class MapScreen extends StatefulWidget {
   final int conferenceId;
 
-  List<Location> locations = new List<Location>();
+  //List<Node> locations = new List<Node>();
+
+  Graph graph = new Graph();
 
   MapScreen({Key key, this.conferenceId}) : super(key: key) {
     getConferenceInfo();
@@ -22,7 +26,17 @@ class MapScreen extends StatefulWidget {
 
   //TODO:: get info from database
   void getConferenceInfo() {
-    this.locations.add(new Location(
+
+    graph.addNode(Node(0,"Praia","https://upload.wikimedia.org/wikipedia/commons/3/3e/Croatia_Ribarica_beach_panorama_360.jpg",0, 0));
+    graph.addNode(Node(1,"India" ,"https://l13.alamy.com/360/PN0HYA/ganesh-pol-amber-palace-rajasthan-india-PN0HYA.jpg",  90, 45));
+    graph.addNode(Node(2, "Rua", "https://saffi3d.files.wordpress.com/2011/08/commercial_area_cam_v004.jpg", 180, 0));
+    graph.addNode(Node(3,"Cidade", "https://c1.staticflickr.com/5/4302/35137573294_1287bfd0ae_k.jpg" , 90, 90));
+
+    graph.addEdge(0, 1);
+    graph.addEdge(0, 2);
+    graph.addEdge(3, 2);
+
+    /*this.locations.add(new Location(
         "Praia",
         new PanoramaViewImage(
             "https://upload.wikimedia.org/wikipedia/commons/3/3e/Croatia_Ribarica_beach_panorama_360.jpg"),
@@ -78,12 +92,8 @@ class MapScreen extends StatefulWidget {
         }
       }
 
-    }
-
-    //initiate edges
-    /*for (int i = 0; i < this.locations.length; i++) {
-      this.locations[i].tagsLocationReferences(this.locations);
     }*/
+
   }
 }
 
@@ -187,7 +197,7 @@ class _MapScreenState extends State<MapScreen> {
             onTap: () {
               Navigator.of(context).push(MaterialPageRoute(
                   builder: (context) => ConferenceViewer(
-                        locations: widget.locations,
+                        locations: widget.graph.getNodes(), startIndex: 0,
                       )));
             },
             label: 'GO',
@@ -221,7 +231,7 @@ class _MapScreenState extends State<MapScreen> {
 
 
   Widget _buildMap() {
-      return GraphDraw();
+      return GraphDraw(graph: widget.graph,);
   }
 
 

@@ -34,10 +34,18 @@ class Graph {
         Node destNode = getNode(destID);
         // TODO: do error checking in case there is no node with the specified ids
 
+
         Edge edge = new Edge(srcNode, destNode);
         if (!srcNode.addEdge(edge))
             return false;
         _edges.add(edge);
+
+
+        Edge bidirectionalEdge = new Edge(destNode, srcNode);
+        if (!destNode.addEdge(bidirectionalEdge))
+            return false;
+        _edges.add(bidirectionalEdge);
+
         return true;
     }
 

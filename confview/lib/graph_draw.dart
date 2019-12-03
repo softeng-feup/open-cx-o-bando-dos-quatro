@@ -4,10 +4,14 @@ import 'package:flutter/material.dart';
 import 'graph.dart';
 import 'map_data.dart';
 
+import 'conferenceViewer.dart';
+
 
 class GraphDraw extends StatefulWidget {
 
-    GraphDraw ({Key key}) : super(key: key);
+    GraphDraw ({Key key , this.graph}) : super(key: key);
+
+    final Graph graph;
 
     @override
     _GraphDrawState createState() => _GraphDrawState();
@@ -15,17 +19,17 @@ class GraphDraw extends StatefulWidget {
 
 class _GraphDrawState extends State<GraphDraw> {
 
-    Graph _graph = new Graph();
+    //Graph _graph = new Graph();
     bool _addScreenOffset = true;
     
     @override
     void initState() {
         super.initState();
-        _buildGraph();
+        //_buildGraph();
     }
 
     // TODO: this is a testing function to build a graph
-    void _buildGraph() {
+    /*void _buildGraph() {
         _graph.addNode(Node(1, 0, 0));
         _graph.addNode(Node(2, 90, 45));
         _graph.addNode(Node(3, 180, 0));
@@ -33,7 +37,7 @@ class _GraphDrawState extends State<GraphDraw> {
 
         _graph.addEdge(1, 2);
         _graph.addEdge(1, 3);
-    }
+    }*/
     // offset in pixels
     Offset _graphHorizontalOffset = Offset(0.0, 0.0);
     Offset _graphVerticalOffset = Offset(0.0, 0.0);
@@ -49,7 +53,7 @@ class _GraphDrawState extends State<GraphDraw> {
 
         return Container(
             child: CustomPaint(
-            painter: GraphPainter(context, _graph, _graphOffset),
+            painter: GraphPainter(context, widget.graph, _graphOffset),
             child: GestureDetector(
                 onVerticalDragStart: (details) {
                     _graphVerticalOffset = details.globalPosition; 
@@ -79,12 +83,16 @@ class _GraphDrawState extends State<GraphDraw> {
 
         Offset tap = details.localPosition;
 
-        for (Node node in _graph.getNodes()) {
+        for (Node node in widget.graph.getNodes()) {
             Offset nodeOffset = node.getPosition() + _graphOffset;
             double distance = sqrt(pow(tap.dx - nodeOffset.dx, 2) + pow(tap.dy - nodeOffset.dy, 2));
 
             if (distance <= 17) {
                 print("pressed node with id : " + node.getID().toString());
+                Navigator.of(context).push(MaterialPageRoute(
+                    builder: (context) => ConferenceViewer(
+                        locations: widget.graph.getNodes(), startIndex: node.getID(),
+                    )));
                 break;
             }
         }

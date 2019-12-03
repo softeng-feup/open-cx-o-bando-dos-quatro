@@ -2,6 +2,8 @@ import 'dart:async';
 import 'dart:math';
 
 import 'package:confview/conferenceViewer.dart';
+import 'package:confview/map_data.dart';
+
 import 'package:flutter/material.dart';
 
 class PanoramaView extends StatefulWidget {
@@ -11,8 +13,8 @@ class PanoramaView extends StatefulWidget {
   }
 
   PanoramaViewImage panoramaImage;
-  Location location;
-  List<Location> locations;
+  Node location;
+  List<Node> locations;
 
   @override
   _PanoramaViewState createState() => _PanoramaViewState();
@@ -68,7 +70,7 @@ class _PanoramaViewState extends State<PanoramaView> {
               ((this.imageWidth * screenHeight) /
                       (this.imageHeight * screenWidth) +
                   -1.0072) +
-          2.00054;
+          2.00054; // DO NOT TOUCH THIS CONSTANTS, UNLESS YOU FIND A BETTER WAY; BUT IT WORKS
 
     this._imageAlignment = Alignment(0, 0);
     this._imageAlignment2 = Alignment(this.delta, 0);
@@ -92,7 +94,7 @@ class _PanoramaViewState extends State<PanoramaView> {
             ((this.imageWidth * screenHeight) /
                     (this.imageHeight * screenWidth) +
                 -1.0072) +
-        2.00054;
+        2.00054; // DO NOT TOUCH THIS CONSTANTS, UNLESS YOU FIND A BETTER WAY; BUT IT WORKS
 
     //print("Calculation of delta: " + this.delta.toString());
 
@@ -215,16 +217,22 @@ class _PanoramaViewState extends State<PanoramaView> {
       ),
     ];
 
-    for (int i = 0; i < widget.location.tags.length; i++) {
+    List<Edge> edges = widget.location.getEdges();
+
+    for (int i = 0; i < edges.length; i++) {
+
       Widget tagContainer = Container(
         padding: EdgeInsets.all(8.0),
-        child: Text(widget.location.tags[i].getText()),
+        child: Text(edges[i].getDestName()),
       );
+
       Widget child1;
-      print(widget.location.tags[i].getText()+ "->" + widget.location.tags[i].getAlignment().toString());
-      if (widget.location.tags[i].getText() == widget.location.path) {
+
+      print(edges[i].getDestName()+ "->" + edges[i].getAlignment().toString());
+
+      if (edges[i].getDestName() == widget.location.path) {
         child1 = Align(
-            alignment: widget.location.tags[i].getAlignment() * this.delta -
+            alignment: edges[i].getAlignment() * this.delta -
                 _imageAlignment -
                 _imageAlignment -
                 _imageAlignment -
@@ -235,13 +243,13 @@ class _PanoramaViewState extends State<PanoramaView> {
                   Navigator.of(context).push(MaterialPageRoute(
                       builder: (context) => PanoramaView(
                           locations: widget.locations,
-                          location: widget.location.tags[i].dest)));
+                          location: edges[i].getDestNode())));
                 },
                 color: Colors.redAccent,
                 child: tagContainer));
       } else {
         child1 = Align(
-            alignment: widget.location.tags[i].getAlignment() * this.delta -
+            alignment: edges[i].getAlignment() * this.delta -
                 _imageAlignment -
                 _imageAlignment -
                 _imageAlignment -
@@ -252,7 +260,7 @@ class _PanoramaViewState extends State<PanoramaView> {
                   Navigator.of(context).push(MaterialPageRoute(
                       builder: (context) => PanoramaView(
                           locations: widget.locations,
-                          location: widget.location.tags[i].dest)));
+                          location: edges[i].getDestNode())));
                 },
                 color: Colors.blue,
                 child: tagContainer));
@@ -260,9 +268,9 @@ class _PanoramaViewState extends State<PanoramaView> {
       stackChildren.add(child1);
 
       Widget child2;
-      if (widget.location.tags[i].getText() == widget.location.path) {
+      if (edges[i].getDestName() == widget.location.path) {
         child2 = Align(
-            alignment: widget.location.tags[i].getAlignment() * this.delta -
+            alignment: edges[i].getAlignment() * this.delta -
                 _imageAlignment2 -
                 _imageAlignment2 -
                 _imageAlignment2 -
@@ -273,13 +281,13 @@ class _PanoramaViewState extends State<PanoramaView> {
                   Navigator.of(context).push(MaterialPageRoute(
                       builder: (context) => PanoramaView(
                           locations: widget.locations,
-                          location: widget.location.tags[i].dest)));
+                          location: edges[i].getDestNode())));
                 },
                 color: Colors.redAccent,
                 child: tagContainer));
       } else {
         child2 = Align(
-            alignment: widget.location.tags[i].getAlignment() * this.delta -
+            alignment: edges[i].getAlignment() * this.delta -
                 _imageAlignment2 -
                 _imageAlignment2 -
                 _imageAlignment2 -
@@ -290,7 +298,7 @@ class _PanoramaViewState extends State<PanoramaView> {
                   Navigator.of(context).push(MaterialPageRoute(
                       builder: (context) => PanoramaView(
                           locations: widget.locations,
-                          location: widget.location.tags[i].dest)));
+                          location: edges[i].getDestNode())));
                 },
                 color: Colors.blue,
                 child: tagContainer));
@@ -349,13 +357,13 @@ class _PanoramaViewState extends State<PanoramaView> {
 }
 
 
-double dist(Location l1, Location l2) {
+double dist(Node l1, Node l2) {
   return sqrt(pow(l1.getX() - l2.getX(), 2) + pow(l1.getY() - l2.getY(), 2));
 }
 
 //shortest path assuming the conections are bi-derectional
-void shortestPath(List<Location> locations, String dest) {
-  List<Location> toVisit = new List<Location>();
+void shortestPath(List<Node> locations, String dest) {
+  List<Node> toVisit = new List<Node>();
   bool found = false;
   for (int i = 0; i < locations.length; i++) {
     locations[i].visited = false;
@@ -371,7 +379,7 @@ void shortestPath(List<Location> locations, String dest) {
   if (!found) return;
 
   while (toVisit.isNotEmpty) {
-    Location nextLocation;
+    Node nextLocation;
     double minDist = double.maxFinite;
     int index = 0;
     for (int i = 0; i < toVisit.length; i++) {
@@ -384,12 +392,14 @@ void shortestPath(List<Location> locations, String dest) {
 
     toVisit.removeAt(index);
 
-    for (int i = 0; i < nextLocation.tags.length; i++) {
-      if (nextLocation.tags[i].dest.distance >
-          minDist + dist(nextLocation, nextLocation.tags[i].dest)) {
-        nextLocation.tags[i].dest.distance =
-            minDist + dist(nextLocation, nextLocation.tags[i].dest);
-        nextLocation.tags[i].dest.path = nextLocation.getName();
+    List<Edge> edges = nextLocation.getEdges();
+
+    for (int i = 0; i < edges.length; i++) {
+      if (edges[i].getDestNode().distance >
+          minDist + dist(nextLocation, edges[i].getDestNode())) {
+        edges[i].getDestNode().distance =
+            minDist + dist(nextLocation, edges[i].getDestNode());
+        edges[i].getDestNode().path = nextLocation.getName();
       }
     }
   }
