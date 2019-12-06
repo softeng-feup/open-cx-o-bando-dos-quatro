@@ -18,7 +18,12 @@ CREATE TABLE conference (
     id                  INTEGER PRIMARY KEY,
     user_id             INTEGER NOT NULL REFERENCES user(id), 
     confName            VARCHAR UNIQUE NOT NULL ON CONFLICT ABORT,
-    code                INTEGER UNIQUE NOT NULL ON CONFLICT ABORT
+    code                INTEGER UNIQUE NOT NULL ON CONFLICT ABORT,
+    startdate           DATE    NOT NULL ON CONFLICT ABORT,
+    enddate             DATE    NOT NULL ON CONFLICT ABORT,
+    addr                VARCHAR NOT NULL ON CONFLICT ABORT,
+    city                VARCHAR NOT NULL ON CONFLICT ABORT,
+    descr               VARCHAR NOT NULL ON CONFLICT ABORT         
 );
 
 CREATE TABLE node (
