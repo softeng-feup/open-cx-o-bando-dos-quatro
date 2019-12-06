@@ -2,6 +2,7 @@
 
     include_once('../includes/include_data_base.php');
     include_once('../debug/debug.php');
+    
 
     function validInfo($conf_name, $conf_code){
         if(preg_match ("/^[a-zA-Z0-9]+$/", $conf_name)){
@@ -44,12 +45,12 @@
 
     }
 
-    function addNewConf($user_id, $conf_name, $conf_code){
+    function addNewConf($user_id, $conf_name, $conf_code, $conf_start, $conf_end, $conf_address, $conf_city, $conf_description){
 
         $db = Database::instance()->db();
 
-        $stmt = $db->prepare('INSERT INTO conference(user_id, confName, code) VALUES(?, ?,?)');
-        $stmt->execute(array($user_id, $conf_name, $conf_code));
+        $stmt = $db->prepare('INSERT INTO conference(user_id, confName, code, startdate, enddate, addr, city, descr) VALUES(?, ?, ?, ?, ?, ?, ?, ?)');
+        $stmt->execute(array($user_id, $conf_name, $conf_code, $conf_start, $conf_end, $conf_address, $conf_city, $conf_description));
        
      
     }

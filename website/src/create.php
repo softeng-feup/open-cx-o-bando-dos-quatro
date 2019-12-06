@@ -65,11 +65,22 @@
         <section id="form">
             <form action="../actions/addConfInfo.php" method="POST">
 
-                <label></label>Conference Name: <input type="text" name="name" id="name"/></label>
-                <label></label>Conference Code: <input type="number" name="code" id="code"/></label>
-                <label>Start Date<input id="check-in" type="date" value="<?php echo date('Y-m-d');?>"></label>
-                <label>End Date<input id="check-out" type="date" value="<?php echo date('Y-m-d', strtotime('tomorrow'));?>"></label>
-                
+                <p>
+                <label>Conference Name: <input type="text" name="name" id="name"/></label>
+                <label>Conference Code: <input type="number" name="code" id="code"/></label>
+                <label>Start Date<input name="check-in" type="date" value="<?php echo date('Y-m-d');?>"></label>
+                <label>End Date<input name="check-out" type="date" value="<?php echo date('Y-m-d', strtotime('tomorrow'));?>"></label>
+                </p>
+
+                <p>
+                    <label>Address: <input type="text" name="address" id="address"/></label>
+                    <label>City: <input type="text" name="city" id="city"/></label>
+                </p>
+
+                <p>
+                    <label>Description: <textarea name="description" rows="3" cols="30">Insert a brief description about your conference</textarea></label>
+                </p>
+
                 <br>
                 <br>
 
