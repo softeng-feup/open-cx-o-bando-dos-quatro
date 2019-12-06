@@ -188,6 +188,13 @@
 
     }
 
+    function delete_conference($id){
+        $db = Database::instance()->db();
+
+        $stmt = $db->prepare('DELETE FROM conference WHERE id=?');
+        $stmt->execute(array($id));
+    }
+
 
 
 ?>
