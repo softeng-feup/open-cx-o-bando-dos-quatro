@@ -34,11 +34,11 @@
                 <?php $conferences = list_conferences(get_user_id($_SESSION['username']));
 
                 foreach($conferences as $conference){
-                    //echo $conference['confName'];
+                    
                     ?>
 
                     <section id="display_conferences">
-                        <li> <?= $conference['confName']; ?> </li>
+                        <li> <?= $conference['confName']; ?>   <a href="./edit-conference.php?id=<?=$conference['id']?>">Edit</a>  <a href="../actions/action_delete.php?id=<?=$conference['id']?>">Delete </a></li>
                     </section>
 
                     <?php
