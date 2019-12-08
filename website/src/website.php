@@ -38,7 +38,7 @@
                     ?>
 
                     <section id="display_conferences">
-                        <li> <?= $conference['confName']; ?>   <a href="./edit-conference.php?id=<?=$conference['id']?>">Edit</a>  <a href="../actions/action_delete.php?id=<?=$conference['id']?>">Delete </a></li>
+                        <li> <?= $conference['confName'] ?>  : <a href="./edit-conference.php?id=<?=$conference['id']?>">Edit</a> | <a href="../actions/action_delete.php?id=<?=$conference['id']?>">Delete </a></li>
                     </section>
 
                     <?php

@@ -195,6 +195,15 @@
         $stmt->execute(array($id));
     }
 
+    function conference_information($id){
+        $db = Database::instance()->db();
+
+        $stmt = $db->prepare('SELECT * FROM conference WHERE id=?');
+        $stmt->execute(array($id));
+
+        return $stmt->fetch();
+    }
+
 
 
 ?>
