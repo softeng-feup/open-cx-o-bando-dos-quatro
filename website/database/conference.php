@@ -231,5 +231,43 @@
     }
 
 
+    function update_conference_nodes($x, $y, $tag, $ids, $conf_id){
+        $db = Database::instance()->db();
 
+
+        $keys1 = array_keys($x);
+        $keys2 = array_keys($y);
+        $keys3 = array_keys($tag);
+        $keys4 = array_keys($ids);
+
+
+        $old_ids = count($ids);
+        $min = min(count($x), count($y));
+
+        for($i = 0; $i < $min; $i++){
+
+            if($i < $old_ids){
+                $stmt = $db->prepare('UPDATE node SET(x_coord, y_coord, isTag) = (?, ?, ?) WHERE id = ?');
+
+                if($tag[$keys3[$i]] == "y"){
+                    $stmt->execute(array($x[$keys1[$i]], $y[$keys2[$i]], true, $ids[$keys4[$i]]));
+                }
+                else{
+                    $stmt->execute(array($x[$keys1[$i]], $y[$keys2[$i]], false, $ids[$keys4[$i]]));
+                }
+
+            }
+            else{
+                $stmt = $db->prepare('INSERT INTO node(conference_id, x_coord, y_coord, isTag) VALUES(?, ?, ?, ?)');
+
+                if($tag[$keys3[$i]] == "y"){
+                    $stmt->execute(array($conf_id, $x[$keys1[$i]], $y[$keys2[$i]], true));
+                }
+                else{
+                    $stmt->execute(array($conf_id, $x[$keys1[$i]], $y[$keys2[$i]], false));
+                }
+            }
+        }
+
+    }
 ?>

@@ -113,6 +113,7 @@
                         $coords_info = get_coords_info($node_id['id']);
                     ?>
                     <p>
+                        <input type="hidden" id="nodes_ids" name="nodes_ids[]" value="<?= $node_id['id']?>">
                         x_coordinate: <input type="number" name="x[]" id="x_coordinate" value = "<?= $coords_info['x_coord']?>"/>
                         y_coordinate: <input type="number" name="y[]" id="y_coordinate" value = "<?= $coords_info['y_coord']?>"/>
                         <?php if($coords_info['isTag']) {?>

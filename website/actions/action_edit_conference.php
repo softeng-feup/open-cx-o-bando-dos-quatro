@@ -18,6 +18,15 @@
     $new_city = $_POST['city'];
     $new_description = $_POST['description'];
 
+    //process nodes
+    $x = $_POST['x'];
+    $y = $_POST['y'];
+    $tag = $_POST['tag'];
+    $ids = $_POST['nodes_ids'];
+
+   
+
+
 
     //recebe toda a informação dos conferencia (sem nós nem edges)
     $conf_info_db = conference_information($id);
@@ -35,6 +44,8 @@
     }
 
     update_conference_info($new_name, $new_code, $new_start, $new_end, $new_address, $new_city, $new_description, $id);
+    update_conference_nodes($x, $y, $tag, $ids, $id);
+
     $_SESSION['messages'][] = array('type' => 'error', 'content' => 'Conference updated');
     header("Location: ../src/website.php");
 
