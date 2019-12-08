@@ -221,4 +221,15 @@
         return $stmt->fetchAll();
     }
 
+    function get_coords_info($node_id){
+        $db = Database::instance()->db();
+
+        $stmt = $db->prepare('SELECT * FROM node WHERE id=?');
+        $stmt->execute(array($node_id));
+
+        return $stmt->fetch();
+    }
+
+
+
 ?>

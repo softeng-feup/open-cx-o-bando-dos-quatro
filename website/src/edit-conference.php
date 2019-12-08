@@ -11,7 +11,7 @@
     $info = conference_information($id); 
 
     $nodes_IDS= conference_nodeIDS($id); //returns all the nodes ids associated with a conference
-    //print_r($nodes_IDS);
+    $counter = 0;
 ?>
 
 <html>
@@ -108,12 +108,33 @@
                     <p>
                     You must tell us the coordinates of each point of the map in order for us to generate it.
                     </p>
-                    x_coordinate: <input type="number" name="x[]" id="x_coordinate"/>
-                    y_coordinate: <input type="number" name="y[]" id="y_coordinate"/>
-                    Tag (y/n)? <input type="text" name="tag[]" id="tag2"/>
-                    <a href="#" id="add">
-                        Add Node
-                    </a>
+
+                    <?php foreach($nodes_IDS as $node_id){
+                        $coords_info = get_coords_info($node_id['id']);
+                    ?>
+                    <p>
+                        x_coordinate: <input type="number" name="x[]" id="x_coordinate" value = "<?= $coords_info['x_coord']?>"/>
+                        y_coordinate: <input type="number" name="y[]" id="y_coordinate" value = "<?= $coords_info['y_coord']?>"/>
+                        <?php if($coords_info['isTag']) {?>
+                        Tag (y/n)? <input type="text" name="tag[]" id="tag2" value ="y"/>
+                        <?php }
+                            else{ ?>
+                        Tag (y/n)? <input type="text" name="tag[]" id="tag2"/>
+                        
+                        <?php }?>
+
+                    <?php if($counter == 0){ ?>
+                        <a href="#" id="add">
+                         Add Node
+                        </a>
+                    <?php 
+                        $counter = $counter + 1;
+                    }else {?>
+                        <a href="#" id="remove">x</a>
+                    <?php }?>
+                    </p>
+                     <?php } ?>
+                
                 </div>
 
                 <br>
