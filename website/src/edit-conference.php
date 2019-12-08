@@ -9,6 +9,9 @@
 
     $id = $_GET['id'];
     $info = conference_information($id); 
+
+    $nodes_IDS= conference_nodeIDS($id); //returns all the nodes ids associated with a conference
+    //print_r($nodes_IDS);
 ?>
 
 <html>
@@ -19,6 +22,50 @@
         <link href="../css/style.css" rel="stylesheet">
 
         <!-- javascript -->
+        <script>
+            
+            $(document).ready(function(e){
+
+                /* ------------------------------------- */
+                /* --------------- NODES --------------- */
+                /* ------------------------------------- */
+
+                // Variables
+                var html = '<p/><div>x_coordinate: <input type="number" name="x[]" id="child_x_coordinate"/>y_coordinate: <input type="number" name="y[]" id="child_y_coordinate"/>Tag (y/n)? <input type="text" name="tag[]" id="child_tag"/><a href="#" id="remove">x</a></div>';
+
+                // Add nodes
+                $("#add").click(function(e){
+                    $("#container").append(html);
+                });
+
+                // remove nodes
+                $("#container").on('click', '#remove', function(e){
+                    $(this).parent('div').remove();
+                });
+
+
+                
+                
+                /* ------------------------------------- */
+                /* --------------- EDGES --------------- */
+                /* ------------------------------------- */
+
+                // Variables
+                var edges = '<p/><div>Node id: <input type="number" name="first_id[]" id="child_id1"/>connects to Node id: <input type="number" name="second_id[]" id="child_id2"/><a href="#" id="remove_edge">x</a></div>';
+
+                // Add Edges
+                $("#add_edge").click(function(e){
+                    $("#edge_container").append(edges);
+                });
+
+                // remove nodes
+                $("#edge_container").on('click', '#remove_edge', function(e){
+                    $(this).parent('div').remove();
+                });
+
+            });
+
+        </script>
 
     </head>
 

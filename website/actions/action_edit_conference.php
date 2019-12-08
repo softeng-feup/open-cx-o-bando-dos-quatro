@@ -22,6 +22,7 @@
     //recebe toda a informação dos conferencia (sem nós nem edges)
     $conf_info_db = conference_information($id);
 
+
     //não pode existir conferencias com código ou nomes iguais
     if($conf_info_db['confName'] != $new_name && confNameExists($new_name)){
         $_SESSION['messages'][] = array('type' => 'error', 'content' => 'This conference name already exists!');
@@ -35,7 +36,7 @@
 
     update_conference_info($new_name, $new_code, $new_start, $new_end, $new_address, $new_city, $new_description, $id);
     $_SESSION['messages'][] = array('type' => 'error', 'content' => 'Conference updated');
-    header("Location: ../src/website.php");
+    //header("Location: ../src/website.php");
 
 
 

@@ -212,5 +212,13 @@
     
     }
   
+    function conference_nodeIDS($conference_id){
+        $db = Database::instance()->db();
+
+        $stmt = $db->prepare('SELECT id FROM node WHERE conference_id=?');
+        $stmt->execute(array($conference_id));
+
+        return $stmt->fetchAll();
+    }
 
 ?>
