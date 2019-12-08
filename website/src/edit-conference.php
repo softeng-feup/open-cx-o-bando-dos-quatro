@@ -33,7 +33,7 @@
 
         <section id="form">
             <form action="../actions/action_edit_conference.php" method="POST">
-
+                <input type="hidden" id="conf_id" name="conf_id" value="<?=$id?>">
                 <p>
                 <label>Conference Name: <input type="text" name="name" id="name" value = "<?=$info['confName']?>"/></label>
                 <label>Conference Code: <input type="number" name="code" id="code" value = "<?=$info['code']?>"/></label>

@@ -204,6 +204,13 @@
         return $stmt->fetch();
     }
 
+    function update_conference_info($new_name, $new_code, $new_start, $new_end, $new_address, $new_city, $new_description, $id){
+        $db = Database::instance()->db();
 
+        $stmt = $db->prepare('UPDATE conference SET (confName, code, startdate, enddate, addr, city, descr) = (?, ?, ?, ?, ?, ?, ?) WHERE id = ?');
+        $stmt->execute(array($new_name, $new_code, $new_start, $new_end, $new_address, $new_city, $new_description, $id));
+    
+    }
+  
 
 ?>
