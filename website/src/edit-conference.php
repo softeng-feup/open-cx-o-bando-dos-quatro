@@ -12,6 +12,9 @@
 
     $nodes_IDS= conference_nodeIDS($id); //returns all the nodes ids associated with a conference
     $counter = 0;
+
+    // removes nodes from database
+    removeNodes($id);
 ?>
 
 <html>
@@ -31,7 +34,7 @@
                 /* ------------------------------------- */
 
                 // Variables
-                var html = '<p/><div>x_coordinate: <input type="number" name="x[]" id="child_x_coordinate"/>y_coordinate: <input type="number" name="y[]" id="child_y_coordinate"/>Tag (y/n)? <input type="text" name="tag[]" id="child_tag"/><a href="#" id="remove">x</a></div>';
+                var html = '<p/><div>Name: <input type="text" name="node_name[]" id="child_node_name"/>x_coordinate: <input type="number" name="x[]" id="child_x_coordinate"/>y_coordinate: <input type="number" name="y[]" id="child_y_coordinate"/>Tag (y/n)? <input type="text" name="tag[]" id="child_tag"/><a href="#" id="remove">x</a></div>';
 
                 // Add nodes
                 $("#add").click(function(e){
@@ -43,8 +46,7 @@
                     $(this).parent('div').remove();
                 });
 
-
-                
+                                
                 
                 /* ------------------------------------- */
                 /* --------------- EDGES --------------- */
@@ -70,6 +72,8 @@
     </head>
 
     <body>
+
+    <?php $flag = true; ?>
 
         <header>
             <h1> Confview Creator </h1>
@@ -102,39 +106,20 @@
 
                 <!-- container for the nodes -->
                 <div id="container">
-                    <p>
+                    
+                <p>
                     Here you should fill out information about each node of the conference venue.
                     </p>
                     <p>
                     You must tell us the coordinates of each point of the map in order for us to generate it.
                     </p>
-
-                    <?php foreach($nodes_IDS as $node_id){
-                        $coords_info = get_coords_info($node_id['id']);
-                    ?>
-                    <p>
-                        <input type="hidden" id="nodes_ids" name="nodes_ids[]" value="<?= $node_id['id']?>">
-                        x_coordinate: <input type="number" name="x[]" id="x_coordinate" value = "<?= $coords_info['x_coord']?>"/>
-                        y_coordinate: <input type="number" name="y[]" id="y_coordinate" value = "<?= $coords_info['y_coord']?>"/>
-                        <?php if($coords_info['isTag']) {?>
-                        Tag (y/n)? <input type="text" name="tag[]" id="tag2" value ="y"/>
-                        <?php }
-                            else{ ?>
-                        Tag (y/n)? <input type="text" name="tag[]" id="tag2"/>
-                        
-                        <?php }?>
-
-                    <?php if($counter == 0){ ?>
-                        <a href="#" id="add">
-                         Add Node
-                        </a>
-                    <?php 
-                        $counter = $counter + 1;
-                    }else {?>
-                        <a href="#" id="remove">x</a>
-                    <?php }?>
-                    </p>
-                     <?php } ?>
+                    Name: <input type="text" name="node_name[]" id="node_name"/>
+                    x_coordinate: <input type="number" name="x[]" id="x_coordinate"/>
+                    y_coordinate: <input type="number" name="y[]" id="y_coordinate"/>
+                    Tag (y/n)? <input type="text" name="tag[]" id="tag2"/>
+                    <a href="#" id="add">
+                        Add Node
+                    </a>
                 
                 </div>
 

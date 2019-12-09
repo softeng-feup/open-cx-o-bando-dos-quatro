@@ -14,6 +14,9 @@ $conf_code = $_POST['code'];
 $x = $_POST['x'];
 $y = $_POST['y'];
 $tag = $_POST['tag'];
+
+$name = $_POST['node_name'];
+
 $first_id = $_POST['first_id'];
 $second_id = $_POST['second_id'];
 
@@ -34,11 +37,16 @@ if($conf_name && $conf_code){
            if(!confCodeExists($conf_code)){
                if(count($x) >= 2 && count($y) >= 2){
                 addNewConf($user_id, $conf_name, $conf_code, $conf_start, $conf_end, $conf_address, $conf_city, $conf_description);
-                $number_nodes = countNodes();
-                addNodes($conf_name, $x, $y, $tag);
-                addEdges($first_id, $second_id, $number_nodes);
+                
+                //$number_nodes = countNodes();
+                $last_node = getLastNode();
 
-                header("Location: ../src/website.php");
+
+                addNodes($conf_name, $x, $y, $tag, $name);
+                addEdges($first_id, $second_id, $last_node);
+
+                $conf_id = getConfID($conf_name);
+                header("Location: ../src/photos.php?id=".$conf_id);
                }
                else{
                 $_SESSION['messages'][] = array('type' => 'error', 'content' => 'Please input at least 2 nodes in the conference...');

@@ -22,7 +22,11 @@
     $x = $_POST['x'];
     $y = $_POST['y'];
     $tag = $_POST['tag'];
+    $names = $_POST['node_name'];
     $ids = $_POST['nodes_ids'];
+
+    $first_id = $_POST['first_id'];
+    $second_id = $_POST['second_id'];
 
    
 
@@ -43,11 +47,22 @@
         header("Location: ../src/website.php");
     }
 
+    
+
     update_conference_info($new_name, $new_code, $new_start, $new_end, $new_address, $new_city, $new_description, $id);
-    update_conference_nodes($x, $y, $tag, $ids, $id);
+
+
+    $last_node = getLastNode();
+
+
+    update_conference_nodes($names, $x, $y, $tag, $ids, $id);
+
+
+    
+    addEdges($first_id, $second_id, $last_node);
 
     $_SESSION['messages'][] = array('type' => 'error', 'content' => 'Conference updated');
-    header("Location: ../src/website.php");
+    header("Location: ../src/photos.php?id=".$id);
 
 
 

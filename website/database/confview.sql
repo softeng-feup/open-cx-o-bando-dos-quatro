@@ -5,6 +5,7 @@ DROP TABLE IF EXISTS conference;
 DROP TABLE IF EXISTS node;
 DROP TABLE IF EXISTS location;
 DROP TABLE IF EXISTS edge;
+DROP TABLE IF EXISTS image;
 
 CREATE TABLE user (
 
@@ -29,6 +30,7 @@ CREATE TABLE conference (
 CREATE TABLE node (
     id                  INTEGER PRIMARY KEY,
     conference_id       INTEGER REFERENCES conference(id) ON DELETE CASCADE,
+    name                VARCHAR NOT NULL ON CONFLICT ABORT,
     x_coord             REAL NOT NULL ON CONFLICT ABORT,
     y_coord             REAL NOT NULL ON CONFLICT ABORT,
     isTag               BOOLEAN DEFAULT FALSE
@@ -40,6 +42,14 @@ CREATE TABLE edge(
     id                   INTEGER PRIMARY KEY,
     origin_node          INTEGER REFERENCES node(id) ON DELETE CASCADE,        
     dest_node            INTEGER REFERENCES node(id) ON DELETE CASCADE
+
+);
+
+CREATE TABLE image(
+
+    id                  INTEGER PRIMARY KEY,
+    node_id             INTEGER REFERENCES node(id) ON DELETE CASCADE,
+    IMAGE               VARCHAR NOT NULL
 
 );
 

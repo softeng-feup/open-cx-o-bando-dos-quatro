@@ -55,25 +55,26 @@
      
     }
 
-    function addNodes($conf_name, $x, $y, $tag){
+    function addNodes($conf_name, $x, $y, $tag, $name){
 
         $db = Database::instance()->db();
 
         $keys1 = array_keys($x);
         $keys2 = array_keys($y);
         $keys3 = array_keys($tag);
+        $keys4 = array_keys($name);
 
         $conf_id = getConfID($conf_name);
         $min = min(count($x), count($y));
 
         for($i = 0; $i < $min; $i++) {
-            $stmt = $db->prepare('INSERT INTO node(conference_id, x_coord, y_coord, isTag) VALUES(?, ?, ?, ?)');
+            $stmt = $db->prepare('INSERT INTO node(conference_id, name, x_coord, y_coord, isTag) VALUES(?, ?, ?, ?, ?)');
 
             if($tag[$keys3[$i]] == "y"){
-                $stmt->execute(array($conf_id, $x[$keys1[$i]], $y[$keys2[$i]], true));
+                $stmt->execute(array($conf_id, $name[$keys4[$i]], $x[$keys1[$i]], $y[$keys2[$i]], true));
             }
             else{
-                $stmt->execute(array($conf_id, $x[$keys1[$i]], $y[$keys2[$i]], false));
+                $stmt->execute(array($conf_id, $name[$keys4[$i]], $x[$keys1[$i]], $y[$keys2[$i]], false));
             }    
         }
     }
@@ -84,6 +85,9 @@
 
         $keys1_edge = array_keys($first_id);
         $keys2_edge = array_keys($second_id);
+
+        print_r($first_id[$keys1_edge]);
+        print_r($second_id[$keys2_edge]);
         
 
         $min_edge = min(count($first_id), count($second_id));
@@ -115,6 +119,17 @@
         $stmt->execute();
 
         return $stmt->fetch()['num'];
+    }
+
+    function getLastNode(){
+
+        $db = Database::instance()->db();
+
+        $stmt = $db->prepare('SELECT MAX(id) AS num FROM node');
+        $stmt->execute();
+
+        return $stmt->fetch()['num'];
+
     }
 
     function available_username($username){
@@ -231,7 +246,7 @@
     }
 
 
-    function update_conference_nodes($x, $y, $tag, $ids, $conf_id){
+    function update_conference_nodes($name, $x, $y, $tag, $ids, $conf_id){
         $db = Database::instance()->db();
 
 
@@ -240,6 +255,8 @@
         $keys3 = array_keys($tag);
         $keys4 = array_keys($ids);
 
+        $keys5 = array_keys($name);
+
 
         $old_ids = count($ids);
         $min = min(count($x), count($y));
@@ -247,27 +264,63 @@
         for($i = 0; $i < $min; $i++){
 
             if($i < $old_ids){
-                $stmt = $db->prepare('UPDATE node SET(x_coord, y_coord, isTag) = (?, ?, ?) WHERE id = ?');
+                $stmt = $db->prepare('UPDATE node SET(name, x_coord, y_coord, isTag) = (?, ?, ?, ?) WHERE id = ?');
 
                 if($tag[$keys3[$i]] == "y"){
-                    $stmt->execute(array($x[$keys1[$i]], $y[$keys2[$i]], true, $ids[$keys4[$i]]));
+                    $stmt->execute(array($name[$keys5[$i]], $x[$keys1[$i]], $y[$keys2[$i]], true, $ids[$keys4[$i]]));
                 }
                 else{
-                    $stmt->execute(array($x[$keys1[$i]], $y[$keys2[$i]], false, $ids[$keys4[$i]]));
+                    $stmt->execute(array($name[$keys5[$i]], $x[$keys1[$i]], $y[$keys2[$i]], false, $ids[$keys4[$i]]));
                 }
 
             }
             else{
-                $stmt = $db->prepare('INSERT INTO node(conference_id, x_coord, y_coord, isTag) VALUES(?, ?, ?, ?)');
+                $stmt = $db->prepare('INSERT INTO node(conference_id, name, x_coord, y_coord, isTag) VALUES(?, ?, ?, ?, ?)');
 
                 if($tag[$keys3[$i]] == "y"){
-                    $stmt->execute(array($conf_id, $x[$keys1[$i]], $y[$keys2[$i]], true));
+                    $stmt->execute(array($conf_id, $name[$keys5[$i]], $x[$keys1[$i]], $y[$keys2[$i]], true));
                 }
                 else{
-                    $stmt->execute(array($conf_id, $x[$keys1[$i]], $y[$keys2[$i]], false));
+                    $stmt->execute(array($conf_id, $name[$keys5[$i]], $x[$keys1[$i]], $y[$keys2[$i]], false));
                 }
             }
         }
 
     }
+
+    function countTagNodes($conf_id){
+
+        $db = Database::instance()->db();
+        
+
+        $stmt = $db->prepare('SELECT * FROM node WHERE (conference_id = ? AND isTag = 1)');
+        $stmt->execute(array($conf_id));
+
+
+        return $stmt->fetchAll();
+
+    }
+
+    function insertPhotos($node_id, $target){
+
+        $db = Database::instance()->db();
+
+        $stmt = $db->prepare('INSERT INTO image(node_id, IMAGE) VALUES(?, ?)');
+        $stmt->execute(array($node_id, $target));
+
+        return true;
+
+    }
+
+    function removeNodes($conf_id){
+        
+        $db = Database::instance()->db();
+
+        $stmt = $db->prepare('DELETE FROM node WHERE conference_id = ?');
+        $stmt->execute(array($conf_id));
+
+    }
+
+
+
 ?>

@@ -15,7 +15,7 @@
                 /* ------------------------------------- */
 
                 // Variables
-                var html = '<p/><div>x_coordinate: <input type="number" name="x[]" id="child_x_coordinate"/>y_coordinate: <input type="number" name="y[]" id="child_y_coordinate"/>Tag (y/n)? <input type="text" name="tag[]" id="child_tag"/><a href="#" id="remove">x</a></div>';
+                var html = '<p/><div>Name: <input type="text" name="node_name[]" id="child_node_name"/>x_coordinate: <input type="number" name="x[]" id="child_x_coordinate"/>y_coordinate: <input type="number" name="y[]" id="child_y_coordinate"/>Tag (y/n)? <input type="text" name="tag[]" id="child_tag"/><a href="#" id="remove">x</a></div>';
 
                 // Add nodes
                 $("#add").click(function(e){
@@ -92,6 +92,7 @@
                     <p>
                     You must tell us the coordinates of each point of the map in order for us to generate it.
                     </p>
+                    Name: <input type="text" name="node_name[]" id="node_name"/>
                     x_coordinate: <input type="number" name="x[]" id="x_coordinate"/>
                     y_coordinate: <input type="number" name="y[]" id="y_coordinate"/>
                     Tag (y/n)? <input type="text" name="tag[]" id="tag2"/>
