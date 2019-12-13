@@ -10,13 +10,22 @@
         $images = $_FILES['images'];
 
 
+
         // gets all the node ids
         $node_id = $_POST['node_id'];
 
         $i = 0;
         foreach($_FILES['images']['tmp_name'] as $index => $tmpName ){
             
-            $target = "../images/".basename($_FILES['images']['name'][$i]);
+            $n_node_id = $node_id[$i];
+
+            if($_FILES['images']['type'][$i] == "image/jpeg"){
+                $target = "../images/$n_node_id.jpg";
+            }
+            else if($_FILES['images']['type'][$i] == "image/png"){
+                $target = "../images/$n_node_id.png";
+            }
+            
 
             if(move_uploaded_file($tmpName, $target)){
                 
