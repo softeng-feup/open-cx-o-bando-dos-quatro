@@ -13,6 +13,7 @@ class Graph {
 
 
     void addNode(Node node) {
+        print("add");
         print(node);
         _nodes.add(node);
     }

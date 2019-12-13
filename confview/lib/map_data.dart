@@ -76,6 +76,9 @@ class Edge {
     if(vx < 0) ang += pi;
     this.x =  -ang/(2*pi) * 4; //TODO:: Carefull with this value it was hardoded and it is not to be here
     this.y = 0;
+
+    print(_src.getName() + " -> " + _dest.getName() + "  " +  this.x.toString() + "  " + this.y.toString());
+
   }
 
   Node getSrcNode() { return _src; }

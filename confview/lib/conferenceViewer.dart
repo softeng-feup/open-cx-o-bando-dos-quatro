@@ -23,6 +23,7 @@ class _ConferenceViewerState extends State<ConferenceViewer> {
 
   @override
   Widget build(BuildContext context) {
+    print("f");
     return PanoramaView(
         locations: this.widget.locations, location: this.widget.locations[this.widget.startIndex]);
   }

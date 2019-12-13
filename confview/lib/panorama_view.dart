@@ -9,7 +9,8 @@ import 'package:flutter/material.dart';
 class PanoramaView extends StatefulWidget {
   PanoramaView({Key key, this.locations, this.location}) : super(key: key) {
     this.panoramaImage = this.location.image;
-    print(this.locations);
+    //print(this.locations);
+    print("new viewer");
   }
 
   PanoramaViewImage panoramaImage;
@@ -39,10 +40,14 @@ class _PanoramaViewState extends State<PanoramaView> {
 
   GlobalKey imageKey1 = new GlobalKey();
 
-  TextEditingController _searchQuery;
-  bool _isSearching = false;
-  String searchQuery = "Search query";
-  FocusNode _searchFocus;
+  final TextEditingController _filter = new TextEditingController();
+  //final dio = new Dio(); // for http requests
+  String _searchText = "";
+  List names = new List(); // names we get from API
+  List filteredNames = new List(); // names filtered by search text
+  Icon _searchIcon = new Icon(Icons.search);
+  Widget _appBarTitle = new Text( 'Search Example' );
+
 
   @override
   initState() {
@@ -52,10 +57,19 @@ class _PanoramaViewState extends State<PanoramaView> {
     super.initState();
 
     this.delta = 2.455;
-    _searchQuery = new TextEditingController();
-    _searchFocus = FocusNode();
 
     loadImage();
+    _getNames();
+  }
+  void _getNames(){
+    List tempList = new List();
+    for (int i = 0; i < widget.locations.length; i++) {
+      tempList.add(widget.locations[i].getName());
+    }
+    setState(() {
+      names = tempList;
+      filteredNames = names;
+    });
   }
 
   getImageSize(_) {
@@ -133,41 +147,26 @@ class _PanoramaViewState extends State<PanoramaView> {
     return completer.future;
   }
 
-  @override
-  dispose() {
-    _searchFocus.dispose();
-    super.dispose();
-  }
-
-  _startSearch() {
+  void _searchPressed() {
     setState(() {
-      _isSearching = true;
+      if (this._searchIcon.icon == Icons.search) {
+        this._searchIcon = new Icon(Icons.close);
+        this._appBarTitle = new TextField(
+          controller: _filter,
+          decoration: new InputDecoration(
+              prefixIcon: new Icon(Icons.search),
+              hintText: 'Search...'
+          ),
+        );
+      } else {
+        this._searchIcon = new Icon(Icons.search);
+        this._appBarTitle = new Text('Search Example');
+        filteredNames = names;
+        _filter.clear();
+      }
     });
   }
 
-  _stopSearch() {
-    _clearSearchQuery();
-    setState(() {
-      _isSearching = false;
-    });
-  }
-
-  _clearSearchQuery() {
-    print("close search box");
-    setState(() {
-      _searchQuery.clear();
-      _updateSearchQuery("Search query");
-    });
-  }
-
-  _updateSearchQuery(String newQuery) {
-    setState(() {
-      _isSearching = true;
-      searchQuery = newQuery;
-    });
-    print("search query : " + newQuery);
-    shortestPath(widget.locations, newQuery);
-  }
 
   _toggleAppBar() {
     print('toggled the AppBar');
@@ -226,15 +225,11 @@ class _PanoramaViewState extends State<PanoramaView> {
 
       Widget child1;
 
-      print(edges[i].getDestName()+ "->" + edges[i].getAlignment().toString());
+      //print(edges[i].getDestName()+ "->" + edges[i].getAlignment().toString());
 
       if (edges[i].getDestName() == widget.location.path) {
         child1 = Align(
-            alignment: edges[i].getAlignment() * this.delta -
-                _imageAlignment -
-                _imageAlignment -
-                _imageAlignment -
-                _imageAlignment,
+            alignment: -_imageAlignment * this.delta * 1.5 - edges[i].getAlignment() * this.delta ,
             child: FlatButton(
                 onPressed: () {
                   Navigator.pop(context);
@@ -247,11 +242,7 @@ class _PanoramaViewState extends State<PanoramaView> {
                 child: tagContainer));
       } else {
         child1 = Align(
-            alignment: edges[i].getAlignment() * this.delta -
-                _imageAlignment -
-                _imageAlignment -
-                _imageAlignment -
-                _imageAlignment,
+            alignment: -_imageAlignment * this.delta * 1.4 - edges[i].getAlignment() * this.delta ,
             child: FlatButton(
                 onPressed: () {
                   Navigator.pop(context);
@@ -268,11 +259,7 @@ class _PanoramaViewState extends State<PanoramaView> {
       Widget child2;
       if (edges[i].getDestName() == widget.location.path) {
         child2 = Align(
-            alignment: edges[i].getAlignment() * this.delta -
-                _imageAlignment2 -
-                _imageAlignment2 -
-                _imageAlignment2 -
-                _imageAlignment2,
+            alignment: -_imageAlignment2 * this.delta * 1.5 - edges[i].getAlignment() * this.delta,
             child: FlatButton(
                 onPressed: () {
                   Navigator.pop(context);
@@ -285,11 +272,8 @@ class _PanoramaViewState extends State<PanoramaView> {
                 child: tagContainer));
       } else {
         child2 = Align(
-            alignment: edges[i].getAlignment() * this.delta -
-                _imageAlignment2 -
-                _imageAlignment2 -
-                _imageAlignment2 -
-                _imageAlignment2,
+            alignment:
+                -_imageAlignment2 * this.delta * 1.4 - edges[i].getAlignment() * this.delta,
             child: FlatButton(
                 onPressed: () {
                   Navigator.pop(context);
@@ -312,15 +296,6 @@ class _PanoramaViewState extends State<PanoramaView> {
       leading: BackButton(),
       backgroundColor: Colors.transparent,
       elevation: 0.0,
-      title: TextField(
-        controller: _searchQuery,
-        focusNode: _searchFocus,
-        onChanged: _updateSearchQuery,
-        onTap: _startSearch,
-        decoration: InputDecoration(
-          hintText: 'Search...',
-        ),
-      ),
       //actions: _buildActions(),
       /* TODO: create our own AppBar widget
                 backgroundColor: Colors.transparent,
@@ -363,6 +338,7 @@ double dist(Node l1, Node l2) {
 void shortestPath(List<Node> locations, String dest) {
   List<Node> toVisit = new List<Node>();
   bool found = false;
+
   for (int i = 0; i < locations.length; i++) {
     locations[i].visited = false;
     locations[i].distance = double.maxFinite;
@@ -403,7 +379,7 @@ void shortestPath(List<Node> locations, String dest) {
   }
 
   for (int i = 0; i < locations.length; i++) {
-    print(locations[i].getName() + " -> " + locations[i].path);
+    //print(locations[i].getName() + " -> " + locations[i].path);
 
   }
 }
