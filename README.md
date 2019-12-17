@@ -131,8 +131,10 @@ ConfView application shows a graph with images associated to nodes, and if we se
 
 Organizers can edit previous created conferences.
 Our website contains a login and signup feature, so conferences can only be viewed and edited by their organizer.
+
 ### Iteration 5: finish by 20dec
 
+The application is able to display the graphs stored in the database.
 
 ## Test
 ### Test plan: finish by 20dec
