@@ -108,12 +108,12 @@ Last but not least, user stories have been refactored since some of them weren't
 
 
 ## Implementation
-### Iteration 1
-### Iteration 2
-### Iteration 3
-### Iteration 4
-### Iteration 5
+### Iteration 1: finish by 20dec
+### Iteration 2: finish by 20dec
+### Iteration 3: finish by 20dec
+### Iteration 4: finish by 20dec
+### Iteration 5: finish by 20dec
 
 
 ## Test
-### Test plan
+### Test plan: finish by 20dec
