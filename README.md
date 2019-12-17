@@ -125,14 +125,14 @@ It is Now possible to read a NFC tag at our application. We started working on g
 
 Website is ready to create a conference and save data into our database.
 
-### Iteration 4: finish by 20dec
+### Iteration 4: 
 
 ConfView application shows a graph with images associated to nodes, and if we search for a location in the search bar, our app shows the shortest path between the current location to the desired location by highlighting a part of the screen.
 
 Organizers can edit previous created conferences.
 Our website contains a login and signup feature, so conferences can only be viewed and edited by their organizer.
 
-### Iteration 5: finish by 20dec
+### Iteration 5: 
 
 The application is able to display the graphs stored in the database.
 
