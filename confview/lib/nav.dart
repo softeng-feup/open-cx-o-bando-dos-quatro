@@ -86,7 +86,9 @@ class _MapScreenState extends State<MapScreen> {
   
   initState() {
     super.initState();
+
     _getNames();
+
     _filter.addListener(() {
       if (_filter.text.isEmpty) {
         setState(() {

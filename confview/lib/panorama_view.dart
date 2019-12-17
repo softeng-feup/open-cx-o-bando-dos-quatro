@@ -40,13 +40,10 @@ class _PanoramaViewState extends State<PanoramaView> {
 
   GlobalKey imageKey1 = new GlobalKey();
 
-  final TextEditingController _filter = new TextEditingController();
-  //final dio = new Dio(); // for http requests
-  String _searchText = "";
-  List names = new List(); // names we get from API
-  List filteredNames = new List(); // names filtered by search text
-  Icon _searchIcon = new Icon(Icons.search);
-  Widget _appBarTitle = new Text( 'Search Example' );
+  TextEditingController _searchQuery;
+  bool _isSearching = false;
+  String searchQuery = "Search query";
+  FocusNode _searchFocus;
 
 
   @override
@@ -56,21 +53,15 @@ class _PanoramaViewState extends State<PanoramaView> {
 
     super.initState();
 
+    _searchQuery = new TextEditingController();
+    _searchFocus = FocusNode();
+
     this.delta = 2.455;
 
     loadImage();
-    _getNames();
+
   }
-  void _getNames(){
-    List tempList = new List();
-    for (int i = 0; i < widget.locations.length; i++) {
-      tempList.add(widget.locations[i].getName());
-    }
-    setState(() {
-      names = tempList;
-      filteredNames = names;
-    });
-  }
+
 
   getImageSize(_) {
     RenderBox renderBoxRed = imageKey1.currentContext.findRenderObject();
@@ -147,26 +138,35 @@ class _PanoramaViewState extends State<PanoramaView> {
     return completer.future;
   }
 
-  void _searchPressed() {
+  _startSearch() {
     setState(() {
-      if (this._searchIcon.icon == Icons.search) {
-        this._searchIcon = new Icon(Icons.close);
-        this._appBarTitle = new TextField(
-          controller: _filter,
-          decoration: new InputDecoration(
-              prefixIcon: new Icon(Icons.search),
-              hintText: 'Search...'
-          ),
-        );
-      } else {
-        this._searchIcon = new Icon(Icons.search);
-        this._appBarTitle = new Text('Search Example');
-        filteredNames = names;
-        _filter.clear();
-      }
+      _isSearching = true;
     });
   }
 
+  _stopSearch() {
+    _clearSearchQuery();
+    setState(() {
+      _isSearching = false;
+    });
+  }
+
+  _clearSearchQuery() {
+    print("close search box");
+    setState(() {
+      _searchQuery.clear();
+      _updateSearchQuery("Search query");
+    });
+  }
+
+  _updateSearchQuery(String newQuery) {
+    setState(() {
+      _isSearching = true;
+      searchQuery = newQuery;
+    });
+    print("search query : " + newQuery);
+    shortestPath(widget.locations, newQuery);
+  }
 
   _toggleAppBar() {
     print('toggled the AppBar');
@@ -186,6 +186,7 @@ class _PanoramaViewState extends State<PanoramaView> {
         ),
       );
     }
+
 
     List<Widget> stackChildren = [
       Container(
@@ -296,6 +297,15 @@ class _PanoramaViewState extends State<PanoramaView> {
       leading: BackButton(),
       backgroundColor: Colors.transparent,
       elevation: 0.0,
+      title: TextField(
+        controller: _searchQuery,
+        focusNode: _searchFocus,
+        onChanged: _updateSearchQuery,
+        onTap: _startSearch,
+        decoration: InputDecoration(
+          hintText: 'Search...',
+        ),
+      ),
       //actions: _buildActions(),
       /* TODO: create our own AppBar widget
                 backgroundColor: Colors.transparent,
@@ -303,6 +313,7 @@ class _PanoramaViewState extends State<PanoramaView> {
                 */
     );
   }
+
 
   // FIXME: for now the values are hard coded
   // TODO: figure out a way of getting the size of the image and relating it to the alignment
