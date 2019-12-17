@@ -46,7 +46,7 @@ Thank you!
 ## Requirements
 ### Use case diagram
 
-![use case diagram](./resources/use_case.png)
+![use case diagram](./resources/use-case.png)
 
 In the use-case diagram above we can see two main possibilities of usage of our product: Setting up a ConfView environment for your conference or using the App's capabilities to guide you during a conference.
 
