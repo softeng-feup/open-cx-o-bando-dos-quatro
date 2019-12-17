@@ -99,3 +99,9 @@ The deployment UML diagram above documents high-level physical structures of the
 
 
 ### Prototype
+
+At the end the o iteration 0, none of the user stories were fully implemented. Our main goal was to discuss between React Native or Flutter as a framework. We researched the differences, advantages and disadvantages of each one and we thought the best option would be Flutter. We also opted for Flutter since most groups are working with this framework and therefore it would be easier to exchange ideas and solve problems between groups.
+
+At this iteration, Logical and Physical architecture diagram, Domain Model and Use Case Diagram were done, as all the Business Modeling. 
+
+Last but not least, user stories have been refactored since some of them weren't testable or were to long.
