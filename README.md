@@ -46,7 +46,7 @@ Thank you!
 ## Requirements
 ### Use case diagram
 
-![use case diagram](./resources/use_cases.png)
+![use case diagram](./resources/use_case.png)
 
 In the use-case diagram above we can see two main possibilities of usage of our product: Setting up a ConfView environment for your conference or using the App's capabilities to guide you during a conference.
 
@@ -87,7 +87,7 @@ The diagram shows all locations have an associated image, we can do many transit
 
 ### Logical Architecture
 
-![logical architecture diagram](./resources/esof_logical_architecture.png)
+![logical architecture diagram](./resources/Esof_logical_architecture.png)
 
 The UML diagram above represents the logical architecture of our code divided essentially in 2 big parts, an App and a Website. Both connect to a server where all information loaded at the website will be processed and then saved into a database. In the opposite way, an app will display the correct information a user needs, depending on our database.
 
@@ -105,7 +105,3 @@ At the end the o iteration 0, none of the user stories were fully implemented. O
 At this iteration, Logical and Physical architecture diagram, Domain Model and Use Case Diagram were done, as all the Business Modeling. 
 
 Last but not least, user stories have been refactored since some of them weren't testable or were to long.
-
-## Test
-
-### Test plan
