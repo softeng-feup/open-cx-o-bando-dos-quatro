@@ -1,6 +1,8 @@
 <?php
 
     include_once("../database/conference.php");
+    include_once('../includes/session.php');
+
 
     $username = $_POST['username'];
     $password = $_POST['password'];
@@ -16,9 +18,13 @@
         header("Location: ../src/draw_signup.php");
     }
 
-    insert_user($username, $password);
-
-    // swap website.html for Gustavo's page
-    header("Location: ../src/website.html");
+    if(insert_user($username, $password)){
+        $_SESSION['username'] = $username;
+        header("Location: ../src/website.php");
+    }
+    else{
+        header("Location: ../src/draw_signup.php");
+    }
+    
 
 ?>

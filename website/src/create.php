@@ -3,6 +3,7 @@
         <title> ConfView Creator </title>
         <meta charset="UTF_8">
         <script type="text/javascript" src="jquery-3.2.1.min.js"></script>
+        <link href="../css/style.css" rel="stylesheet">
 
         <!-- javascript -->
         <script>
@@ -14,7 +15,7 @@
                 /* ------------------------------------- */
 
                 // Variables
-                var html = '<p/><div>x_coordinate: <input type="number" name="x[]" id="child_x_coordinate"/>y_coordinate: <input type="number" name="y[]" id="child_y_coordinate"/>Tag (y/n)? <input type="text" name="tag[]" id="child_tag"/><a href="#" id="remove">x</a></div>';
+                var html = '<p/><div>Name: <input type="text" name="node_name[]" id="child_node_name"/>x_coordinate: <input type="number" name="x[]" id="child_x_coordinate"/>y_coordinate: <input type="number" name="y[]" id="child_y_coordinate"/>Tag (y/n)? <input type="text" name="tag[]" id="child_tag"/><a href="#" id="remove">x</a></div>';
 
                 // Add nodes
                 $("#add").click(function(e){
@@ -64,19 +65,34 @@
         <section id="form">
             <form action="../actions/addConfInfo.php" method="POST">
 
-                <label></label>Conference Name: <input type="text" name="name"/></label>
-                <label></label>Conference Code: <input type="number" name="code"/></label>
-                <label>Start Date<input id="check-in" type="date" value="<?php echo date('Y-m-d');?>"></label>
-                <label>End Date<input id="check-out" type="date" value="<?php echo date('Y-m-d', strtotime('tomorrow'));?>"></label>
-                
+                <p>
+                <label>Conference Name: <input type="text" name="name" id="name"/></label>
+                <label>Conference Code: <input type="number" name="code" id="code"/></label>
+                <label>Start Date<input name="check-in" type="date" value="<?php echo date('Y-m-d');?>"></label>
+                <label>End Date<input name="check-out" type="date" value="<?php echo date('Y-m-d', strtotime('tomorrow'));?>"></label>
+                </p>
+
+                <p>
+                    <label>Address: <input type="text" name="address" id="address"/></label>
+                    <label>City: <input type="text" name="city" id="city"/></label>
+                </p>
+
+                <p>
+                    <label>Description: <textarea name="description" rows="3" cols="30">Insert a brief description about your conference</textarea></label>
+                </p>
+
                 <br>
                 <br>
 
                 <!-- container for the nodes -->
-                Here you should fill out information about each node of the conference venue.
-                <br>
-                You must tell us the coordinates of each point of the map in order for us to generate it.
                 <div id="container">
+                    <p>
+                    Here you should fill out information about each node of the conference venue.
+                    </p>
+                    <p>
+                    You must tell us the coordinates of each point of the map in order for us to generate it.
+                    </p>
+                    Name: <input type="text" name="node_name[]" id="node_name"/>
                     x_coordinate: <input type="number" name="x[]" id="x_coordinate"/>
                     y_coordinate: <input type="number" name="y[]" id="y_coordinate"/>
                     Tag (y/n)? <input type="text" name="tag[]" id="tag2"/>
@@ -89,8 +105,10 @@
                 <br>
 
                 <!-- container for the edges -->
-                Here you should tell us which nodes are connected. The id of each node is a reference to the way they were input before (the id of the first node is 1, of the second node is 2, ...).
                 <div id="edge_container">
+                    <p>
+                    Here you should tell us which nodes are connected. The id of each node is a reference to the way they were input before (the id of the first node is 1, of the second node is 2, ...).
+                    </p>
                     Node id: <input type="number" name="first_id[]" id="id1"/>
                     connects to
                     Node id: <input type="number" name="second_id[]" id="id2"/>
@@ -100,7 +118,7 @@
                 </div>
 
                 <br>
-                <input type="submit" name="submit"/>
+                <input type="submit" value="Submit"/>
             
             </form>
         </section>

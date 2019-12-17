@@ -1,6 +1,15 @@
 <?php
     
+    include_once('../includes/session.php');
+
+    /*
+    if(isset($_SESSION['username'])){
+        die(header("Location: ../src/website.php"));
+    }
+    */
+
 ?>
+
 <h1>
     SIGN UP
 </h1>
