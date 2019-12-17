@@ -111,13 +111,26 @@ Last but not least, user stories have been refactored since some of them weren't
 ### Iteration 1: 
 
 Started using Flutter aplication to show Photospheres and Panoramic Photos.
+
 Started to think about our own database to keep our data to be accessed by the App.
 
 ### Iteration 2: 
 
+At flutter application it is now possible to add a new Conference, delete it and show all the conferences.
 
-### Iteration 3: finish by 20dec
+Finished database and started website creation and connection of the site with database. 
+
+### Iteration 3: 
+It is Now possible to read a NFC tag at our application. We started working on graphs to show the conferences map.
+
+Website is ready to create a conference and save data into our database.
+
 ### Iteration 4: finish by 20dec
+
+ConfView application shows a graph with images associated to nodes, and if we search for a location in the search bar, our app shows the shortest path between the current location to the desired location by highlighting a part of the screen.
+
+Organizers can edit previous created conferences.
+Our website contains a login and signup feature, so conferences can only be viewed and edited by their organizer.
 ### Iteration 5: finish by 20dec
 
 
