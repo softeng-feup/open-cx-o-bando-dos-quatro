@@ -108,8 +108,14 @@ Last but not least, user stories have been refactored since some of them weren't
 
 
 ## Implementation
-### Iteration 1: finish by 20dec
-### Iteration 2: finish by 20dec
+### Iteration 1: 
+
+Started using Flutter aplication to show Photospheres and Panoramic Photos.
+Started to think about our own database to keep our data to be accessed by the App.
+
+### Iteration 2: 
+
+
 ### Iteration 3: finish by 20dec
 ### Iteration 4: finish by 20dec
 ### Iteration 5: finish by 20dec
