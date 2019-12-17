@@ -105,3 +105,7 @@ At the end the o iteration 0, none of the user stories were fully implemented. O
 At this iteration, Logical and Physical architecture diagram, Domain Model and Use Case Diagram were done, as all the Business Modeling. 
 
 Last but not least, user stories have been refactored since some of them weren't testable or were to long.
+
+## Test
+
+### Test plan
