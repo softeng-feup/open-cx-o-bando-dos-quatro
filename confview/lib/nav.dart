@@ -15,7 +15,11 @@ class MapScreen extends StatefulWidget {
 
   //List<Node> locations = new List<Node>();
 
-  Graph graph = new Graph();
+  static Graph graph = new Graph();
+
+  static int currentConference = -1;
+
+  static final _formKey = GlobalKey<FormState>();
 
   MapScreen({Key key, this.conferenceId}) : super(key: key) {
     getConferenceInfo();
@@ -26,6 +30,12 @@ class MapScreen extends StatefulWidget {
 
   //TODO:: get info from database
   void getConferenceInfo() {
+
+    if(currentConference == this.conferenceId){
+      return;
+    }
+    currentConference = this.conferenceId;
+    graph = new Graph();
 
     /*graph.addNode(Node(0,"Praia","https://upload.wikimedia.org/wikipedia/commons/3/3e/Croatia_Ribarica_beach_panorama_360.jpg",0, 0));
     graph.addNode(Node(1,"India" ,"https://l13.alamy.com/360/PN0HYA/ganesh-pol-amber-palace-rajasthan-india-PN0HYA.jpg",  90, 45));
@@ -57,54 +67,105 @@ class MapScreen extends StatefulWidget {
     print('fecthed graph');
 
   }
+
+
+
 }
 
 class _MapScreenState extends State<MapScreen> {
-  TextEditingController _searchQuery;
-  bool _isSearching = false;
-  String searchQuery = "Search query";
-  FocusNode _searchFocus;
+
+
+  final TextEditingController _filter = new TextEditingController();
+  String _searchText = "";
+  List names = new List(); // names we get from API
+  List filteredNames = new List(); // names filtered by search text
+  Icon _searchIcon = new Icon(Icons.search);
+  Widget _appBarTitle = new Text( 'Search Example' );
+  bool isSearching = false;
+
   
   initState() {
     super.initState();
-    _searchQuery = new TextEditingController();
-    _searchFocus = FocusNode();
-  }
-
-  @override
-  dispose() {
-    _searchFocus.dispose();
-    super.dispose();
-  }
-
-  _startSearch() {
-    setState(() {
-      _isSearching = true;
+    _getNames();
+    _filter.addListener(() {
+      if (_filter.text.isEmpty) {
+        setState(() {
+          _searchText = "";
+          filteredNames = names;
+        });
+      } else {
+        setState(() {
+          _searchText = _filter.text;
+        });
+      }
     });
   }
 
-  _stopSearch() {
-    _clearSearchQuery();
+  void _getNames()  {
+
     setState(() {
-      _isSearching = false;
+      names = MapScreen.graph.getNodes();
+      filteredNames = names;
+    });
+    print(names);
+  }
+
+  void _searchPressed() {
+    setState(() {
+      if (this._searchIcon.icon == Icons.search) {
+        this._searchIcon = new Icon(Icons.close);
+        this._appBarTitle = new TextField(
+          controller: _filter,
+          decoration: new InputDecoration(
+              prefixIcon: new Icon(Icons.search),
+              hintText: 'Search...'
+          ),
+        );
+        isSearching = true;
+      } else {
+        this._searchIcon = new Icon(Icons.search);
+        this._appBarTitle = new Text('Search Example');
+        filteredNames = names;
+        _filter.clear();
+        isSearching = false;
+      }
     });
   }
 
-  _clearSearchQuery() {
-    print("close search box");
-    setState(() {
-      _searchQuery.clear();
-      _updateSearchQuery("Search query");
-    });
+  Widget _buildList() {
+    for (int i = 0; i < filteredNames.length; i++) {
+      filteredNames[i].selected = false;
+    }
+    if (_searchText.isNotEmpty) {
+      List tempList = new List();
+      for (int i = 0; i < filteredNames.length; i++) {
+        if (filteredNames[i].getName().toLowerCase().contains(_searchText.toLowerCase())) {
+          tempList.add(filteredNames[i]);
+          filteredNames[i].selected = true;
+        }
+      }
+      filteredNames = tempList;
+    }
+    
+    return ListView.builder(
+      itemCount: names == null ? 0 : filteredNames.length,
+      itemBuilder: (BuildContext context, int index) {
+        return new ListTile(
+          title: Text(filteredNames[index].getName()),
+          onTap: () {
+            print(filteredNames[index].getName());
+            _searchPressed();
+            for (int i = 0; i < filteredNames.length; i++) {
+                filteredNames[i].selected = false;
+            }
+            filteredNames[index].selected = true;
+            isSearching = false;
+          },
+        );
+      },
+    );
   }
 
-  _updateSearchQuery(String newQuery) {
-    setState(() {
-      _isSearching = true;
-      searchQuery = newQuery;
-    });
-    print("search query : " + newQuery);
-  }
 
   @override
   Widget build(BuildContext context) {
@@ -122,23 +183,15 @@ class _MapScreenState extends State<MapScreen> {
 
     return Scaffold(
       appBar: AppBar(
-        leading: _isSearching ? _buildBackButton() : null,
-        title: TextField(
-          controller: _searchQuery,
-          focusNode: _searchFocus,
-          onChanged: _updateSearchQuery,
-          onTap: _startSearch,
-          decoration: InputDecoration(
-            hintText: 'Search...',
-          ),
-        ),
+        leading:  _buildBackButton(),
+        title: this._appBarTitle,
         actions: _buildActions(),
         /* TODO: create our own AppBar widget
                 backgroundColor: Colors.transparent,
                 elevation: 0.0,
                 */
       ),
-      body: _isSearching ? _buildSuggestions() : _buildMap(),
+      body: isSearching ? _buildList() :_buildMap(),
       floatingActionButton: _getFAB(),
     );
   }
@@ -159,7 +212,7 @@ class _MapScreenState extends State<MapScreen> {
             onTap: () {
               Navigator.of(context).push(MaterialPageRoute(
                   builder: (context) => ConferenceViewer(
-                        locations: widget.graph.getNodes(), startIndex: 0,
+                        locations: MapScreen.graph.getNodes(), startIndex: 0,
                       )));
             },
             label: 'GO',
@@ -186,14 +239,11 @@ class _MapScreenState extends State<MapScreen> {
   }
 
 
-  Widget _buildSuggestions() {
-    print(searchQuery);
-    return Center(child: Text('Suggestions go here : ' + searchQuery));
-  }
+
 
 
   Widget _buildMap() {
-      return GraphDraw(graph: widget.graph,);
+      return GraphDraw(graph: MapScreen.graph,);
   }
 
 
@@ -217,34 +267,27 @@ class _MapScreenState extends State<MapScreen> {
 
   _readTag() {
     Navigator.of(context)
-        .push(MaterialPageRoute(builder: (context) => NfcScan(locations: widget.graph.getNodes())));
+        .push(MaterialPageRoute(builder: (context) => NfcScan(locations: MapScreen.graph.getNodes())));
   }
 
   List<Widget> _buildActions() {
-    if (!_isSearching)
       return <Widget>[
         IconButton(
           icon: const Icon(Icons.search),
-          onPressed: () {
-            FocusScope.of(context).requestFocus(_searchFocus);
-            _startSearch();
-          },
+          onPressed: _searchPressed,
         ),
       ];
 
-    return <Widget>[
-      IconButton(
-        icon: const Icon(Icons.clear),
-        onPressed: _clearSearchQuery,
-      ),
-    ];
   }
 
   Widget _buildBackButton() {
-    return IconButton(
-      icon: Icon(Icons.arrow_back),
-      onPressed: _stopSearch,
-      // TODO: probably the focus will need to be changed here
-    );
+    return BackButton();
   }
+
+  @override
+  void dispose() {
+    MapScreen.currentConference = -1;
+    super.dispose();
+  }
+
 }

@@ -14,6 +14,8 @@ class Node {
   double distance = double.maxFinite;
   String path = "";
 
+  bool selected = false;
+
   Node(this._id,this.name, String imageUrl, double x, double y) {
     image = new PanoramaViewImage(imageUrl);
     _position = Offset(x, y);
@@ -77,7 +79,7 @@ class Edge {
     this.x =  -ang/(2*pi) * 4; //TODO:: Carefull with this value it was hardoded and it is not to be here
     this.y = 0;
 
-    print(_src.getName() + " -> " + _dest.getName() + "  " +  this.x.toString() + "  " + this.y.toString());
+    //print(_src.getName() + " -> " + _dest.getName() + "  " +  this.x.toString() + "  " + this.y.toString());
 
   }
 

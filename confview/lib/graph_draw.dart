@@ -167,6 +167,8 @@ class GraphPainter extends CustomPainter {
 
         final paintNormalNode = Paint();
         paintNormalNode.color = Colors.orangeAccent;
+        final paintSelectedNode = Paint();
+        paintSelectedNode.color = Colors.redAccent;
 
         for (Edge edge in _graph.getEdges()) {
             Node srcNode = edge.getSrcNode();
@@ -187,7 +189,9 @@ class GraphPainter extends CustomPainter {
             Offset nodeOffset = node.getPosition() - _screenOffset + _offset;
             nodeOffset *= _scale;
             nodeOffset += _screenOffset;
-            canvas.drawCircle(nodeOffset, 15, paintNormalNode);
+            if(node.selected)
+                canvas.drawCircle(nodeOffset, 15, paintSelectedNode);
+            else canvas.drawCircle(nodeOffset, 15, paintNormalNode);
         }
         for (Node node in _graph.getNodes()) {
 
