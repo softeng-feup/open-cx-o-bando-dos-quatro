@@ -11,7 +11,7 @@ import 'package:flutter_speed_dial/flutter_speed_dial.dart';
 import 'nfc.dart';
 
 class MapScreen extends StatefulWidget {
-  final int conferenceId;
+  int conferenceId;
 
   //List<Node> locations = new List<Node>();
 
@@ -83,12 +83,21 @@ class _MapScreenState extends State<MapScreen> {
   Widget _appBarTitle = new Text( 'Search Example' );
   bool isSearching = false;
 
+  GraphDraw _graphDraw;
   
   initState() {
     super.initState();
 
+    _graphDraw = GraphDraw(graph: MapScreen.graph,conferenceId : this.widget.conferenceId);
+
+    print('again');
+
     _getNames();
 
+    filterAddListener();
+  }
+
+  filterAddListener(){
     _filter.addListener(() {
       if (_filter.text.isEmpty) {
         setState(() {
@@ -98,6 +107,7 @@ class _MapScreenState extends State<MapScreen> {
       } else {
         setState(() {
           _searchText = _filter.text;
+          filteredNames = names;
         });
       }
     });
@@ -171,18 +181,6 @@ class _MapScreenState extends State<MapScreen> {
 
   @override
   Widget build(BuildContext context) {
-    Widget floatingActionButton1 = FloatingActionButton(
-      child: Icon(Icons.nfc),
-      tooltip: 'Read NFC tag',
-      onPressed: _readTag,
-    );
-
-    Widget floatingActionButton2 = FloatingActionButton(
-      child: Icon(Icons.airplay),
-      tooltip: 'Read NFC tag',
-      onPressed: _readTag,
-    );
-
     return Scaffold(
       appBar: AppBar(
         leading:  _buildBackButton(),
@@ -245,7 +243,7 @@ class _MapScreenState extends State<MapScreen> {
 
 
   Widget _buildMap() {
-      return GraphDraw(graph: MapScreen.graph,);
+      return _graphDraw;
   }
 
 
@@ -283,7 +281,21 @@ class _MapScreenState extends State<MapScreen> {
   }
 
   Widget _buildBackButton() {
-    return BackButton();
+    return
+      IconButton(
+        icon: const Icon(Icons.arrow_back),
+        onPressed: () {
+          if(isSearching){
+            _searchPressed();
+            setState(() {
+
+            });
+          }else{
+            Navigator.of(context)
+                .pop();
+          }
+        },
+      );
   }
 
   @override

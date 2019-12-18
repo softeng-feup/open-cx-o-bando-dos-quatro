@@ -76,7 +76,7 @@ class _HomePageState extends State<HomePage> {
         onTap: () {
           // TODO: this is temporary, change the parameter so that the map screen is built for the correct conference
           Navigator.of(context).push(MaterialPageRoute(
-              builder: (context) => MapScreen(conferenceId: 0)));
+              builder: (context) => MapScreen(conferenceId: index)));
         });
   }
 

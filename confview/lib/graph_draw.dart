@@ -16,9 +16,12 @@ import 'conferenceViewer.dart';
 
 class GraphDraw extends StatefulWidget {
 
-    GraphDraw ({Key key , this.graph}) : super(key: key);
+    GraphDraw ({Key key , this.graph,this.conferenceId}) : super(key: key){
+        print('asfg');
+    }
 
     final Graph graph;
+    final int conferenceId;
 
     @override
     _GraphDrawState createState() => _GraphDrawState();
@@ -27,19 +30,37 @@ class GraphDraw extends StatefulWidget {
 class _GraphDrawState extends State<GraphDraw> {
 
     //Graph _graph = new Graph();
-    bool _addScreenOffset = true;
+    static bool _addScreenOffset = true;
 
-    ui.Image backgroundImage;
+    static ui.Image backgroundImage;
+
+    static int currentConference = -1;
+    int conferenceId;
+
+    static Offset _graphHorizontalOffset;
+    static Offset _graphVerticalOffset;
+    static Offset _graphOffset;
+    static double _scale;
     
     @override
     void initState() {
         super.initState();
-        //_buildGraph();
-        backgroundImage = null;
+        print(currentConference);
+        if(this.widget.conferenceId == currentConference){
+            return;
+        }else{
+            currentConference = this.widget.conferenceId;
+        }
+        _addScreenOffset = true;
+        _graphHorizontalOffset = Offset(0.0, 0.0);
+        _graphVerticalOffset = Offset(0.0, 0.0);
+        _graphOffset = Offset(0.0, 0.0);
+        _scale = 1;
 
 //        Image tempImage = Image.network("http://www.loc.gov/static/portals/visit/maps-and-floor-plans/images/campus-map.jpg");
         //Uri uri = Uri.dataFromString("http://www.loc.gov:anonious/static/portals/visit/maps-and-floor-plans/images/");
         //http://fcrevit.org/merrifield/images/MosaicMap022516.png
+
         try {
             Uri uri = Uri.http("fcrevit.org", "/merrifield/images/");
             NetworkAssetBundle(uri).load("MosaicMap022516.png").then((bd) {
@@ -50,6 +71,8 @@ class _GraphDrawState extends State<GraphDraw> {
                             (frameInfo) {
                             backgroundImage = frameInfo.image;
                             print("bkImage instantiated: $backgroundImage");
+                            if(!mounted)
+                                return;
                             setState(() {});
                         }
                     );
@@ -60,6 +83,11 @@ class _GraphDrawState extends State<GraphDraw> {
             backgroundImage = null;
         }
 
+    }
+
+    @override
+    dispose(){
+        super.dispose();
     }
 
     // TODO: this is a testing function to build a graph
@@ -73,15 +101,11 @@ class _GraphDrawState extends State<GraphDraw> {
         _graph.addEdge(1, 3);
     }*/
     // offset in pixels
-    Offset _graphHorizontalOffset = Offset(0.0, 0.0);
-    Offset _graphVerticalOffset = Offset(0.0, 0.0);
-    Offset _graphOffset = Offset(0.0, 0.0);
-    double _scale = 1;
 
     @override 
     Widget build(BuildContext context) {
-        
-        if (_addScreenOffset) { 
+
+        if (_addScreenOffset) {
             _graphOffset += Offset(MediaQuery.of(context).size.width / 2.0, MediaQuery.of(context).size.height / 2.0 - kToolbarHeight);
             _addScreenOffset = false;
         }
