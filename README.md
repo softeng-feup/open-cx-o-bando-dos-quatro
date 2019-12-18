@@ -150,5 +150,5 @@ Can be seen in our board, associated with respective user story.
 
 
 Can be seen in our board, associated with respective user story.
-* **Trello** :[View](https://trello.com/b/m0GrAXGv/user-stories-esof) 
+* **Trello** : [View](https://trello.com/b/m0GrAXGv/user-stories-esof) 
 
