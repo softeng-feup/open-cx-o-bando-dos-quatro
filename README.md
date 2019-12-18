@@ -139,7 +139,16 @@ Our website contains a login and signup feature, so conferences can only be view
 The application is able to display the graphs stored in the database.
 
 ## Test
-### Test plan: finish by 20dec
+
+### Test Plan:
+
+To understand if we have a viable product we need a need a way to validate the features we are selling. Our product deals with navigation on a conference and the ability for conference organizers to map their own venue, with very little costs, so with unit testing this becomes very difficult. However, acceptance testing using **Gherkin** is very useful to prove we have found solutions to the problems specified on our **User Stories**. You can find these tests on our [Trello] (https://trello.com/b/m0GrAXGv/user-stories-esof) board.
+
+On the other hand, some tests can be deducted easily. 
+* When a new conference is added to the **website** its information should accessible on the **App**. We are talking about the nodes that mark each point in the graph, its edges, and the Photosphere's display when a user read an **NFC** tag.
+* When opening the **App** and looking for the conference the user's attending, the map and further information should only be accessible if they enter the correct conference code.
+* When reading an **NFC** tag the corresponding Photosphere should be displayed and capable of being "dragged" for complete 360º experience.
+* On the **website** if an organizer wants to create a new conference map or edit an existing one he should firstly input its credentials (username and password) to ensure that only he is allowed to make changes.
 
 ## Mockups
 
