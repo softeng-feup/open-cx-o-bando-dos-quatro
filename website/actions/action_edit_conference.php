@@ -9,7 +9,7 @@
     }
 
 
-    $id = $_POST['conf_id'];
+    $id = $_GET['id'];
     $new_name = $_POST['name'];
     $new_code = $_POST['code'];
     $new_start = $_POST['check-in'];
@@ -27,6 +27,15 @@
 
     $first_id = $_POST['first_id'];
     $second_id = $_POST['second_id'];
+
+    $photos = false;
+
+    for($i = 0; $i < count($tag); $i++){
+        if($tag[$i] == 'y'){
+            $photos= true;
+            break;
+        }
+    }
 
    
 
@@ -48,22 +57,26 @@
     }
 
     
+    if(count($x) >= 2 && count($y) >= 2){
 
-    update_conference_info($new_name, $new_code, $new_start, $new_end, $new_address, $new_city, $new_description, $id);
-
-
-    $last_node = getLastNode();
+        update_conference_info($new_name, $new_code, $new_start, $new_end, $new_address, $new_city, $new_description, $id);
 
 
-    update_conference_nodes($names, $x, $y, $tag, $ids, $id);
+        $last_node = getLastNode();
+        update_conference_nodes($names, $x, $y, $tag, $ids, $id);
+        addEdges($first_id, $second_id, $last_node);
 
 
-    
-    addEdges($first_id, $second_id, $last_node);
-
-    $_SESSION['messages'][] = array('type' => 'error', 'content' => 'Conference updated');
-    header("Location: ../src/photos.php?id=".$id);
-
+        if($photos){
+            header("Location: ../src/photos.php?id=".$id);
+        }
+        else{
+            header("Location: ../src/website.php");
+        }
+    }
+    else{
+        header("Location: ../src/edit-conference.php?id=$id");
+    }
 
 
 ?>

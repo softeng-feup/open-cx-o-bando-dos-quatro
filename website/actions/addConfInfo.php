@@ -27,8 +27,17 @@ $conf_end = $_POST['check-out'];
 $conf_address = $_POST['address'];
 $conf_city = $_POST['city'];
 $conf_description = $_POST['description'];
-
+print_r($tag);
 $user_id = get_user_id($_SESSION['username']);
+
+$photos = false;
+
+for($i = 0; $i < count($tag); $i++){
+    if($tag[$i] == 'y'){
+        $photos= true;
+        break;
+    }
+}
 
 
 if($conf_name && $conf_code){
@@ -46,7 +55,13 @@ if($conf_name && $conf_code){
                 addEdges($first_id, $second_id, $last_node);
 
                 $conf_id = getConfID($conf_name);
-                header("Location: ../src/photos.php?id=".$conf_id);
+
+                if($photos){
+                    header("Location: ../src/photos.php?id=".$conf_id);
+                }
+                else{
+                    header("Location: ../src/website.php");
+                }
                }
                else{
                 $_SESSION['messages'][] = array('type' => 'error', 'content' => 'Please input at least 2 nodes in the conference...');
