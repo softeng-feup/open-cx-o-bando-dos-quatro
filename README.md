@@ -20,6 +20,8 @@ You can find here detailed about the (sub)product, hereby mentioned as module, f
 * [Test](#Test)
 * [Configuration and change management](#Configuration-and-change-management)
 * [Project management](#Project-management)
+* [Mockups](#Mockups)
+* [Acceptance Tests](#Acceptance-tests)
 
 So far, contributions are exclusively made by the initial team, but we hope to open them to the community, in all areas and topics: requirements, technologies, development, experimentation, testing, etc.
 
@@ -138,3 +140,7 @@ The application is able to display the graphs stored in the database.
 
 ## Test
 ### Test plan: finish by 20dec
+
+## Mockups
+
+## Acceptance Tests
