@@ -24,7 +24,8 @@ CREATE TABLE conference (
     enddate             DATE    NOT NULL ON CONFLICT ABORT,
     addr                VARCHAR NOT NULL ON CONFLICT ABORT,
     city                VARCHAR NOT NULL ON CONFLICT ABORT,
-    descr               VARCHAR NOT NULL ON CONFLICT ABORT         
+    descr               VARCHAR NOT NULL ON CONFLICT ABORT,
+    version             INTEGER       
 );
 
 CREATE TABLE node (

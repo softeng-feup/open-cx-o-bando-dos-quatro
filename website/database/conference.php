@@ -49,8 +49,10 @@
 
         $db = Database::instance()->db();
 
-        $stmt = $db->prepare('INSERT INTO conference(user_id, confName, code, startdate, enddate, addr, city, descr) VALUES(?, ?, ?, ?, ?, ?, ?, ?)');
-        $stmt->execute(array($user_id, $conf_name, $conf_code, $conf_start, $conf_end, $conf_address, $conf_city, $conf_description));
+        $version = 1;
+
+        $stmt = $db->prepare('INSERT INTO conference(user_id, confName, code, startdate, enddate, addr, city, descr, version) VALUES(?, ?, ?, ?, ?, ?, ?, ?, ?)');
+        $stmt->execute(array($user_id, $conf_name, $conf_code, $conf_start, $conf_end, $conf_address, $conf_city, $conf_description, $version));
        
      
     }
@@ -222,8 +224,11 @@
     function update_conference_info($new_name, $new_code, $new_start, $new_end, $new_address, $new_city, $new_description, $id){
         $db = Database::instance()->db();
 
-        $stmt = $db->prepare('UPDATE conference SET (confName, code, startdate, enddate, addr, city, descr) = (?, ?, ?, ?, ?, ?, ?) WHERE id = ?');
-        $stmt->execute(array($new_name, $new_code, $new_start, $new_end, $new_address, $new_city, $new_description, $id));
+        $old_version = get_conference_version($id);
+        $new_version = $old_version['version'] + 1;
+
+        $stmt = $db->prepare('UPDATE conference SET (confName, code, startdate, enddate, addr, city, descr, version) = (?, ?, ?, ?, ?, ?, ?, ?) WHERE id = ?');
+        $stmt->execute(array($new_name, $new_code, $new_start, $new_end, $new_address, $new_city, $new_description,$new_version, $id));
     
     }
   
@@ -319,6 +324,16 @@
         $stmt = $db->prepare('DELETE FROM node WHERE conference_id = ?');
         $stmt->execute(array($conf_id));
 
+    }
+
+    function get_conference_version($conf_id){
+
+        $db = Database::instance()->db();
+        $stmt = $db->prepare('SELECT version FROM conference WHERE id=?');
+        $stmt->execute(array($conf_id));
+
+
+        return $stmt->fetch();
     }
 
 
