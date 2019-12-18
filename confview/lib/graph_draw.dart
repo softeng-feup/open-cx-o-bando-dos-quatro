@@ -1,8 +1,13 @@
+import 'dart:convert';
+import 'dart:convert' as prefix1;
+import 'dart:ffi';
 import 'dart:math';
+import 'dart:typed_data';
 import 'dart:ui' as ui;
 
 import 'package:flutter/material.dart';
 import 'package:flutter/material.dart' as prefix0;
+import 'package:flutter/services.dart';
 import 'graph.dart';
 import 'map_data.dart';
 
@@ -23,11 +28,38 @@ class _GraphDrawState extends State<GraphDraw> {
 
     //Graph _graph = new Graph();
     bool _addScreenOffset = true;
+
+    ui.Image backgroundImage;
     
     @override
     void initState() {
         super.initState();
         //_buildGraph();
+        backgroundImage = null;
+
+//        Image tempImage = Image.network("http://www.loc.gov/static/portals/visit/maps-and-floor-plans/images/campus-map.jpg");
+        //Uri uri = Uri.dataFromString("http://www.loc.gov:anonious/static/portals/visit/maps-and-floor-plans/images/");
+        //http://fcrevit.org/merrifield/images/MosaicMap022516.png
+        try {
+            Uri uri = Uri.http("fcrevit.org", "/merrifield/images/");
+            NetworkAssetBundle(uri).load("MosaicMap022516.png").then((bd) {
+                Uint8List lst = new Uint8List.view(bd.buffer);
+
+                ui.instantiateImageCodec(lst).then((codec) {
+                    codec.getNextFrame().then(
+                            (frameInfo) {
+                            backgroundImage = frameInfo.image;
+                            print("bkImage instantiated: $backgroundImage");
+                            setState(() {});
+                        }
+                    );
+                });
+            });
+        }on Exception catch(e){
+            print(e);
+            backgroundImage = null;
+        }
+
     }
 
     // TODO: this is a testing function to build a graph
@@ -60,7 +92,7 @@ class _GraphDrawState extends State<GraphDraw> {
 
                     Container(
                     child: CustomPaint(
-                    painter: GraphPainter(context, widget.graph, _graphOffset, _scale),
+                    painter: GraphPainter(context, backgroundImage, widget.graph, _graphOffset, _scale),
                     child: GestureDetector(
                         onVerticalDragStart: (details) {
                             _graphVerticalOffset = details.globalPosition;
@@ -150,9 +182,9 @@ class GraphPainter extends CustomPainter {
     final Offset _offset;
     final double _scale;
     Offset _screenOffset;   
-    
+    final ui.Image backgroundImage;
 
-    GraphPainter(this._context, this._graph, this._offset,this._scale) {
+    GraphPainter(this._context, this.backgroundImage, this._graph, this._offset,this._scale) {
         Size size = MediaQuery.of(_context).size;
         _screenOffset = Offset(size.width / 2.0, size.height / 2.0 - kToolbarHeight);
         //print(_screenOffset);
@@ -169,7 +201,15 @@ class GraphPainter extends CustomPainter {
         paintNormalNode.color = Colors.orangeAccent;
         final paintSelectedNode = Paint();
         paintSelectedNode.color = Colors.redAccent;
-
+        if(backgroundImage != null) {
+            double bkwidth = backgroundImage.width.toDouble();
+            double bkheight = backgroundImage.height.toDouble();
+            canvas.drawImageRect(backgroundImage,
+                (const Offset(0, 0) & Size(bkwidth, bkheight)),
+                (_offset - _screenOffset- _screenOffset) * _scale + _screenOffset &  Size(bkwidth * _scale, bkheight * _scale),
+                new Paint());
+            //canvas.drawImage(backgroundImage, _offset - _screenOffset, new Paint());
+        }
         for (Edge edge in _graph.getEdges()) {
             Node srcNode = edge.getSrcNode();
             Node destNode = edge.getDestNode();
