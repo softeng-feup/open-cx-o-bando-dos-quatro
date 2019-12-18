@@ -64,7 +64,7 @@
 
         $last_node = getLastNode();
         update_conference_nodes($names, $x, $y, $tag, $ids, $id);
-        addEdges($first_id, $second_id, $last_node);
+        addEdges($first_id, $second_id, $last_node, $id);
 
 
         if($photos){

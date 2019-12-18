@@ -41,6 +41,7 @@ CREATE TABLE node (
 CREATE TABLE edge(
 
     id                   INTEGER PRIMARY KEY,
+    conference_id        INTEGER REFERENCES conference(id) ON DELETE CASCADE,
     origin_node          INTEGER REFERENCES node(id) ON DELETE CASCADE,        
     dest_node            INTEGER REFERENCES node(id) ON DELETE CASCADE
 

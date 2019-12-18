@@ -50,11 +50,11 @@ if($conf_name && $conf_code){
                 //$number_nodes = countNodes();
                 $last_node = getLastNode();
 
-
-                addNodes($conf_name, $x, $y, $tag, $name);
-                addEdges($first_id, $second_id, $last_node);
-
                 $conf_id = getConfID($conf_name);
+                addNodes($conf_name, $x, $y, $tag, $name);
+                addEdges($first_id, $second_id, $last_node, $conf_id);
+
+                
 
                 if($photos){
                     header("Location: ../src/photos.php?id=".$conf_id);

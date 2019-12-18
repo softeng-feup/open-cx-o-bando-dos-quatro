@@ -81,7 +81,7 @@
         }
     }
 
-    function addEdges($first_id, $second_id, $nodes_number){
+    function addEdges($first_id, $second_id, $nodes_number, $conf_id){
 
         $db = Database::instance()->db();
 
@@ -107,8 +107,8 @@
             console_log($sum_nodesY);
 
 
-            $stmt = $db->prepare('INSERT INTO edge(origin_node, dest_node) VALUES(?, ?)');
-            $stmt->execute(array($sum_nodesX, $sum_nodesY));
+            $stmt = $db->prepare('INSERT INTO edge(conference_id, origin_node, dest_node) VALUES(?, ?, ?)');
+            $stmt->execute(array($conf_id, $sum_nodesX, $sum_nodesY));
         }
 
     }
