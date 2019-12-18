@@ -143,4 +143,12 @@ The application is able to display the graphs stored in the database.
 
 ## Mockups
 
+Can be seen in our board, associated with respective user story.
+* **Trello** :(https://trello.com/b/m0GrAXGv/user-stories-esof) 
+
 ## Acceptance Tests
+
+
+Can be seen in our board, associated with respective user story.
+* **Trello** :(https://trello.com/b/m0GrAXGv/user-stories-esof) 
+
