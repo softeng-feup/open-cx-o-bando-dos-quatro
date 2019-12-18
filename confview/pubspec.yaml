@@ -25,6 +25,7 @@ dependencies:
       url: git://github.com/matteocrippa/flutter-nfc-reader.git
       ref: master
   flutter_speed_dial: ^1.2.4
+  diacritic: ^0.1.1
 
 
 dev_dependencies:

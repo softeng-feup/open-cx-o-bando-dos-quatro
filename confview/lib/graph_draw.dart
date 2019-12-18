@@ -61,6 +61,10 @@ class _GraphDrawState extends State<GraphDraw> {
         //Uri uri = Uri.dataFromString("http://www.loc.gov:anonious/static/portals/visit/maps-and-floor-plans/images/");
         //http://fcrevit.org/merrifield/images/MosaicMap022516.png
 
+        _getImage();
+    }
+
+    _getImage(){
         try {
             Uri uri = Uri.http("fcrevit.org", "/merrifield/images/");
             NetworkAssetBundle(uri).load("MosaicMap022516.png").then((bd) {
@@ -71,9 +75,6 @@ class _GraphDrawState extends State<GraphDraw> {
                             (frameInfo) {
                             backgroundImage = frameInfo.image;
                             print("bkImage instantiated: $backgroundImage");
-                            if(!mounted)
-                                return;
-                            setState(() {});
                         }
                     );
                 });
@@ -81,8 +82,11 @@ class _GraphDrawState extends State<GraphDraw> {
         }on Exception catch(e){
             print(e);
             backgroundImage = null;
+        }finally{
+            if(!mounted)
+                return;
+            setState(() {});
         }
-
     }
 
     @override

@@ -37,32 +37,68 @@ class MapScreen extends StatefulWidget {
     currentConference = this.conferenceId;
     graph = new Graph();
 
-    /*graph.addNode(Node(0,"Praia","https://upload.wikimedia.org/wikipedia/commons/3/3e/Croatia_Ribarica_beach_panorama_360.jpg",0, 0));
-    graph.addNode(Node(1,"India" ,"https://l13.alamy.com/360/PN0HYA/ganesh-pol-amber-palace-rajasthan-india-PN0HYA.jpg",  90, 45));
-    graph.addNode(Node(2, "Rua", "https://saffi3d.files.wordpress.com/2011/08/commercial_area_cam_v004.jpg", 180, 0));
-    graph.addNode(Node(3,"Cidade", "https://c1.staticflickr.com/5/4302/35137573294_1287bfd0ae_k.jpg" , 90, 90));
+    if(currentConference == 0) {
+      graph.addNode(Node(0, "Sala",
+          "https://www.realtourvision.com/wp-content/uploads/2012/11/2.jpg", 0,
+          0));
+      graph.addNode(Node(1, "Cave",
+          "http://www.tasmania360.com//panoramas/Highfield-House-Stanley-03/thumb_huge.jpg",
+          70, 0));
+      graph.addNode(Node(2, "Casa de Banho",
+          "https://img-new.cgtrader.com/items/729948/ecb94768f1/panorama-chinese-style-bathroom-toilet-space-02-3d-model-max.jpg",
+          70, 80));
+      graph.addNode(Node(3, "Cozinha",
+          "https://www.imagesolutionsindia.com/cdn/images/Image-editing/360-photo-editing-services.jpg",
+          -40, 40));
 
-    graph.addEdge(0, 1);
-    graph.addEdge(0, 2);
-    graph.addEdge(3, 2);*/
+      graph.addNode(Node(4, "Sotão",
+          "https://media.blendernation.com/wp-content/uploads/2018/06/Chocofur_Interior_Scene_03_360_LR.jpg",
+          0, -40));
+      graph.addNode(Node(5, "Jardim",
+          "https://cdn.eso.org/images/thumb300y/ESO_Guesthouse_360_Marcio_Cabral_Chile_01-CC.jpg",
+          0, 80));
+      graph.addNode(Node(6, "Quarto",
+          "http://www.prophotocompany.co.uk/images/panorama/panorama07.jpg", 50,
+          40));
 
-    graph.addNode(Node(0,"Sala","https://www.realtourvision.com/wp-content/uploads/2012/11/2.jpg",0, 0));
-    graph.addNode(Node(1,"Cave","http://www.tasmania360.com//panoramas/Highfield-House-Stanley-03/thumb_huge.jpg",70, 0));
-    graph.addNode(Node(2,"Casa de Banho","https://img-new.cgtrader.com/items/729948/ecb94768f1/panorama-chinese-style-bathroom-toilet-space-02-3d-model-max.jpg",70, 80));
-    graph.addNode(Node(3,"Cozinha","https://www.imagesolutionsindia.com/cdn/images/Image-editing/360-photo-editing-services.jpg",-40, 40));
+      graph.addEdge(0, 5);
+      graph.addEdge(0, 3);
+      graph.addEdge(0, 1);
+      graph.addEdge(0, 4);
+      graph.addEdge(0, 6);
+      graph.addEdge(6, 2);
+      graph.addEdge(6, 1);
+      graph.addEdge(3, 5);
+    }else if(currentConference == 1) {
+      graph.addNode(Node(0, "Sala",
+          "https://www.realtourvision.com/wp-content/uploads/2012/11/2.jpg", 0,
+          0));
+      graph.addNode(Node(1, "Cave",
+          "http://www.tasmania360.com//panoramas/Highfield-House-Stanley-03/thumb_huge.jpg",
+          70, 0));
+      graph.addNode(Node(2, "Casa de Banho",
+          "https://img-new.cgtrader.com/items/729948/ecb94768f1/panorama-chinese-style-bathroom-toilet-space-02-3d-model-max.jpg",
+          70, 80));
+      graph.addNode(Node(3, "Cozinha",
+          "https://www.imagesolutionsindia.com/cdn/images/Image-editing/360-photo-editing-services.jpg",
+          -40, 40));
 
-    graph.addNode(Node(4,"Sotão","https://media.blendernation.com/wp-content/uploads/2018/06/Chocofur_Interior_Scene_03_360_LR.jpg",0, -40));
-    graph.addNode(Node(5,"Jardim","https://cdn.eso.org/images/thumb300y/ESO_Guesthouse_360_Marcio_Cabral_Chile_01-CC.jpg",0, 80));
-    graph.addNode(Node(6,"Quarto","http://www.prophotocompany.co.uk/images/panorama/panorama07.jpg",50, 40));
+      graph.addNode(Node(4, "Sotão",
+          "https://media.blendernation.com/wp-content/uploads/2018/06/Chocofur_Interior_Scene_03_360_LR.jpg",
+          0, -40));
+      graph.addNode(Node(5, "Jardim",
+          "https://cdn.eso.org/images/thumb300y/ESO_Guesthouse_360_Marcio_Cabral_Chile_01-CC.jpg",
+          0, 80));
+      graph.addNode(Node(6, "Quarto",
+          "http://www.prophotocompany.co.uk/images/panorama/panorama07.jpg", 50,
+          40));
 
-    graph.addEdge(0, 5);
-    graph.addEdge(0, 3);
-    graph.addEdge(0, 1);
-    graph.addEdge(0, 4);
-    graph.addEdge(0, 6);
-    graph.addEdge(6, 2);
-    graph.addEdge(6, 1);
-    graph.addEdge(3, 5);
+      graph.addEdge(0, 5);
+      graph.addEdge(0, 3);
+      graph.addEdge(0, 1);
+      graph.addEdge(0, 4);
+
+    }
 
     print('fecthed graph');
 

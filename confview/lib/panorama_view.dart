@@ -1,6 +1,7 @@
 import 'dart:async';
 import 'dart:math';
 
+import 'package:diacritic/diacritic.dart';
 import 'package:confview/conferenceViewer.dart';
 import 'package:confview/map_data.dart';
 
@@ -42,7 +43,7 @@ class _PanoramaViewState extends State<PanoramaView> {
 
   TextEditingController _searchQuery;
   bool _isSearching = false;
-  String searchQuery = "Search query";
+  static String searchQuery = "";
   FocusNode _searchFocus;
 
 
@@ -52,9 +53,15 @@ class _PanoramaViewState extends State<PanoramaView> {
       WidgetsBinding.instance.addPostFrameCallback(getImageSize);
 
     super.initState();
+    if(removeDiacritics(this.widget.location.getName().toLowerCase()) == removeDiacritics(searchQuery.toLowerCase())){
+      _updateSearchQuery("");
+    }
 
-    _searchQuery = new TextEditingController();
+    _searchQuery = new TextEditingController(text: searchQuery);
     _searchFocus = FocusNode();
+
+
+
 
     this.delta = 2.455;
 
@@ -230,7 +237,7 @@ class _PanoramaViewState extends State<PanoramaView> {
 
       if (edges[i].getDestName() == widget.location.path) {
         child1 = Align(
-            alignment: -_imageAlignment * this.delta * 1.5 - edges[i].getAlignment() * this.delta ,
+            alignment: -_imageAlignment * this.delta * 1.4 - edges[i].getAlignment() * this.delta ,
             child: FlatButton(
                 onPressed: () {
                   Navigator.pop(context);
@@ -260,7 +267,7 @@ class _PanoramaViewState extends State<PanoramaView> {
       Widget child2;
       if (edges[i].getDestName() == widget.location.path) {
         child2 = Align(
-            alignment: -_imageAlignment2 * this.delta * 1.5 - edges[i].getAlignment() * this.delta,
+            alignment: -_imageAlignment2 * this.delta * 1.4 - edges[i].getAlignment() * this.delta,
             child: FlatButton(
                 onPressed: () {
                   Navigator.pop(context);
@@ -354,7 +361,7 @@ void shortestPath(List<Node> locations, String dest) {
     locations[i].visited = false;
     locations[i].distance = double.maxFinite;
     locations[i].path = "";
-    if (locations[i].getName() == dest) {
+    if (removeDiacritics(locations[i].getName().toLowerCase()) == removeDiacritics(dest.toLowerCase())) {
       toVisit.add(locations[i]);
       locations[i].distance = 0;
       found = true;
