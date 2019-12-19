@@ -74,6 +74,7 @@ class _GraphDrawState extends State<GraphDraw> {
                     codec.getNextFrame().then(
                             (frameInfo) {
                             backgroundImage = frameInfo.image;
+                            backgroundImage = null;
                             print("bkImage instantiated: $backgroundImage");
                         }
                     );
