@@ -22,30 +22,33 @@ class MapScreen extends StatefulWidget {
 
   static int currentConference = -1;
 
-  static final _formKey = GlobalKey<FormState>();
 
   MapScreen({Key key, this.conferenceId}) : super(key: key) {
-    getConferenceInfo();
+    //getConferenceInfo();
   }
 
   @override
   _MapScreenState createState() => _MapScreenState();
 
   //TODO:: get info from database
-  void getConferenceInfo() async {
+  Future<bool> getConferenceInfo() async {
 
     if(currentConference == this.conferenceId){
-      return;
+      return false;
     }
     currentConference = this.conferenceId;
     graph = new Graph();
 
     var url = 'https://gnomo.fe.up.pt/~up201706534/website/api/fetch_conference.php';
-    var response = await http.post(url, body: {'conference_code': '123456'});
+    var response = await http.post(url, body: {'conference_code': currentConference.toString()});
     print('Response status: ${response.statusCode}');
     print('Response body: ${response.body}');
-
-    List<dynamic> map = jsonDecode(response.body);
+    List<dynamic> map;
+    try {
+       map = jsonDecode(response.body);
+    }on Exception catch(e){
+      return false;
+    }
     print(map);
     Map<String, dynamic> conferenceInfo = map[0];
     List<dynamic> nodesInfo = map[1];
@@ -68,76 +71,7 @@ class MapScreen extends StatefulWidget {
       int dest = int.parse(edge['dest_node']);
       graph.addEdge(orig, dest);
     }
-
-
-
-
-    /*
-    if(currentConference == 0) {
-      graph.addNode(Node(0, "Sala",
-          "https://www.realtourvision.com/wp-content/uploads/2012/11/2.jpg", 0,
-          0));
-      graph.addNode(Node(1, "Cave",
-          "http://www.tasmania360.com//panoramas/Highfield-House-Stanley-03/thumb_huge.jpg",
-          70, 0));
-      graph.addNode(Node(2, "Casa de Banho",
-          "https://img-new.cgtrader.com/items/729948/ecb94768f1/panorama-chinese-style-bathroom-toilet-space-02-3d-model-max.jpg",
-          70, 80));
-      graph.addNode(Node(3, "Cozinha",
-          "https://www.imagesolutionsindia.com/cdn/images/Image-editing/360-photo-editing-services.jpg",
-          -40, 40));
-
-      graph.addNode(Node(4, "Sotão",
-          "https://media.blendernation.com/wp-content/uploads/2018/06/Chocofur_Interior_Scene_03_360_LR.jpg",
-          0, -40));
-      graph.addNode(Node(5, "Jardim",
-          "https://cdn.eso.org/images/thumb300y/ESO_Guesthouse_360_Marcio_Cabral_Chile_01-CC.jpg",
-          0, 80));
-      graph.addNode(Node(6, "Quarto",
-          "http://www.prophotocompany.co.uk/images/panorama/panorama07.jpg", 50,
-          40));
-
-      graph.addEdge(0, 5);
-      graph.addEdge(0, 3);
-      graph.addEdge(0, 1);
-      graph.addEdge(0, 4);
-      graph.addEdge(0, 6);
-      graph.addEdge(6, 2);
-      graph.addEdge(6, 1);
-      graph.addEdge(3, 5);
-    }else if(currentConference == 1) {
-      graph.addNode(Node(0, "Sala",
-          "https://www.realtourvision.com/wp-content/uploads/2012/11/2.jpg", 0,
-          0));
-      graph.addNode(Node(1, "Cave",
-          "http://www.tasmania360.com//panoramas/Highfield-House-Stanley-03/thumb_huge.jpg",
-          70, 0));
-      graph.addNode(Node(2, "Casa de Banho",
-          "https://img-new.cgtrader.com/items/729948/ecb94768f1/panorama-chinese-style-bathroom-toilet-space-02-3d-model-max.jpg",
-          70, 80));
-      graph.addNode(Node(3, "Cozinha",
-          "https://www.imagesolutionsindia.com/cdn/images/Image-editing/360-photo-editing-services.jpg",
-          -40, 40));
-
-      graph.addNode(Node(4, "Sotão",
-          "https://media.blendernation.com/wp-content/uploads/2018/06/Chocofur_Interior_Scene_03_360_LR.jpg",
-          0, -40));
-      graph.addNode(Node(5, "Jardim",
-          "https://cdn.eso.org/images/thumb300y/ESO_Guesthouse_360_Marcio_Cabral_Chile_01-CC.jpg",
-          0, 80));
-      graph.addNode(Node(6, "Quarto",
-          "http://www.prophotocompany.co.uk/images/panorama/panorama07.jpg", 50,
-          40));
-
-      graph.addEdge(0, 5);
-      graph.addEdge(0, 3);
-      graph.addEdge(0, 1);
-      graph.addEdge(0, 4);
-
-    }
-
-    print('fecthed graph');
-    */
+    return true;
   }
 
 
@@ -160,7 +94,15 @@ class _MapScreenState extends State<MapScreen> {
   initState() {
     super.initState();
 
-    _graphDraw = GraphDraw(graph: MapScreen.graph,conferenceId : this.widget.conferenceId);
+    this.widget.getConferenceInfo().then((bool value){
+        this.setState(() {
+          if(value == true){
+            _graphDraw = GraphDraw(graph: MapScreen.graph, conferenceId : this.widget.conferenceId);
+          }
+        });
+    });
+
+    _graphDraw = null;
 
     print('again');
 

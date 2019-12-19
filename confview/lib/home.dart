@@ -3,6 +3,16 @@ import 'package:flutter/material.dart';
 import 'action_item.dart';
 import 'nav.dart';
 
+import 'dart:io';
+import 'dart:async';
+import 'package:path_provider/path_provider.dart';
+import 'package:flutter/foundation.dart';
+
+import 'package:http/http.dart' as http;
+import 'dart:convert';
+
+
+
 class HomePage extends StatefulWidget {
   HomePage({Key key, this.title}) : super(key: key);
 
@@ -12,9 +22,27 @@ class HomePage extends StatefulWidget {
   _HomePageState createState() => _HomePageState();
 }
 
+
+
 class _HomePageState extends State<HomePage> {
   // TODO: the app must get the conference names from the database
-  final List<String> _conferences = ["Web Summit", "Talk A Bit"];
+  List<Map<String, dynamic>> _conferences = [];
+
+  @override
+  void initState() {
+    super.initState();
+    readConferences().then((String lines) {
+      setState(() {
+        print("Lines  " + lines);
+        List<dynamic> linesDecoded = jsonDecode(lines);
+        print(linesDecoded);
+        for(int i = 0; i < linesDecoded.length;i++){
+          Map<String, dynamic> line = linesDecoded[i];
+          _conferences.add(line);
+        }
+      });
+    });
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -69,14 +97,14 @@ class _HomePageState extends State<HomePage> {
               height: 150.0,
               child: Card(
                 child: Row(
-                  children: <Widget>[Text(_conferences[index])],
+                  children: <Widget>[Text(_conferences[index]['name'])],
                 ),
               )),
         ),
         onTap: () {
           // TODO: this is temporary, change the parameter so that the map screen is built for the correct conference
           Navigator.of(context).push(MaterialPageRoute(
-              builder: (context) => MapScreen(conferenceId: index)));
+              builder: (context) => MapScreen(conferenceId: int.parse(_conferences[index]['code'])  ) ));
         });
   }
 
@@ -120,23 +148,96 @@ class _HomePageState extends State<HomePage> {
     );
   }
 
-  _addNewConference(String conferenceName, BuildContext context) {
+  _addNewConference(String conferenceCode, BuildContext context) async{
     print('Checking if it is possible to create a new conf');
-    if (conferenceName == '') return;
+    if(conferenceCode == '') return;
+    for(int i = 0; i < _conferences.length;i++){
+      if(_conferences[i]['code'] == conferenceCode){
+        Navigator.pop(context);
+        return;
+      }
+    }
+    var url = 'https://gnomo.fe.up.pt/~up201706534/website/api/fetch_conference.php';
+    var response = await http.post(url, body: {'conference_code': conferenceCode});
+    //print('Response status: ${response.statusCode}');
+    //print('Response body: ${response.body}');
+    List<dynamic> map;
+    try {
+      map = jsonDecode(response.body);
+    }on Exception catch(e){
+      return;
+    }
+    print(map);
+    Map<String, dynamic> conferenceInfo = map[0];
+    Map<String, dynamic> addedInfo = new Map();
+    addedInfo['name'] = conferenceInfo['confName'];
+    addedInfo['code'] = conferenceInfo['code'];
 
     setState(() {
       print('Created a new conference');
-      _conferences.add(conferenceName);
+      _conferences.add(addedInfo);
     });
-
+    writeConference();
     Navigator.pop(context);
   }
 
   _deleteConference(int index) {
     setState(() {
       _conferences.removeAt(index);
+      writeConference();
     });
   }
+
+
+
+
+
+
+  Future<String> get _localPath async {
+    String dir = (await getApplicationDocumentsDirectory()).path;
+
+    return dir;
+  }
+
+  Future<File> get _conferecesFile async {
+    final path = await _localPath;
+    return File('$path/conferences.txt');
+  }
+
+  Future<File> writeConference() async {
+    final file = await _conferecesFile;
+
+    // Write the file.
+    print('Writen to file');
+    String toWrite = "[";
+    for(int i = 0; i<_conferences.length;i++){
+      toWrite+="{\"name\":\""+_conferences[i]['name']+"\",\"code\":\""+_conferences[i]['code']+"\"}";
+      if(i!=_conferences.length-1){
+        toWrite+=",";
+      }
+    }
+    toWrite +="]";
+    print("I am going to write:  " + toWrite);
+    return file.writeAsString(toWrite);
+  }
+
+  Future<String> readConferences() async {
+    try {
+      final file = await _conferecesFile;
+
+      Future<String> lines;
+      // Read the file.
+      lines = file.readAsString();
+
+      return lines;
+    } catch (e) {
+      // If encountering an error, return 0.
+      return "[]";
+    }
+  }
+
+
+
 
   _openConference() {}
 }
