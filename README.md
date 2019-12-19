@@ -158,7 +158,9 @@ As requested and suggested throughout the course, we have adopted the use of Git
 * **merge:** Merge to master after review.
 
 ## Project management
-oi2
+Our team adopted as Project management tool Trello, since it was suggested to us by the teacher and it seemed easy to understand and quite intuitive. Also, Trello's capable of registering tasks, assign tasks to people, add estimations to tasks, monitor tasks progress.
+
+You can visit our trello [here](https://trello.com/b/m0GrAXGv/user-stories-esof).
 
 ## Mockups
 
