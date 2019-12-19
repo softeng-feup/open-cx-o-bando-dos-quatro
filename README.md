@@ -150,6 +150,14 @@ On the other hand, some tests can be deducted easily.
 * When reading an **NFC** tag the corresponding Photosphere should be displayed and capable of being "dragged" for complete 360º experience.
 * On the **website** if an organizer wants to create a new conference map or edit an existing one he should firstly input its credentials (username and password) to ensure that only he is allowed to make changes.
 
+
+## Configuration and change management
+
+oi
+
+## Project management
+oi2
+
 ## Mockups
 
 Can be seen in our board, associated with respective user story.
@@ -161,6 +169,4 @@ Can be seen in our board, associated with respective user story.
 Can be seen in our board, associated with respective user story.
 * **Trello** : [View](https://trello.com/b/m0GrAXGv/user-stories-esof) 
 
-## Configuration and change management
-## Project management
 
