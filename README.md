@@ -152,8 +152,11 @@ On the other hand, some tests can be deducted easily.
 
 
 ## Configuration and change management
+As requested and suggested throughout the course, we have adopted the use of Github flow features:
 
-oi
+* **branches:**
+* **discussion & review:**
+* **merge: **
 
 ## Project management
 oi2
