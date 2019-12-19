@@ -156,7 +156,7 @@ As requested and suggested throughout the course, we have adopted the use of Git
 
 * **branches:**
 * **discussion & review:**
-* **merge: **
+* **merge:**
 
 ## Project management
 oi2
