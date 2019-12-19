@@ -153,10 +153,9 @@ On the other hand, some tests can be deducted easily.
 
 ## Configuration and change management
 As requested and suggested throughout the course, we have adopted the use of Github flow features:
-
-* **branches:**
-* **discussion & review:**
-* **merge:**
+* **branches:** We have created new branches to the development of new features and bug fixes. Each one with a proper name.
+* **discussion & review:** To verify that everything is as intended.
+* **merge:** Merge to master after review.
 
 ## Project management
 oi2
