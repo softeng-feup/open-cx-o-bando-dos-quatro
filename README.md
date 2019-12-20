@@ -76,33 +76,33 @@ __Setting up a ConfView environment:__
 __Guidance App:__
 
 * **Read Tag**
-  - * **Actor**: The actor taking part in this case will be the regular conference attendee. However, nothing stops the event organizers or speakers to download the App as well, it is free to use.
+  - **Actor**: The actor taking part in this case will be the regular conference attendee. However, nothing stops the event organizers or speakers to download the App as well, it is free to use.
 
-  - * **Description**: Attendees can use the App to read NFC tags that will automatically show a photosphere of the spot they're in.
+  - **Description**: Attendees can use the App to read NFC tags that will automatically show a photosphere of the spot they're in.
 
-  - * **Preconditions**: In order for this to work all the user needs is a smartphone and internet connection to use the App.
+  - **Preconditions**: In order for this to work all the user needs is a smartphone and internet connection to use the App.
 
-  - * **Normal Flow**: The user simply needs to get their phone close enough of the NFC tag whilst the App is running and wait for the image to be loaded.
+  - **Normal Flow**: The user simply needs to get their phone close enough of the NFC tag whilst the App is running and wait for the image to be loaded.
  
-  - * **Postconditions**: The image of the spot the user's are is loaded and they can see a Photosphere of it. The Photosphere marks the direction of other spots.
+  - **Postconditions**: The image of the spot the user's are is loaded and they can see a Photosphere of it. The Photosphere marks the direction of other spots.
  
 
-  - * **Alternative Flows and Exceptions**: Some smartphones can have problems reading the NFC tags which would result in an incomplete ConfView experience.
+  - **Alternative Flows and Exceptions**: Some smartphones can have problems reading the NFC tags which would result in an incomplete ConfView experience.
  
  
-2. **Display Directions**
+* **Display Directions**
 
-  1. **Actor**: The actor taking part in this case will be the regular conference attendee. However, nothing stops the event organizers or speakers to download the App as well, it is free to use.
+  - **Actor**: The actor taking part in this case will be the regular conference attendee. However, nothing stops the event organizers or speakers to download the App as well, it is free to use.
 
-  2. **Description**: Attendees can use the App to get a clear understanding of the venue's location and find out the shortest path from where they are to where they are headed.
+  - **Description**: Attendees can use the App to get a clear understanding of the venue's location and find out the shortest path from where they are to where they are headed.
 
-  3. **Preconditions**: In order for this to work all the user needs is a smartphone and internet connection to use the App.
+  - **Preconditions**: In order for this to work all the user needs is a smartphone and internet connection to use the App.
 
-  4. **Normal Flow**: We can look at the ConfView experience from the prespective of someone that is going to attend a conference and hasn't done any research whatsoever about the location of it. He just knows what lectures he wants to attend. All he needs to do is type in the name of the room or auditorium he wants to go, bathrooms and dining areas will also be in the conference database so they can look that up too.
+  - **Normal Flow**: We can look at the ConfView experience from the prespective of someone that is going to attend a conference and hasn't done any research whatsoever about the location of it. He just knows what lectures he wants to attend. All he needs to do is type in the name of the room or auditorium he wants to go, bathrooms and dining areas will also be in the conference database so they can look that up too.
  
-  5. **Postconditions**: Then app will calculate the shortest path to that place and tell the user where he needs to go.
+  - **Postconditions**: Then app will calculate the shortest path to that place and tell the user where he needs to go.
 
-  6. **Alternative Flows and Exceptions**: Although we are trying our best to make this as intuitive and easy to use as possible there are always cases where the algorythms used don't work, especially if the information about the venue is not correctly set up.
+  - **Alternative Flows and Exceptions**: Although we are trying our best to make this as intuitive and easy to use as possible there are always cases where the algorythms used don't work, especially if the information about the venue is not correctly set up.
  
 
 
