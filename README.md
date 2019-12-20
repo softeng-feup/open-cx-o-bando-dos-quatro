@@ -132,6 +132,15 @@ The UML diagram above represents the logical architecture of our code divided es
 
 ![components_diagram](./resources/component-diagram.png)
 
+Conference participants should download the app for their smartphone. After entering conference code, our application will fetch the desired conference data by HTTP requests.
+Conference organizers can map their own conference by accessing our website and filling in the required information. After submission, all data will be stored in the database.
+
+For the development of our product we chose Flutter as our working environment, for the reasons that can be seen in Prototype.
+For the website, since this is quite simple, we adopted for HTML, PHP and JavaScript.
+For database purposes we used SQLite once all group members are familiar with this software.
+We chose sqlite also for its simplicity and power.
+
+
 
 ### Prototype
 
