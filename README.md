@@ -23,6 +23,8 @@ You can find here detailed about the (sub)product, hereby mentioned as module, f
 * [Mockups](#Mockups)
 * [Acceptance Tests](#Acceptance-tests)
 
+* [Evolution - contributions to open-cx](#Contributions-to-Open-cx)
+
 So far, contributions are exclusively made by the initial team, but we hope to open them to the community, in all areas and topics: requirements, technologies, development, experimentation, testing, etc.
 
 Please contact us! 
@@ -173,4 +175,4 @@ Can be seen in our board, associated with respective user story.
 Can be seen in our board, associated with respective user story.
 * **Trello** : [View](https://trello.com/b/m0GrAXGv/user-stories-esof) 
 
-
+## Contributions to Open cx
