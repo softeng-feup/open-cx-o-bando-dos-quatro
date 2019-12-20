@@ -20,6 +20,10 @@ You can find here detailed about the (sub)product, hereby mentioned as module, f
 * [Test](#Test)
 * [Configuration and change management](#Configuration-and-change-management)
 * [Project management](#Project-management)
+* [Mockups](#Mockups)
+* [Acceptance Tests](#Acceptance-tests)
+
+* [Evolution - contributions to open-cx](#Contributions-to-Open-cx)
 
 So far, contributions are exclusively made by the initial team, but we hope to open them to the community, in all areas and topics: requirements, technologies, development, experimentation, testing, etc.
 
@@ -46,56 +50,171 @@ Thank you!
 ## Requirements
 ### Use case diagram
 
-![use case diagram](./resources/use_cases.png)
+![use case diagram](./resources/use-case.png)
 
 In the use-case diagram above we can see two main possibilities of usage of our product: Setting up a ConfView environment for your conference or using the App's capabilities to guide you during a conference.
 
+* **Organizer**: The Organizer is the person or the group of people that are in charge of arranging the conference. They have permission and the information needed to map the venue using our website. 
+
+* **Participant**: The Participant represents everybody that attends the conference and uses our App.
+
+
 __Setting up a ConfView environment:__
-* **Actor**: The actor taking part in this case will be a conference organizer. It should give information about the venue that will be processed afterwards and used in the App.
 
-* **Description**: By letting organizers input their venue info to a website that is linked to our app database we allow our product to be used in various conferences.
+* **Input Venue Info**
+  - **Actor**: The actor taking part in this case will be a conference organizer. It should give information about the venue that will be processed afterwards and used in the App.
 
-* **Preconditions and Postconditions**: In order for this to work it is needed, for the actor taking part, to map the venue with some NFC tags and have a basic knowledge of how coordinates work on a graph of their conference location.
+  - **Description**: By letting organizers input their venue info to a website that is linked to our app database we allow our product to be used in various conferences.
 
-* **Normal Flow**: Under the expected conditions the organizer should fill in a _form_ on the website telling how many nodes his conference map has, giving _x_ and _y_ coordinates to each node and checking wether that node has a tag placed or not. All this information is then processed and stored in a database that can be accessed and used in a human-friendly way on the ConfView App.
+  - **Preconditions**: In order for this to work it is needed, for the actor taking part, to map the venue with some NFC tags and have a basic knowledge of how coordinates work on a graph of their conference location.
 
-* **Alternative Flows and Exceptions**: A usage scenario where this use case can be troubling is if the organizer inputs information about the venue incorrectly. This would result on a broken guidance couseling for the conference in question, showing the map incorrectly and misplacing tags.
+  - **Normal Flow**: Under the expected conditions the organizer should fill in a _form_ on the website telling how many nodes his conference map has, giving _x_ and _y_ coordinates to each node and checking wether that node has a tag placed or not. 
+
+  - **Postconditions**: All that information is then processed and stored in a database that can be accessed and used in a human-friendly way on the ConfView App.
+
+  - **Alternative Flows and Exceptions**: A usage scenario where this use case can be troubling is if the organizer inputs information about the venue incorrectly. This would result on a broken guidance couseling for the conference in question, showing the map incorrectly and misplacing tags.
 
 
 __Guidance App:__
-* **Actor**: The actor taking part in this case will be the regular conference attendee. However, nothing stops the event organizers or speakers to download the App as well, it is free to use.
 
-* **Description**: Attendees can use the App to get a clear understanding of the venue's location and find out the shortest path from where they are to where they are headed. It can display photospheres, directions and even read NFC tags to show exactly where they are in the map. 
+* **Read Tag**
+  - **Actor**: The actor taking part in this case will be the regular conference attendee. However, nothing stops the event organizers or speakers to download the App as well, it is free to use.
 
-* **Preconditions and Postconditions**: In order for this to work all the user needs is a smartphone and internet connection to download the App. We aren't quite sure wether internet connection will be needed when using the App but we are working on trying to make that not necessary.
+  - **Description**: Attendees can use the App to read NFC tags that will automatically show a Photosphere of the spot they're in.
 
-* **Normal Flow**: We can look at the ConfView experience from the prespective of someone that is going to attend a conference and hasn't done any research whatsoever about the location of it. He just knows what lectures he wants to attend. All he needs to do is type in the name of the lecture's auditorium and the app will calculate the shortest path to it. It can also display 3D images of certain key locations of the venue and a map telling, in real-time, where exactly we are in the venue. Dining areas and bathrooms are also stored in the database so attendees can look that up too.
+  - **Preconditions**: In order for this to work all the user needs is a smartphone and internet connection to use the App.
 
-* **Alternative Flows and Exceptions**: Although we are trying our best to make this as intuitive and easy to use as possible there are always cases where the algorythms used don't work, especially if the information about the venue is not correctly set up. Some smartphones can also have problems reading the NFC tags which would result in an incomplete ConfView experience.
+  - **Normal Flow**: The user simply needs to get their phone close enough of the NFC tag whilst the App is running and wait for the image to be loaded.
+ 
+  - **Postconditions**: The image of the spot the user's are is loaded and they can see a Photosphere of it. The Photosphere marks the direction of other spots.
+ 
+
+  - **Alternative Flows and Exceptions**: Some smartphones can have problems reading the NFC tags which would result in an incomplete ConfView experience.
+ 
+ 
+* **Display Directions**
+
+  - **Actor**: The actor taking part in this case will be the regular conference attendee. However, nothing stops the event organizers or speakers to download the App as well, it is free to use.
+
+  - **Description**: Attendees can use the App to get a clear understanding of the venue's location and find out the shortest path from where they are to where they are headed.
+
+  - **Preconditions**: In order for this to work all the user needs is a smartphone and internet connection to use the App.
+
+  - **Normal Flow**: We can look at the ConfView experience from the prespective of someone that is going to attend a conference and hasn't done any research whatsoever about the location of it. He just knows what lectures he wants to attend. All he needs to do is type in the name of the room or auditorium he wants to go, bathrooms and dining areas will also be in the conference database so they can look that up too.
+ 
+  - **Postconditions**: Then, the app will calculate the shortest path to that place and tell the user where he needs to go.
+
+  - **Alternative Flows and Exceptions**: Although we are trying our best to make this as intuitive and easy to use as possible there are always cases where the algorythms used don't work, especially if the information about the venue is not correctly set up.
+ 
 
 
 
 ### User stories
 * **Trello** : [Also contains Acceptance Test & Mockups](https://trello.com/b/m0GrAXGv/user-stories-esof) 
 ### Domain model
-![model domain diagram](./resources/ESOF_DOMAIN_MODEL_2.0.png)
+![model domain diagram](./resources/domain_model_esof_confview.png)
 
 
 To better understand the context of the software system, it is very useful to have a simple UML class diagram with key concepts and relationships involved of the problem domain addressed by our module.
-The diagram shows all locations have an associated image, we can do many transitions between locations, each one with some info. A path is an association between two locations, our atual location and the destination.
+The diagram shows that conferences can have multiple locations, each one can have an associated photo. In the conference there are also several edges that link two locations, the origin and destination (of each edge).
+
 ## Architecture and Design
 
 ### Logical Architecture
 
-![logical architecture diagram](./resources/esof_logical_architecture.png)
+![logical architecture diagram](./resources/Esof_logical_architecture.png)
 
 The UML diagram above represents the logical architecture of our code divided essentially in 2 big parts, an App and a Website. Both connect to a server where all information loaded at the website will be processed and then saved into a database. In the opposite way, an app will display the correct information a user needs, depending on our database.
 
 ### Physical Architecture
 
-![physical architecture diagram](./resources/esof_physical_arch.png)
+![physical architecture diagram](./resources/physical-architecture.png)
 
-The deployment UML diagram above documents high-level physical structures of the software system. The Nodes represent hardware requirements for the project's idea to work properly. Each one holds one or more components, this is, pieces of software that vary in language or functionality and can communicate with each other.
+![components_diagram](./resources/component-diagram.png)
+
+Conference participants should download the app for their smartphone. After entering the conference code, our application will fetch the desired conference data by HTTP requests.
+Conference organizers can map their own conference by accessing our website and filling in the required information. After submission, all data will be stored in the database.
+
+For the development of our product we chose Flutter as our working environment, for the reasons that can be seen in Prototype.
+For the website, since this is quite simple, we adopted for HTML, PHP and JavaScript.
+For database purposes we used SQLite once all group members are familiar with this software.
+We chose sqlite also for its simplicity and power.
+
 
 
 ### Prototype
+
+At the end the o iteration 0, none of the user stories were fully implemented. Our main goal was to discuss between React Native or Flutter as a framework. We researched the differences, advantages and disadvantages of each one and we thought the best option would be Flutter. We also opted for Flutter since most groups are working with this framework and therefore it would be easier to exchange ideas and solve problems between groups.
+
+At this iteration, Logical and Physical architecture diagram, Domain Model and Use Case Diagram were done, as all the Business Modeling. 
+
+Last but not least, user stories have been refactored since some of them weren't testable or were to long.
+
+
+## Implementation
+### Iteration 1: 
+
+Started using Flutter aplication to show Photospheres and Panoramic Photos.
+
+Started to think about our own database to keep our data to be accessed by the App.
+
+### Iteration 2: 
+
+At flutter application it is now possible to add a new Conference, delete it and show all the conferences.
+
+Finished database and started website creation and connection of the site with database. 
+
+### Iteration 3: 
+It is Now possible to read a NFC tag at our application. We started working on graphs to show the conferences map.
+
+Website is ready to create a conference and save data into our database.
+
+### Iteration 4: 
+
+ConfView application shows a graph with images associated to nodes, and if we search for a location in the search bar, our app shows the shortest path between the current location to the desired location by highlighting a part of the screen.
+
+Organizers can edit previous created conferences.
+Our website contains a login and signup feature, so conferences can only be viewed and edited by their organizer.
+
+### Iteration 5: 
+
+The application is able to display the graphs stored in the database.
+
+## Test
+
+### Test Plan:
+
+To understand if we have a viable product we need a way to validate the features we are selling. Our product deals with navigation on a conference and the ability for conference organizers to map their own venue, with very little costs, so with unit testing this becomes very difficult. However, acceptance testing using **Gherkin** is very useful to prove we have found solutions to the problems specified on our **User Stories**. You can find these tests on our [Trello](https://trello.com/b/m0GrAXGv/user-stories-esof) board.
+
+On the other hand, some tests can be deducted easily. 
+* When a new conference is added to the **website** its information should accessible on the **App**. We are talking about the nodes that mark each point in the graph, its edges, and the Photosphere's display when a user read an **NFC** tag.
+* When opening the **App** and looking for the conference the user's attending, the map and further information should only be accessible if they enter the correct conference code.
+* When reading an **NFC** tag the corresponding Photosphere should be displayed and capable of being "dragged" for complete 360º experience.
+* On the **website** if an organizer wants to create a new conference map or edit an existing one he should firstly input its credentials (username and password) to ensure that only he is allowed to make changes.
+
+
+## Configuration and change management
+As requested and suggested throughout the course, we have adopted the use of Github flow features:
+* **branches:** We have created new branches to the development of new features and bug fixes. Each one with a proper name.
+* **discussion & review:** To verify that everything is as intended.
+* **merge:** Merge to master after review.
+
+## Project management
+Our team adopted as Project management tool Trello, since it was suggested to us by the teacher and it seemed easy to understand and quite intuitive. Also, Trello's capable of registering tasks, assign tasks to people, add estimations to tasks, monitor tasks progress.
+
+You can visit our trello [here](https://trello.com/b/m0GrAXGv/user-stories-esof).
+
+## Mockups
+
+Can be seen in our board, associated with respective user story.
+* **Trello** : [View](https://trello.com/b/m0GrAXGv/user-stories-esof) 
+
+## Acceptance Tests
+
+
+Can be seen in our board, associated with respective user story.
+* **Trello** : [View](https://trello.com/b/m0GrAXGv/user-stories-esof) 
+
+## Contributions to Open cx
+
+Working ...
