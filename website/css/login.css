@@ -1,0 +1,35 @@
+#login{
+    background-color: aqua;
+    border-style: solid;
+    border-color: black;
+    border-radius: 10px;
+    text-align: center;
+    width:30%;
+    margin: 0 auto;
+}
+
+#login > form > div{
+    padding:0.5em;
+}
+
+#login > form > div > label{
+    font-weight:600;
+}
+
+#login > footer{
+    padding:0.5em;
+    margin: 0 auto;
+}
+
+#login > footer > p{
+    font-weight: 600;
+}
+
+#login > footer > p > a{
+    text-decoration: none;
+    color: grey;
+} 
+
+#login > footer > p > a:hover{
+    color:black;
+} 

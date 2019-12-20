@@ -1,0 +1,44 @@
+#conferences{
+    background-color: aqua;
+    border-style:solid;
+    border-color: black;
+    border-radius: 10px;
+    text-align: center;
+    width:40%;
+    margin: 0 auto;
+    padding: 0.5em;
+}
+
+#conferences > ul > li{
+    display: flex;
+    flex-direction: row;
+}
+
+#conferences > ul > li > span{
+    font-weight: 600;
+} 
+
+#conferences > ul > li > a{
+    text-decoration: none;
+    color:grey;
+    margin:0 auto;
+}
+
+#conferences > ul > li > a:hover{
+    color:black;
+}
+
+#conferences > footer{
+    padding:0.5em;
+    margin: 0 auto;
+}
+
+#conferences > footer > a{
+    text-decoration: none;
+    color:black;
+    font-weight: 600;
+} 
+
+#conferences > footer > a:hover{
+    color:grey;
+}
