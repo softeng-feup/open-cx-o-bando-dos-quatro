@@ -18,7 +18,7 @@ class Node {
 
   Node(this._id, this.name, String imageUrl, double x, double y) {
     image = new PanoramaViewImage(imageUrl);
-    _position = Offset(x, y);
+    _position = Offset(x, -y);
   }
 
   int getID() {

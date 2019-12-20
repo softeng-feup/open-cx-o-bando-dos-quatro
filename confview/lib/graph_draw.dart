@@ -9,8 +9,10 @@ import 'conferenceViewer.dart';
 import 'graph.dart';
 import 'map_data.dart';
 
+import 'package:flutter_compass/flutter_compass.dart';
+
 class GraphDraw extends StatefulWidget {
-  GraphDraw({Key key, this.graph, this.conferenceId}) : super(key: key) {
+  GraphDraw({Key key, @required this.graph, @required this.conferenceId}) : super(key: key) {
     print('asfg');
   }
 
@@ -35,6 +37,8 @@ class _GraphDrawState extends State<GraphDraw> {
   static Offset _graphOffset;
   static double _scale;
 
+
+
   @override
   void initState() {
     super.initState();
@@ -48,13 +52,18 @@ class _GraphDrawState extends State<GraphDraw> {
     _graphHorizontalOffset = Offset(0.0, 0.0);
     _graphVerticalOffset = Offset(0.0, 0.0);
     _graphOffset = Offset(0.0, 0.0);
-    _scale = 1;
+    _scale = 3;
+
+
 
 //        Image tempImage = Image.network("http://www.loc.gov/static/portals/visit/maps-and-floor-plans/images/campus-map.jpg");
     //Uri uri = Uri.dataFromString("http://www.loc.gov:anonious/static/portals/visit/maps-and-floor-plans/images/");
     //http://fcrevit.org/merrifield/images/MosaicMap022516.png
     backgroundImage = null;
     _getImage();
+
+
+
   }
 
   _getImage() {
@@ -166,7 +175,7 @@ class _GraphDrawState extends State<GraphDraw> {
       double distance =
           sqrt(pow(tap.dx - nodeOffset.dx, 2) + pow(tap.dy - nodeOffset.dy, 2));
 
-      if (distance <= 17) {
+      if (distance <= 15) {
         print("pressed node with id : " + node.getID().toString());
         Navigator.of(context).push(MaterialPageRoute(
             builder: (context) => ConferenceViewer(
@@ -187,6 +196,7 @@ class GraphPainter extends CustomPainter {
   final double _scale;
   Offset _screenOffset;
   final ui.Image backgroundImage;
+  double radius = 12;
 
   GraphPainter(this._context, this.backgroundImage, this._graph, this._offset,
       this._scale) {
@@ -194,6 +204,11 @@ class GraphPainter extends CustomPainter {
     _screenOffset =
         Offset(size.width / 2.0, size.height / 2.0 - kToolbarHeight);
     //print(_screenOffset);
+    for(int i = 0; i < this._graph.getEdges().length;i++){
+      if(this._graph.getEdges()[i].getDistance()/2 < radius){
+        radius = this._graph.getEdges()[i].getDistance()/2;
+      }
+    }
   }
 
   @override
@@ -232,16 +247,26 @@ class GraphPainter extends CustomPainter {
     }
 
     for (Node node in _graph.getNodes()) {
+
+
       Offset nodeOffset = node.getPosition() - _screenOffset + _offset;
       nodeOffset *= _scale;
       nodeOffset += _screenOffset;
+
+      double d = nodeOffset.distance;
+     // print(Offset(d * cos(angle) , d* sin(angle)));
+
       if (node.selected)
-        canvas.drawCircle(nodeOffset, 5 + 10 * (_scale), paintSelectedNode);
+        canvas.drawCircle(nodeOffset, 4 + radius * (_scale), paintSelectedNode);
       else
-        canvas.drawCircle(nodeOffset, 5 + 10 * (_scale), paintNormalNode);
+        canvas.drawCircle(nodeOffset, 4 + radius * (_scale), paintNormalNode);
     }
+    int i = 0;
     for (Node node in _graph.getNodes()) {
-      double fontSize = 15;
+      i++;
+      double fontSize = 5 + 7 * _scale;
+      if(fontSize > 20) fontSize = 20;
+      if(fontSize < 6) fontSize = 0;
 
       ui.TextStyle textStyle = ui.TextStyle(
         color: Colors.lightBlue,
@@ -259,9 +284,12 @@ class GraphPainter extends CustomPainter {
       ui.ParagraphConstraints constraints = ui.ParagraphConstraints(width: 300);
       ui.Paragraph text = paragBuilder.build();
       text.layout(constraints);
-
+      double up = 20;
+      if(i%2 == 0){
+        up = -20;
+      }
       canvas.drawParagraph(
-          text, nodeOffset - Offset(node.getName().length / 4 * fontSize, 30));
+          text, nodeOffset - Offset(node.getName().length / 4 * fontSize, 10 + up * _scale / 4));
     }
   }
 

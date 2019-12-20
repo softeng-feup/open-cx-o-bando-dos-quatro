@@ -5,16 +5,18 @@ import 'package:confview/map_data.dart';
 import 'package:diacritic/diacritic.dart';
 import 'package:flutter/material.dart';
 
+import 'package:http/http.dart' as http;
+
 class PanoramaView extends StatefulWidget {
-  PanoramaView({Key key, this.locations, this.location}) : super(key: key) {
+  PanoramaView({Key key, @required this.locations, @required this.location}) : super(key: key) {
     this.panoramaImage = this.location.image;
     //print(this.locations);
     print("new viewer");
   }
 
   PanoramaViewImage panoramaImage;
-  Node location;
-  List<Node> locations;
+  final Node location;
+  final List<Node> locations;
 
   @override
   _PanoramaViewState createState() => _PanoramaViewState();
@@ -113,13 +115,21 @@ class _PanoramaViewState extends State<PanoramaView> {
   }
 
   Future<bool> getImage() async {
+
+    final response =
+    await http.get(widget.panoramaImage.imageUrl);
+
+    if (response.statusCode != 200) {
+      widget.panoramaImage.imageUrl = "https://cdn.steemitimages.com/DQmbQGsqqhgTgZK2Wh4o3o9pALrNqPVryT3AH17J4WExoqS/no-image-available-grid.jpg";
+    }
+
     Completer<bool> completer = Completer();
 
+    ImageStreamCompleter load;
     this.networkImage = NetworkImage(widget.panoramaImage.imageUrl);
-
     NetworkImage config =
-        await this.networkImage.obtainKey(const ImageConfiguration());
-    ImageStreamCompleter load = networkImage.load(config);
+    await this.networkImage.obtainKey(const ImageConfiguration());
+    load = networkImage.load(config);
 
     ImageStreamListener listener =
         new ImageStreamListener((ImageInfo info, isSync) async {
@@ -313,6 +323,7 @@ class _PanoramaViewState extends State<PanoramaView> {
   // TODO: figure out a way of getting the size of the image and relating it to the alignment
   // probably need to get the width of the screen since it corresponds to 2 alignment units
   _dragImage(DragUpdateDetails details) {
+    double resistance = dragResistance * 500 / this.widget.panoramaImage.width;
     double dx = _imageAlignment.x - details.delta.dx / dragResistance;
     double dx2 = _imageAlignment2.x - details.delta.dx / dragResistance;
 

@@ -137,7 +137,7 @@ class _HomePageState extends State<HomePage> {
           onPressed: () {
             _addNewConference(textController.text, context);
           },
-          child: Text('Submit'),
+          child: Text('Add conference'),
         )
       ],
     );
@@ -156,18 +156,19 @@ class _HomePageState extends State<HomePage> {
         'https://gnomo.fe.up.pt/~up201706534/website/api/fetch_conference.php';
     var response =
         await http.post(url, body: {'conference_code': conferenceCode});
-    //print('Response status: ${response.statusCode}');
-    //print('Response body: ${response.body}');
+    print('Response status: ${response.statusCode}');
+    print('Response body: ${response.body}');
     List<dynamic> map;
     try {
       map = jsonDecode(response.body);
     } on Exception catch (e) {
+      print(e);
       return;
     }
     print(map);
     Map<String, dynamic> conferenceInfo = map[0];
     Map<String, dynamic> addedInfo = new Map();
-    addedInfo['name'] = conferenceInfo['confName'];
+    addedInfo['name'] = conferenceInfo['name'];
     addedInfo['code'] = conferenceInfo['code'];
 
     setState(() {

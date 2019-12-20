@@ -73,7 +73,11 @@ void main() {
     final edge = new prefix0.Edge(node1,node2);
     expect(edge.getDistance(), 5);
   });
-
+  test('Edge on null', () {
+    final node1 = Node(0,"teste1","",0,0);
+    final node2 = null;
+    expect( prefix0.Edge(node1,node2), throwsException);
+  });
 
 
 }
