@@ -75,34 +75,34 @@ __Setting up a ConfView environment:__
 
 __Guidance App:__
 
-* **Read Tag**
- * **Actor**: The actor taking part in this case will be the regular conference attendee. However, nothing stops the event organizers or speakers to download the App as well, it is free to use.
+1. **Read Tag**
+  1. **Actor**: The actor taking part in this case will be the regular conference attendee. However, nothing stops the event organizers or speakers to download the App as well, it is free to use.
 
- * **Description**: Attendees can use the App to read NFC tags that will automatically show a photosphere of the spot they're in.
+  2. **Description**: Attendees can use the App to read NFC tags that will automatically show a photosphere of the spot they're in.
 
- * **Preconditions**: In order for this to work all the user needs is a smartphone and internet connection to use the App.
+  3. **Preconditions**: In order for this to work all the user needs is a smartphone and internet connection to use the App.
 
- * **Normal Flow**: The user simply needs to get their phone close enough of the NFC tag whilst the App is running and wait for the image to be loaded.
+  4. **Normal Flow**: The user simply needs to get their phone close enough of the NFC tag whilst the App is running and wait for the image to be loaded.
  
-  * **Postconditions**: The image of the spot the user's are is loaded and they can see a Photosphere of it. The Photosphere marks the direction of other spots.
+  5. **Postconditions**: The image of the spot the user's are is loaded and they can see a Photosphere of it. The Photosphere marks the direction of other spots.
  
 
- * **Alternative Flows and Exceptions**: Some smartphones can have problems reading the NFC tags which would result in an incomplete ConfView experience.
+  6. **Alternative Flows and Exceptions**: Some smartphones can have problems reading the NFC tags which would result in an incomplete ConfView experience.
  
  
-* **Display Directions**
+2. **Display Directions**
 
- * **Actor**: The actor taking part in this case will be the regular conference attendee. However, nothing stops the event organizers or speakers to download the App as well, it is free to use.
+  1. **Actor**: The actor taking part in this case will be the regular conference attendee. However, nothing stops the event organizers or speakers to download the App as well, it is free to use.
 
- * **Description**: Attendees can use the App to get a clear understanding of the venue's location and find out the shortest path from where they are to where they are headed.
+  2. **Description**: Attendees can use the App to get a clear understanding of the venue's location and find out the shortest path from where they are to where they are headed.
 
- * **Preconditions**: In order for this to work all the user needs is a smartphone and internet connection to use the App.
+  3. **Preconditions**: In order for this to work all the user needs is a smartphone and internet connection to use the App.
 
- * **Normal Flow**: We can look at the ConfView experience from the prespective of someone that is going to attend a conference and hasn't done any research whatsoever about the location of it. He just knows what lectures he wants to attend. All he needs to do is type in the name of the room or auditorium he wants to go, bathrooms and dining areas will also be in the conference database so they can look that up too.
+  4. **Normal Flow**: We can look at the ConfView experience from the prespective of someone that is going to attend a conference and hasn't done any research whatsoever about the location of it. He just knows what lectures he wants to attend. All he needs to do is type in the name of the room or auditorium he wants to go, bathrooms and dining areas will also be in the conference database so they can look that up too.
  
-  * **Postconditions**: Then app will calculate the shortest path to that place and tell the user where he needs to go.
+  5. **Postconditions**: Then app will calculate the shortest path to that place and tell the user where he needs to go.
 
- * **Alternative Flows and Exceptions**: Although we are trying our best to make this as intuitive and easy to use as possible there are always cases where the algorythms used don't work, especially if the information about the venue is not correctly set up.
+  6. **Alternative Flows and Exceptions**: Although we are trying our best to make this as intuitive and easy to use as possible there are always cases where the algorythms used don't work, especially if the information about the venue is not correctly set up.
  
 
 
@@ -110,7 +110,7 @@ __Guidance App:__
 ### User stories
 * **Trello** : [Also contains Acceptance Test & Mockups](https://trello.com/b/m0GrAXGv/user-stories-esof) 
 ### Domain model
-![model domain diagram](./resources/domain_model_esof_confview.png)
+![model domain diagram](./resources/domain_model.png)
 
 
 To better understand the context of the software system, it is very useful to have a simple UML class diagram with key concepts and relationships involved of the problem domain addressed by our module.
