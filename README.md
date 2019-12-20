@@ -54,19 +54,27 @@ Thank you!
 
 In the use-case diagram above we can see two main possibilities of usage of our product: Setting up a ConfView environment for your conference or using the App's capabilities to guide you during a conference.
 
+* **Organizer**: The Organizer is the person or the group of people that are in charge of arranging the conference. They have permission and the information needed to map the venue using our website. 
+
+* **Participant**: The Participant represents everybody that attends the conference and uses our App.
+
+
 __Setting up a ConfView environment:__
 * **Actor**: The actor taking part in this case will be a conference organizer. It should give information about the venue that will be processed afterwards and used in the App.
 
 * **Description**: By letting organizers input their venue info to a website that is linked to our app database we allow our product to be used in various conferences.
 
-* **Preconditions and Postconditions**: In order for this to work it is needed, for the actor taking part, to map the venue with some NFC tags and have a basic knowledge of how coordinates work on a graph of their conference location.
+* **Preconditions**: In order for this to work it is needed, for the actor taking part, to map the venue with some NFC tags and have a basic knowledge of how coordinates work on a graph of their conference location.
 
-* **Normal Flow**: Under the expected conditions the organizer should fill in a _form_ on the website telling how many nodes his conference map has, giving _x_ and _y_ coordinates to each node and checking wether that node has a tag placed or not. All this information is then processed and stored in a database that can be accessed and used in a human-friendly way on the ConfView App.
+* **Normal Flow**: Under the expected conditions the organizer should fill in a _form_ on the website telling how many nodes his conference map has, giving _x_ and _y_ coordinates to each node and checking wether that node has a tag placed or not. 
+
+* **Postconditions**: All that information is then processed and stored in a database that can be accessed and used in a human-friendly way on the ConfView App.
 
 * **Alternative Flows and Exceptions**: A usage scenario where this use case can be troubling is if the organizer inputs information about the venue incorrectly. This would result on a broken guidance couseling for the conference in question, showing the map incorrectly and misplacing tags.
 
 
 __Guidance App:__
+
 * **Actor**: The actor taking part in this case will be the regular conference attendee. However, nothing stops the event organizers or speakers to download the App as well, it is free to use.
 
 * **Description**: Attendees can use the App to get a clear understanding of the venue's location and find out the shortest path from where they are to where they are headed. It can display photospheres, directions and even read NFC tags to show exactly where they are in the map. 
