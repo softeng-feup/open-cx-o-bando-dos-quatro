@@ -236,8 +236,8 @@ class _PanoramaViewState extends State<PanoramaView> {
 
       if (edges[i].getDestName() == widget.location.path) {
         child1 = Align(
-            alignment: -_imageAlignment * this.delta * 1.4 -
-                edges[i].getAlignment() * this.delta,
+            alignment: (-_imageAlignment * 1.4 -
+                edges[i].getAlignment()) * this.delta,
             child: FlatButton(
                 onPressed: () {
                   Navigator.pop(context);
@@ -250,8 +250,8 @@ class _PanoramaViewState extends State<PanoramaView> {
                 child: tagContainer));
       } else {
         child1 = Align(
-            alignment: -_imageAlignment * this.delta * 1.4 -
-                edges[i].getAlignment() * this.delta,
+            alignment: (-_imageAlignment * this.widget.panoramaImage.width/this.widget.panoramaImage.height -
+                edges[i].getAlignment()) * this.delta,
             child: FlatButton(
                 onPressed: () {
                   Navigator.pop(context);
@@ -268,8 +268,8 @@ class _PanoramaViewState extends State<PanoramaView> {
       Widget child2;
       if (edges[i].getDestName() == widget.location.path) {
         child2 = Align(
-            alignment: -_imageAlignment2 * this.delta * 1.4 -
-                edges[i].getAlignment() * this.delta,
+            alignment: (-_imageAlignment2 * 1.4 -
+                edges[i].getAlignment()) * this.delta,
             child: FlatButton(
                 onPressed: () {
                   Navigator.pop(context);
@@ -282,8 +282,8 @@ class _PanoramaViewState extends State<PanoramaView> {
                 child: tagContainer));
       } else {
         child2 = Align(
-            alignment: -_imageAlignment2 * this.delta * 1.4 -
-                edges[i].getAlignment() * this.delta,
+            alignment: (-_imageAlignment2 * this.widget.panoramaImage.width/this.widget.panoramaImage.height -
+                edges[i].getAlignment()) * this.delta,
             child: FlatButton(
                 onPressed: () {
                   Navigator.pop(context);
