@@ -127,6 +127,7 @@ class _OnSlideState extends State<OnSlide> {
           scheduleMicrotask(() {
             setState(() {});
           });
+          return true;
         },
       );
     }

@@ -1,17 +1,15 @@
-
 import 'dart:convert';
-
-import 'package:confview/graph_draw.dart';
-import 'package:confview/graph.dart';
-import 'package:confview/map_data.dart';
+import 'dart:io';
 
 import 'package:confview/conferenceViewer.dart';
-
+import 'package:confview/graph.dart';
+import 'package:confview/graph_draw.dart';
+import 'package:confview/map_data.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_speed_dial/flutter_speed_dial.dart';
+import 'package:http/http.dart' as http;
 
 import 'nfc.dart';
-import 'package:http/http.dart' as http;
 
 class MapScreen extends StatefulWidget {
   int conferenceId;
@@ -22,7 +20,6 @@ class MapScreen extends StatefulWidget {
 
   static int currentConference = -1;
 
-
   MapScreen({Key key, this.conferenceId}) : super(key: key) {
     //getConferenceInfo();
   }
@@ -30,23 +27,28 @@ class MapScreen extends StatefulWidget {
   @override
   _MapScreenState createState() => _MapScreenState();
 
-  //TODO:: get info from database
   Future<bool> getConferenceInfo() async {
-
-    if(currentConference == this.conferenceId){
+    if (currentConference == this.conferenceId) {
       return false;
     }
     currentConference = this.conferenceId;
     graph = new Graph();
-
-    var url = 'https://gnomo.fe.up.pt/~up201706534/website/api/fetch_conference.php';
-    var response = await http.post(url, body: {'conference_code': currentConference.toString()});
-    print('Response status: ${response.statusCode}');
-    print('Response body: ${response.body}');
+    var response;
+    try {
+      var url =
+          'https://gnomo.fe.up.pt/~up201706534/website/api/fetch_conference.php';
+      response = await http
+          .post(url, body: {'conference_code': currentConference.toString()});
+    } on SocketException catch (e) {
+      print(e.toString());
+      return false;
+    }
+    //print('Response status: ${response.statusCode}');
+    //print('Response body: ${response.body}');
     List<dynamic> map;
     try {
-       map = jsonDecode(response.body);
-    }on Exception catch(e){
+      map = jsonDecode(response.body);
+    } on Exception catch (e) {
       return false;
     }
     print(map);
@@ -54,18 +56,21 @@ class MapScreen extends StatefulWidget {
     List<dynamic> nodesInfo = map[1];
     List<dynamic> edgesInfo = map[2];
 
-    for(int i = 0; i < nodesInfo.length;i++){
+    for (int i = 0; i < nodesInfo.length; i++) {
       Map<String, dynamic> node = nodesInfo[i];
       int id = int.parse(node['id']);
       String name = node['name'] as String;
       double xCoord = double.parse(node['x_coord']);
       double yCoord = double.parse(node['y_coord']);
-      graph.addNode(Node(id, name,
-          "https://www.realtourvision.com/wp-content/uploads/2012/11/2.jpg", xCoord,
+      graph.addNode(Node(
+          id,
+          name,
+          "https://www.realtourvision.com/wp-content/uploads/2012/11/2.jpg",
+          xCoord,
           yCoord));
     }
 
-    for(int i = 0; i < edgesInfo.length;i++){
+    for (int i = 0; i < edgesInfo.length; i++) {
       Map<String, dynamic> edge = edgesInfo[i];
       int orig = int.parse(edge['origin_node']);
       int dest = int.parse(edge['dest_node']);
@@ -73,33 +78,29 @@ class MapScreen extends StatefulWidget {
     }
     return true;
   }
-
-
-
 }
 
 class _MapScreenState extends State<MapScreen> {
-
-
   final TextEditingController _filter = new TextEditingController();
   String _searchText = "";
   List names = new List(); // names we get from API
   List filteredNames = new List(); // names filtered by search text
   Icon _searchIcon = new Icon(Icons.search);
-  Widget _appBarTitle = new Text( 'Search Example' );
+  Widget _appBarTitle = new Text('Search Example');
   bool isSearching = false;
 
   GraphDraw _graphDraw;
-  
+
   initState() {
     super.initState();
 
-    this.widget.getConferenceInfo().then((bool value){
-        this.setState(() {
-          if(value == true){
-            _graphDraw = GraphDraw(graph: MapScreen.graph, conferenceId : this.widget.conferenceId);
-          }
-        });
+    this.widget.getConferenceInfo().then((bool value) {
+      this.setState(() {
+        if (value == true) {
+          _graphDraw = GraphDraw(
+              graph: MapScreen.graph, conferenceId: this.widget.conferenceId);
+        }
+      });
     });
 
     _graphDraw = null;
@@ -111,7 +112,7 @@ class _MapScreenState extends State<MapScreen> {
     filterAddListener();
   }
 
-  filterAddListener(){
+  filterAddListener() {
     _filter.addListener(() {
       if (_filter.text.isEmpty) {
         setState(() {
@@ -127,8 +128,7 @@ class _MapScreenState extends State<MapScreen> {
     });
   }
 
-  void _getNames()  {
-
+  void _getNames() {
     setState(() {
       names = MapScreen.graph.getNodes();
       filteredNames = names;
@@ -143,9 +143,7 @@ class _MapScreenState extends State<MapScreen> {
         this._appBarTitle = new TextField(
           controller: _filter,
           decoration: new InputDecoration(
-              prefixIcon: new Icon(Icons.search),
-              hintText: 'Search...'
-          ),
+              prefixIcon: new Icon(Icons.search), hintText: 'Search...'),
         );
         isSearching = true;
       } else {
@@ -165,14 +163,17 @@ class _MapScreenState extends State<MapScreen> {
     if (_searchText.isNotEmpty) {
       List tempList = new List();
       for (int i = 0; i < filteredNames.length; i++) {
-        if (filteredNames[i].getName().toLowerCase().contains(_searchText.toLowerCase())) {
+        if (filteredNames[i]
+            .getName()
+            .toLowerCase()
+            .contains(_searchText.toLowerCase())) {
           tempList.add(filteredNames[i]);
           filteredNames[i].selected = true;
         }
       }
       filteredNames = tempList;
     }
-    
+
     return ListView.builder(
       itemCount: names == null ? 0 : filteredNames.length,
       itemBuilder: (BuildContext context, int index) {
@@ -182,7 +183,7 @@ class _MapScreenState extends State<MapScreen> {
             print(filteredNames[index].getName());
             _searchPressed();
             for (int i = 0; i < filteredNames.length; i++) {
-                filteredNames[i].selected = false;
+              filteredNames[i].selected = false;
             }
             filteredNames[index].selected = true;
             isSearching = false;
@@ -192,25 +193,19 @@ class _MapScreenState extends State<MapScreen> {
     );
   }
 
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        leading:  _buildBackButton(),
+        leading: _buildBackButton(),
         title: this._appBarTitle,
         actions: _buildActions(),
-        /* TODO: create our own AppBar widget
-                backgroundColor: Colors.transparent,
-                elevation: 0.0,
-                */
       ),
-      body: isSearching ? _buildList() :_buildMap(),
+      body: isSearching ? _buildList() : _buildMap(),
       floatingActionButton: _getFAB(),
     );
   }
 
-  
   Widget _getFAB() {
     return SpeedDial(
       animatedIcon: AnimatedIcons.menu_close,
@@ -226,7 +221,8 @@ class _MapScreenState extends State<MapScreen> {
             onTap: () {
               Navigator.of(context).push(MaterialPageRoute(
                   builder: (context) => ConferenceViewer(
-                        locations: MapScreen.graph.getNodes(), startIndex: 0,
+                        locations: MapScreen.graph.getNodes(),
+                        startIndex: 0,
                       )));
             },
             label: 'GO',
@@ -252,14 +248,9 @@ class _MapScreenState extends State<MapScreen> {
     );
   }
 
-
-
-
-
   Widget _buildMap() {
-      return _graphDraw;
+    return _graphDraw;
   }
-
 
   Widget _buildButtons() {
     return Column(
@@ -280,36 +271,31 @@ class _MapScreenState extends State<MapScreen> {
   }
 
   _readTag() {
-    Navigator.of(context)
-        .push(MaterialPageRoute(builder: (context) => NfcScan(locations: MapScreen.graph.getNodes())));
+    Navigator.of(context).push(MaterialPageRoute(
+        builder: (context) => NfcScan(locations: MapScreen.graph.getNodes())));
   }
 
   List<Widget> _buildActions() {
-      return <Widget>[
-        IconButton(
-          icon: const Icon(Icons.search),
-          onPressed: _searchPressed,
-        ),
-      ];
-
+    return <Widget>[
+      IconButton(
+        icon: const Icon(Icons.search),
+        onPressed: _searchPressed,
+      ),
+    ];
   }
 
   Widget _buildBackButton() {
-    return
-      IconButton(
-        icon: const Icon(Icons.arrow_back),
-        onPressed: () {
-          if(isSearching){
-            _searchPressed();
-            setState(() {
-
-            });
-          }else{
-            Navigator.of(context)
-                .pop();
-          }
-        },
-      );
+    return IconButton(
+      icon: const Icon(Icons.arrow_back),
+      onPressed: () {
+        if (isSearching) {
+          _searchPressed();
+          setState(() {});
+        } else {
+          Navigator.of(context).pop();
+        }
+      },
+    );
   }
 
   @override
@@ -317,5 +303,4 @@ class _MapScreenState extends State<MapScreen> {
     MapScreen.currentConference = -1;
     super.dispose();
   }
-
 }

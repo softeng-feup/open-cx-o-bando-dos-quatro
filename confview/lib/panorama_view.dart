@@ -1,10 +1,8 @@
 import 'dart:async';
 import 'dart:math';
 
-import 'package:diacritic/diacritic.dart';
-import 'package:confview/conferenceViewer.dart';
 import 'package:confview/map_data.dart';
-
+import 'package:diacritic/diacritic.dart';
 import 'package:flutter/material.dart';
 
 class PanoramaView extends StatefulWidget {
@@ -46,29 +44,24 @@ class _PanoramaViewState extends State<PanoramaView> {
   static String searchQuery = "";
   FocusNode _searchFocus;
 
-
   @override
   initState() {
     if (!this.widget.panoramaImage.loaded)
       WidgetsBinding.instance.addPostFrameCallback(getImageSize);
 
     super.initState();
-    if(removeDiacritics(this.widget.location.getName().toLowerCase()) == removeDiacritics(searchQuery.toLowerCase())){
+    if (removeDiacritics(this.widget.location.getName().toLowerCase()) ==
+        removeDiacritics(searchQuery.toLowerCase())) {
       _updateSearchQuery("");
     }
 
     _searchQuery = new TextEditingController(text: searchQuery);
     _searchFocus = FocusNode();
 
-
-
-
     this.delta = 2.455;
 
     loadImage();
-
   }
-
 
   getImageSize(_) {
     RenderBox renderBoxRed = imageKey1.currentContext.findRenderObject();
@@ -188,12 +181,9 @@ class _PanoramaViewState extends State<PanoramaView> {
       return Scaffold(
         key: imageKey1,
         backgroundColor: Colors.white10,
-        body: Center(
-            child: CircularProgressIndicator()
-        ),
+        body: Center(child: CircularProgressIndicator()),
       );
     }
-
 
     List<Widget> stackChildren = [
       Container(
@@ -225,7 +215,6 @@ class _PanoramaViewState extends State<PanoramaView> {
     List<Edge> edges = widget.location.getEdges();
 
     for (int i = 0; i < edges.length; i++) {
-
       Widget tagContainer = Container(
         padding: EdgeInsets.all(8.0),
         child: Text(edges[i].getDestName()),
@@ -237,7 +226,8 @@ class _PanoramaViewState extends State<PanoramaView> {
 
       if (edges[i].getDestName() == widget.location.path) {
         child1 = Align(
-            alignment: -_imageAlignment * this.delta * 1.4 - edges[i].getAlignment() * this.delta ,
+            alignment: -_imageAlignment * this.delta * 1.4 -
+                edges[i].getAlignment() * this.delta,
             child: FlatButton(
                 onPressed: () {
                   Navigator.pop(context);
@@ -250,7 +240,8 @@ class _PanoramaViewState extends State<PanoramaView> {
                 child: tagContainer));
       } else {
         child1 = Align(
-            alignment: -_imageAlignment * this.delta * 1.4 - edges[i].getAlignment() * this.delta ,
+            alignment: -_imageAlignment * this.delta * 1.4 -
+                edges[i].getAlignment() * this.delta,
             child: FlatButton(
                 onPressed: () {
                   Navigator.pop(context);
@@ -267,7 +258,8 @@ class _PanoramaViewState extends State<PanoramaView> {
       Widget child2;
       if (edges[i].getDestName() == widget.location.path) {
         child2 = Align(
-            alignment: -_imageAlignment2 * this.delta * 1.4 - edges[i].getAlignment() * this.delta,
+            alignment: -_imageAlignment2 * this.delta * 1.4 -
+                edges[i].getAlignment() * this.delta,
             child: FlatButton(
                 onPressed: () {
                   Navigator.pop(context);
@@ -280,8 +272,8 @@ class _PanoramaViewState extends State<PanoramaView> {
                 child: tagContainer));
       } else {
         child2 = Align(
-            alignment:
-                -_imageAlignment2 * this.delta * 1.4 - edges[i].getAlignment() * this.delta,
+            alignment: -_imageAlignment2 * this.delta * 1.4 -
+                edges[i].getAlignment() * this.delta,
             child: FlatButton(
                 onPressed: () {
                   Navigator.pop(context);
@@ -314,13 +306,8 @@ class _PanoramaViewState extends State<PanoramaView> {
         ),
       ),
       //actions: _buildActions(),
-      /* TODO: create our own AppBar widget
-                backgroundColor: Colors.transparent,
-                elevation: 0.0,
-                */
     );
   }
-
 
   // FIXME: for now the values are hard coded
   // TODO: figure out a way of getting the size of the image and relating it to the alignment
@@ -347,7 +334,6 @@ class _PanoramaViewState extends State<PanoramaView> {
   }
 }
 
-
 double dist(Node l1, Node l2) {
   return sqrt(pow(l1.getX() - l2.getX(), 2) + pow(l1.getY() - l2.getY(), 2));
 }
@@ -361,7 +347,8 @@ void shortestPath(List<Node> locations, String dest) {
     locations[i].visited = false;
     locations[i].distance = double.maxFinite;
     locations[i].path = "";
-    if (removeDiacritics(locations[i].getName().toLowerCase()) == removeDiacritics(dest.toLowerCase())) {
+    if (removeDiacritics(locations[i].getName().toLowerCase()) ==
+        removeDiacritics(dest.toLowerCase())) {
       toVisit.add(locations[i]);
       locations[i].distance = 0;
       found = true;
