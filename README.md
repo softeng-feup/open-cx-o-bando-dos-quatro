@@ -110,7 +110,7 @@ __Guidance App:__
 ### User stories
 * **Trello** : [Also contains Acceptance Test & Mockups](https://trello.com/b/m0GrAXGv/user-stories-esof) 
 ### Domain model
-![model domain diagram](./resources/domain_model.png)
+![model domain diagram](./resources/domain_model_esof_confview.png)
 
 
 To better understand the context of the software system, it is very useful to have a simple UML class diagram with key concepts and relationships involved of the problem domain addressed by our module.
