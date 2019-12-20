@@ -60,49 +60,51 @@ In the use-case diagram above we can see two main possibilities of usage of our 
 
 
 __Setting up a ConfView environment:__
-* **Actor**: The actor taking part in this case will be a conference organizer. It should give information about the venue that will be processed afterwards and used in the App.
 
-* **Description**: By letting organizers input their venue info to a website that is linked to our app database we allow our product to be used in various conferences.
+* **Input Venue Info**
+  - **Actor**: The actor taking part in this case will be a conference organizer. It should give information about the venue that will be processed afterwards and used in the App.
 
-* **Preconditions**: In order for this to work it is needed, for the actor taking part, to map the venue with some NFC tags and have a basic knowledge of how coordinates work on a graph of their conference location.
+  - **Description**: By letting organizers input their venue info to a website that is linked to our app database we allow our product to be used in various conferences.
 
-* **Normal Flow**: Under the expected conditions the organizer should fill in a _form_ on the website telling how many nodes his conference map has, giving _x_ and _y_ coordinates to each node and checking wether that node has a tag placed or not. 
+  - **Preconditions**: In order for this to work it is needed, for the actor taking part, to map the venue with some NFC tags and have a basic knowledge of how coordinates work on a graph of their conference location.
 
-* **Postconditions**: All that information is then processed and stored in a database that can be accessed and used in a human-friendly way on the ConfView App.
+  - **Normal Flow**: Under the expected conditions the organizer should fill in a _form_ on the website telling how many nodes his conference map has, giving _x_ and _y_ coordinates to each node and checking wether that node has a tag placed or not. 
 
-* **Alternative Flows and Exceptions**: A usage scenario where this use case can be troubling is if the organizer inputs information about the venue incorrectly. This would result on a broken guidance couseling for the conference in question, showing the map incorrectly and misplacing tags.
+  - **Postconditions**: All that information is then processed and stored in a database that can be accessed and used in a human-friendly way on the ConfView App.
+
+  - **Alternative Flows and Exceptions**: A usage scenario where this use case can be troubling is if the organizer inputs information about the venue incorrectly. This would result on a broken guidance couseling for the conference in question, showing the map incorrectly and misplacing tags.
 
 
 __Guidance App:__
 
-1. **Read Tag**
-  1. **Actor**: The actor taking part in this case will be the regular conference attendee. However, nothing stops the event organizers or speakers to download the App as well, it is free to use.
+* **Read Tag**
+  - **Actor**: The actor taking part in this case will be the regular conference attendee. However, nothing stops the event organizers or speakers to download the App as well, it is free to use.
 
-  2. **Description**: Attendees can use the App to read NFC tags that will automatically show a photosphere of the spot they're in.
+  - **Description**: Attendees can use the App to read NFC tags that will automatically show a Photosphere of the spot they're in.
 
-  3. **Preconditions**: In order for this to work all the user needs is a smartphone and internet connection to use the App.
+  - **Preconditions**: In order for this to work all the user needs is a smartphone and internet connection to use the App.
 
-  4. **Normal Flow**: The user simply needs to get their phone close enough of the NFC tag whilst the App is running and wait for the image to be loaded.
+  - **Normal Flow**: The user simply needs to get their phone close enough of the NFC tag whilst the App is running and wait for the image to be loaded.
  
-  5. **Postconditions**: The image of the spot the user's are is loaded and they can see a Photosphere of it. The Photosphere marks the direction of other spots.
+  - **Postconditions**: The image of the spot the user's are is loaded and they can see a Photosphere of it. The Photosphere marks the direction of other spots.
  
 
-  6. **Alternative Flows and Exceptions**: Some smartphones can have problems reading the NFC tags which would result in an incomplete ConfView experience.
+  - **Alternative Flows and Exceptions**: Some smartphones can have problems reading the NFC tags which would result in an incomplete ConfView experience.
  
  
-2. **Display Directions**
+* **Display Directions**
 
-  1. **Actor**: The actor taking part in this case will be the regular conference attendee. However, nothing stops the event organizers or speakers to download the App as well, it is free to use.
+  - **Actor**: The actor taking part in this case will be the regular conference attendee. However, nothing stops the event organizers or speakers to download the App as well, it is free to use.
 
-  2. **Description**: Attendees can use the App to get a clear understanding of the venue's location and find out the shortest path from where they are to where they are headed.
+  - **Description**: Attendees can use the App to get a clear understanding of the venue's location and find out the shortest path from where they are to where they are headed.
 
-  3. **Preconditions**: In order for this to work all the user needs is a smartphone and internet connection to use the App.
+  - **Preconditions**: In order for this to work all the user needs is a smartphone and internet connection to use the App.
 
-  4. **Normal Flow**: We can look at the ConfView experience from the prespective of someone that is going to attend a conference and hasn't done any research whatsoever about the location of it. He just knows what lectures he wants to attend. All he needs to do is type in the name of the room or auditorium he wants to go, bathrooms and dining areas will also be in the conference database so they can look that up too.
+  - **Normal Flow**: We can look at the ConfView experience from the prespective of someone that is going to attend a conference and hasn't done any research whatsoever about the location of it. He just knows what lectures he wants to attend. All he needs to do is type in the name of the room or auditorium he wants to go, bathrooms and dining areas will also be in the conference database so they can look that up too.
  
-  5. **Postconditions**: Then app will calculate the shortest path to that place and tell the user where he needs to go.
+  - **Postconditions**: Then, the app will calculate the shortest path to that place and tell the user where he needs to go.
 
-  6. **Alternative Flows and Exceptions**: Although we are trying our best to make this as intuitive and easy to use as possible there are always cases where the algorythms used don't work, especially if the information about the venue is not correctly set up.
+  - **Alternative Flows and Exceptions**: Although we are trying our best to make this as intuitive and easy to use as possible there are always cases where the algorythms used don't work, especially if the information about the venue is not correctly set up.
  
 
 
@@ -114,7 +116,7 @@ __Guidance App:__
 
 
 To better understand the context of the software system, it is very useful to have a simple UML class diagram with key concepts and relationships involved of the problem domain addressed by our module.
-The diagram shows that conferences can have multiple locations, each one can have an associated photo. In the conference there are also several edges that link two locations, the origin and destination (of each edge).
+The diagram shows all locations have an associated image, we can do many transitions between locations, each one with some info. A path is an association between two locations, our atual location and the destination.
 ## Architecture and Design
 
 ### Logical Architecture
