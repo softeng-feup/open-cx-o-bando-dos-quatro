@@ -1,7 +1,6 @@
 <?php
 
-    include_once('../includes/include_data_base.php');
-    include_once('../debug/debug.php');
+include_once('../includes/database.php');
     
 
     function validInfo($conf_name, $conf_code){
@@ -12,16 +11,6 @@
         }
 
         return false;
-    }
-
-    function confNameExists($conf_name){
-
-        $db = Database::instance()->db();
-
-        $stmt = $db->prepare('SELECT * FROM conference WHERE confName = ?');
-        $stmt->execute([$conf_name]);
-
-        return $stmt->fetch();
     }
 
     function confCodeExists($conf_code){
@@ -53,8 +42,6 @@
 
         $stmt = $db->prepare('INSERT INTO conference(user_id, confName, code, startdate, enddate, addr, city, descr, version) VALUES(?, ?, ?, ?, ?, ?, ?, ?, ?)');
         $stmt->execute(array($user_id, $conf_name, $conf_code, $conf_start, $conf_end, $conf_address, $conf_city, $conf_description, $version));
-       
-     
     }
 
     function addNodes($conf_name, $x, $y, $tag, $name){
@@ -134,83 +121,12 @@
 
     }
 
-    function available_username($username){
-
-        $db = Database::instance()->db();
-        $stmt = $db->prepare('SELECT * FROM user WHERE username = ?');
-        $stmt->execute(array($username));
-
-        return $stmt->fetch() ? false : true;
-
-    }
-
-    function insert_user($username, $password){
-
-        $db = Database::instance()->db();
-
-        $hash_password = password_hash($password, PASSWORD_DEFAULT);
-
-        $stmt = $db->prepare('INSERT INTO user(username, password) VALUES(?, ?)');
-        $stmt->execute(array($username, $hash_password));
-
-        return true;
-
-    }
+    
 
 
-    function valid_login($username, $password){
+    
 
-        $db = Database::instance()->db();
-        
-        $stmt = $db->prepare('SELECT * FROM user WHERE username = ?');
-        $stmt->execute(array($username));
-
-        $user = $stmt->fetch();
-
-        return $user !== false && password_verify($password, $user['password']);
-
-    }
-
-    function get_user_id($username){
-
-        $db = Database::instance()->db();
-        
-        $stmt = $db->prepare('SELECT id FROM user WHERE username = ?');
-        $stmt->execute(array($username));
-
-        return $stmt->fetch()['id'];
-
-    }
-
-    function get_user_name($id){
-
-        $db = Database::instance()->db();
-        
-        $stmt = $db->prepare('SELECT username FROM user WHERE id = ?');
-        $stmt->execute(array($id));
-
-        return $stmt->fetch()['username'];
-
-    }
-
-
-    function list_conferences($user_id){
-
-        $db = Database::instance()->db();
-        
-        $stmt = $db->prepare('SELECT * FROM conference WHERE user_id = ?');
-        $stmt->execute(array($user_id));
-
-        return $stmt->fetchAll();
-
-    }
-
-    function delete_conference($id){
-        $db = Database::instance()->db();
-
-        $stmt = $db->prepare('DELETE FROM conference WHERE id=?');
-        $stmt->execute(array($id));
-    }
+    
 
     function conference_information($id){
         $db = Database::instance()->db();
