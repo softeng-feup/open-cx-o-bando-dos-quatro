@@ -132,7 +132,7 @@ The UML diagram above represents the logical architecture of our code divided es
 
 ![components_diagram](./resources/component-diagram.png)
 
-Conference participants should download the app for their smartphone. After entering conference code, our application will fetch the desired conference data by HTTP requests.
+Conference participants should download the app for their smartphone. After entering the conference code, our application will fetch the desired conference data by HTTP requests.
 Conference organizers can map their own conference by accessing our website and filling in the required information. After submission, all data will be stored in the database.
 
 For the development of our product we chose Flutter as our working environment, for the reasons that can be seen in Prototype.
