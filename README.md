@@ -75,19 +75,19 @@ __Setting up a ConfView environment:__
 
 __Guidance App:__
 
-1. **Read Tag**
-  1. **Actor**: The actor taking part in this case will be the regular conference attendee. However, nothing stops the event organizers or speakers to download the App as well, it is free to use.
+* **Read Tag**
+  - * **Actor**: The actor taking part in this case will be the regular conference attendee. However, nothing stops the event organizers or speakers to download the App as well, it is free to use.
 
-  2. **Description**: Attendees can use the App to read NFC tags that will automatically show a photosphere of the spot they're in.
+  - * **Description**: Attendees can use the App to read NFC tags that will automatically show a photosphere of the spot they're in.
 
-  3. **Preconditions**: In order for this to work all the user needs is a smartphone and internet connection to use the App.
+  - * **Preconditions**: In order for this to work all the user needs is a smartphone and internet connection to use the App.
 
-  4. **Normal Flow**: The user simply needs to get their phone close enough of the NFC tag whilst the App is running and wait for the image to be loaded.
+  - * **Normal Flow**: The user simply needs to get their phone close enough of the NFC tag whilst the App is running and wait for the image to be loaded.
  
-  5. **Postconditions**: The image of the spot the user's are is loaded and they can see a Photosphere of it. The Photosphere marks the direction of other spots.
+  - * **Postconditions**: The image of the spot the user's are is loaded and they can see a Photosphere of it. The Photosphere marks the direction of other spots.
  
 
-  6. **Alternative Flows and Exceptions**: Some smartphones can have problems reading the NFC tags which would result in an incomplete ConfView experience.
+  - * **Alternative Flows and Exceptions**: Some smartphones can have problems reading the NFC tags which would result in an incomplete ConfView experience.
  
  
 2. **Display Directions**
