@@ -31,6 +31,9 @@ $conference_info = fetch_conference_info_id($conference_id);
         <title>ConfView</title>
         <meta charset="utf-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+        <link href="../css/common.css" rel="stylesheet">
+
         <script src="../javascript/dynamic_form.js" type="module" defer></script>
     </head>
     <body>
