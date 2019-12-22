@@ -13,6 +13,7 @@ if (!isset($_SESSION['username'])) {
 ?>
 
 <!DOCTYPE html>
+<link rel="stylesheet" type="text/css" href="../css/add.css">
 <html>
     <head>
         <title>ConfView</title>

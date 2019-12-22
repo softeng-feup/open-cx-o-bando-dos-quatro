@@ -26,6 +26,7 @@ $conference_info = fetch_conference_info_id($conference_id);
 ?>
 
 <!DOCTYPE html>
+<link rel="stylesheet" type="text/css" href="../css/add.css">
 <html>
     <head>
         <title>ConfView</title>
