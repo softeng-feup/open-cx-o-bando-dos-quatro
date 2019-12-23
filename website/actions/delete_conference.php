@@ -21,6 +21,9 @@ if (!belongs_to_user($conference_id, $username)) {
 
 delete_conference($conference_id);
 
+array_map('unlink', glob("../images/$conference_id/*.*"));
+rmdir("../images/$conference_id/");
+
 $_SESSION['messages'][] = array('type' => 'success', 'content' => 'Conference deleted!');
 header("Location: ../pages/home.php");
 

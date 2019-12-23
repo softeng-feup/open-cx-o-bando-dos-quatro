@@ -2,10 +2,7 @@
 
 include_once('../includes/session.php');
 
-include_once('../database/db_graph.php');
 include_once('../database/db_conference.php');
-
-include_once('../debug/debug.php');
 
 
 if (!isset($_SESSION['username'])) {

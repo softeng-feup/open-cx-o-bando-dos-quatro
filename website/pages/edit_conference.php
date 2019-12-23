@@ -41,6 +41,9 @@ $conference_info = fetch_conference_info_id($conference_id);
 <?php draw_header(); ?>
 
 <form id="form" action="../actions/edit_conference.php" method="post">
+
+    <input type="hidden" name="id" value="<?=$conference_id?>">
+
     <div id="info">
         <h3>Information</h3>
         <div class="form_entry">
