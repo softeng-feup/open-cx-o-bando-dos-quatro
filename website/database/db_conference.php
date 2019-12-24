@@ -105,11 +105,34 @@ function fetch_conference_info_id($id) {
     return $stmt->fetch();
 }
 
-function delete_conference($id){
+function delete_conference($id) {
     $db = Database::instance()->db();
 
-    $stmt = $db->prepare('DELETE FROM conference WHERE id=?');
+    $stmt = $db->prepare('DELETE FROM conference WHERE id = ?');
     $stmt->execute(array($id));
+}
+
+function fetch_conference_code($id) {
+    $db = Database::instance()->db();
+
+    $stmt = $db->prepare('SELECT code FROM conference WHERE id = ?');
+    $stmt->execute(array($id));
+
+    return $stmt->fetch()['code'];
+}
+
+function update_conference($conference_id, $name, $code, $start_date, $end_date, $address, $city, $description) {
+    $db = Database::instance()->db();
+
+    $stmt = $db->prepare('UPDATE conference SET (name, code, start_date, end_date, address, city, description) = (?, ?, ?, ?, ?, ?, ?) WHERE id = ?');
+    $stmt->execute(array($name, $code, $start_date, $end_date, $address, $city, $description, $conference_id));
+}
+
+function delete_conference_nodes($conference_id) {
+    $db = Database::instance()->db();
+
+    $stmt = $db->prepare('DELETE FROM node WHERE conference = ?');
+    $stmt->execute(array($conference_id));
 }
 
 ?>

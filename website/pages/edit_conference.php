@@ -26,17 +26,24 @@ $conference_info = fetch_conference_info_id($conference_id);
 ?>
 
 <!DOCTYPE html>
+<link rel="stylesheet" type="text/css" href="../css/add.css">
 <html>
     <head>
         <title>ConfView</title>
         <meta charset="utf-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+        <link href="../css/common.css" rel="stylesheet">
+
         <script src="../javascript/dynamic_form.js" type="module" defer></script>
     </head>
     <body>
 <?php draw_header(); ?>
 
 <form id="form" action="../actions/edit_conference.php" method="post">
+
+    <input type="hidden" name="id" value="<?=$conference_id?>">
+
     <div id="info">
         <h3>Information</h3>
         <div class="form_entry">

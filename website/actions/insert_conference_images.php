@@ -28,4 +28,7 @@ foreach ($_FILES['image']['tmp_name'] as $index => $tmpName) {
     $i = $i + 1;
 }
 
+
+header('Location: ../pages/home.php');
+
 ?>

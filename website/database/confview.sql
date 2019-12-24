@@ -43,8 +43,8 @@ CREATE TABLE edge (
     origin               INTEGER NOT NULL,    
     destination          INTEGER NOT NULL,
 
-    FOREIGN KEY (origin, conference) REFERENCES node(conf_id, conference),
-    FOREIGN KEY (destination, conference) REFERENCES node(conf_id, conference)
+    FOREIGN KEY (origin, conference) REFERENCES node(conf_id, conference) ON DELETE CASCADE,
+    FOREIGN KEY (destination, conference) REFERENCES node(conf_id, conference) ON DELETE CASCADE
 );
 
 CREATE TABLE image (
@@ -53,5 +53,5 @@ CREATE TABLE image (
     conference          INTEGER NOT NULL,
     path                VARCHAR NOT NULL UNIQUE,
 
-    FOREIGN KEY (node_id, conference) REFERENCES node(conf_id, conference)
+    FOREIGN KEY (node_id, conference) REFERENCES node(conf_id, conference) ON DELETE CASCADE
 );
