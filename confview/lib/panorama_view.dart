@@ -236,7 +236,7 @@ class _PanoramaViewState extends State<PanoramaView> {
 
       if (edges[i].getDestName() == widget.location.path) {
         child1 = Align(
-            alignment: (-_imageAlignment * 1.4 -
+            alignment: (-_imageAlignment * this.widget.panoramaImage.width/this.widget.panoramaImage.height -
                 edges[i].getAlignment()) * this.delta,
             child: FlatButton(
                 onPressed: () {
@@ -268,7 +268,7 @@ class _PanoramaViewState extends State<PanoramaView> {
       Widget child2;
       if (edges[i].getDestName() == widget.location.path) {
         child2 = Align(
-            alignment: (-_imageAlignment2 * 1.4 -
+            alignment: (-_imageAlignment * this.widget.panoramaImage.width/this.widget.panoramaImage.height -
                 edges[i].getAlignment()) * this.delta,
             child: FlatButton(
                 onPressed: () {
