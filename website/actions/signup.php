@@ -1,24 +1,30 @@
 <?php
 
-    include_once("../database/conference.php");
+include_once("../database/db_user.php");
+include_once('../includes/session.php');
 
-    $username = $_POST['username'];
-    $password = $_POST['password'];
-    $r_password = $_POST['r_password'];
 
-    if($password != $r_password){
-        // create error message
-        header("Location: ../src/draw_signup.php");
-    }
-    
-    if(!available_username($username)){
-        // create error message
-        header("Location: ../src/draw_signup.php");
-    }
+$username = $_POST['username'];
+$password = $_POST['password'];
+$r_password = $_POST['r_password'];
 
-    insert_user($username, $password);
+if ($password != $r_password)
+{
+    $_SESSION['messages'][] = array('type' => 'error', 'content' => 'Passwords don\'t match.');
+    header("Location: ../pages/signup.php");
+}
 
-    // swap website.html for Gustavo's page
-    header("Location: ../src/website.html");
+if (!available_username($username))
+{
+    $_SESSION['messages'][] = array('type' => 'error', 'content' => 'Username already taken.');
+    header("Location: ../pages/signup.php");
+}
+
+
+insert_user($username, $password);
+
+$_SESSION['messages'][] = array('type' => 'success', 'content' => 'Signed up and logged in!');
+$_SESSION['username'] = $username;
+header("Location: ../pages/home.php");
 
 ?>
