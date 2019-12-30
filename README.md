@@ -17,7 +17,7 @@ You can find here detailed about the (sub)product, hereby mentioned as module, f
   * [Physical architecture](#Physical-architecture)
   * [Prototype](#Prototype)
 * [Implementation](#Implementation)
-* [App + Website Screenshots](#App-+-Website-Screenshots)
+* [App + Website Screenshots](#App-and-Website-Screenshots)
 * [Test](#Test)
 * [Configuration and change management](#Configuration-and-change-management)
 * [Project management](#Project-management)
@@ -181,7 +181,9 @@ Our website contains a login and signup feature, so conferences can only be view
 
 The application is able to display the graphs stored in the database.
 
-## App + Website Screenshots
+## App and Website Screenshots
+In this section you can see the final look of our product.
+## App
 
 ### Website
 
