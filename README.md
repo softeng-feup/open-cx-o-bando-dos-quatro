@@ -185,18 +185,30 @@ The application is able to display the graphs stored in the database.
 In this section you can see the final look of our product.
 ### App
 
+
 Main menu, where user can see all the conferences he has access to. In the bottom right corner user has a button that gives him access to more conferences.
+
 ![sign-up](./resources/app_photos/13.jpg)
 
+
+
 Add conference code to access  conference map at your phone.
+
 ![sign-up](./resources/app_photos/1.jpg)
 
+
+
 When you search for a place, you will be redirect to that place, that will be at a red box.
+
 ![sign-up](./resources/app_photos/2.jpg)
 
+
 Feup's map. Can be seen at the 'Programming 2020' conference.
+
 ![sign-up](./resources/app_photos/17.png)
+
 ![sign-up](./resources/app_photos/3.jpg)
+
 ![sign-up](./resources/app_photos/10.jpg)
 
 
@@ -204,24 +216,34 @@ Feup's map. Can be seen at the 'Programming 2020' conference.
 
 
 When a node does not have an associated image, it is presented to the user as follows.
+
 ![sign-up](./resources/app_photos/5.jpg)
 
 
 
 First contact we have when entering the Programming 2020 conference map.
+
 ![sign-up](./resources/app_photos/6.jpg)
 
 When we search for a place, a list of all places that match the search appears. In the graph those places appear. with the node in red.
+
+
 ![sign-up](./resources/app_photos/7.jpg)
+
 ![sign-up](./resources/app_photos/8.jpg)
 
+
 When user search for DEEC, this picture shows what the map will look like.
+
 ![sign-up](./resources/app_photos/11.jpg)
 
 
 In the following images, we can see the sequence of photos that appears to someone, who being in the entrance wants to go to Bar de Minas. The nearest way will be to go from the entrance to the auditorium (red box), and from here to the Bar de Minas.
+
 ![sign-up](./resources/app_photos/9.jpg)
+
 ![sign-up](./resources/app_photos/12.jpg)
+
 ![sign-up](./resources/app_photos/4.jpg)
 
 
