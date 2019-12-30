@@ -184,7 +184,7 @@ The application is able to display the graphs stored in the database.
 ## App and Website Screenshots
 In this section you can see the final look of our product.
 ### App
-![sign-up](./resources/app_photos/17.png)
+
 ![sign-up](./resources/app_photos/1.jpg)
 ![sign-up](./resources/app_photos/2.jpg)
 ![sign-up](./resources/app_photos/3.jpg)
@@ -201,27 +201,29 @@ In this section you can see the final look of our product.
 ![sign-up](./resources/app_photos/14.jpg)
 ![sign-up](./resources/app_photos/15.jpg)
 ![sign-up](./resources/app_photos/16.jpg)
+![sign-up](./resources/app_photos/17.png)
 
 
 ### Website
 
-![sign-up](./resources/prints_website/1.png)
 Sign up mechanism.
+![sign-up](./resources/prints_website/1.png)
 
-![login-up](./resources/prints_website/2.png)
 Login mechanism.
+![login-up](./resources/prints_website/2.png)
 
-![main-menu](./resources/prints_website/3.png)
 Main menu, already with a conference.
+![main-menu](./resources/prints_website/3.png)
 
-![create-conference](./resources/prints_website/4.png)
 Create a new conference.
+![create-conference](./resources/prints_website/4.png)
 
-![add-photsphere](./resources/prints_website/5.png)
 Add photospheres to said locations.
+![add-photsphere](./resources/prints_website/5.png)
 
-![edit-conference](./resources/prints_website/6.png)
 Edit an existing conference.
+![edit-conference](./resources/prints_website/6.png)
+
 
 
 ## Test
