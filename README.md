@@ -183,7 +183,7 @@ The application is able to display the graphs stored in the database.
 
 ## App and Website Screenshots
 In this section you can see the final look of our product.
-## App
+### App
 
 ### Website
 
