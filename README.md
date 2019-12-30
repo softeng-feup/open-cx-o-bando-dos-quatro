@@ -185,23 +185,49 @@ The application is able to display the graphs stored in the database.
 In this section you can see the final look of our product.
 ### App
 
+Main menu, where user can see all the conferences he has access to. In the bottom right corner user has a button that gives him access to more conferences.
+![sign-up](./resources/app_photos/13.jpg)
+
+Add conference code to access  conference map at your phone.
 ![sign-up](./resources/app_photos/1.jpg)
+
+When you search for a place, you will be redirect to that place, that will be at a red box.
 ![sign-up](./resources/app_photos/2.jpg)
+
+Feup's map. Can be seen at the 'Programming 2020' conference
+![sign-up](./resources/app_photos/17.png)
 ![sign-up](./resources/app_photos/3.jpg)
+![sign-up](./resources/app_photos/10.jpg)
+
+
+
 ![sign-up](./resources/app_photos/4.jpg)
+
+When a node does not have an associated image, it is presented to the user as follows.
 ![sign-up](./resources/app_photos/5.jpg)
+
+
+
+
 ![sign-up](./resources/app_photos/6.jpg)
+
+When we search for a place, a list of all places that match the search appears. In the graph, if it exists
+more than one place, these places appear with the node in red.
 ![sign-up](./resources/app_photos/7.jpg)
 ![sign-up](./resources/app_photos/8.jpg)
+
+
+
 ![sign-up](./resources/app_photos/9.jpg)
-![sign-up](./resources/app_photos/10.jpg)
+
 ![sign-up](./resources/app_photos/11.jpg)
 ![sign-up](./resources/app_photos/12.jpg)
-![sign-up](./resources/app_photos/13.jpg)
-![sign-up](./resources/app_photos/14.jpg)
+
+NFC feature
 ![sign-up](./resources/app_photos/15.jpg)
+![sign-up](./resources/app_photos/14.jpg)
 ![sign-up](./resources/app_photos/16.jpg)
-![sign-up](./resources/app_photos/17.png)
+
 
 
 ### Website
