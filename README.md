@@ -184,6 +184,24 @@ The application is able to display the graphs stored in the database.
 ## App and Website Screenshots
 In this section you can see the final look of our product.
 ### App
+![sign-up](./resources/app_photos/17.png)
+![sign-up](./resources/app_photos/1.jpg)
+![sign-up](./resources/app_photos/2.jpg)
+![sign-up](./resources/app_photos/3.jpg)
+![sign-up](./resources/app_photos/4.jpg)
+![sign-up](./resources/app_photos/5.jpg)
+![sign-up](./resources/app_photos/6.jpg)
+![sign-up](./resources/app_photos/7.jpg)
+![sign-up](./resources/app_photos/8.jpg)
+![sign-up](./resources/app_photos/9.jpg)
+![sign-up](./resources/app_photos/10.jpg)
+![sign-up](./resources/app_photos/11.jpg)
+![sign-up](./resources/app_photos/12.jpg)
+![sign-up](./resources/app_photos/13.jpg)
+![sign-up](./resources/app_photos/14.jpg)
+![sign-up](./resources/app_photos/15.jpg)
+![sign-up](./resources/app_photos/16.jpg)
+
 
 ### Website
 
