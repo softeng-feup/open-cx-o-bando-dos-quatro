@@ -153,7 +153,7 @@ class _HomePageState extends State<HomePage> {
       }
     }
     var url =
-        'https://gnomo.fe.up.pt/~up201706534/website/api/fetch_conference.php';
+        'https://gnomo.fe.up.pt/~up201703917/website/api/fetch_conference.php';
     var response =
         await http.post(url, body: {'conference_code': conferenceCode});
     print('Response status: ${response.statusCode}');

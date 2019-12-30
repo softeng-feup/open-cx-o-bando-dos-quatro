@@ -40,7 +40,7 @@ class MapScreen extends StatefulWidget {
     graph = new Graph();
     var response;
     try {
-      var url = 'https://gnomo.fe.up.pt/~up201706534/website/api/fetch_conference.php';
+      var url = 'https://gnomo.fe.up.pt/~up201703917/website/api/fetch_conference.php';
       response = await http.post(
           url, body: {'conference_code': currentConference.toString()});
     } on SocketException catch(e){
@@ -66,8 +66,10 @@ class MapScreen extends StatefulWidget {
       String name = node['name'] as String;
       double xCoord = double.parse(node['x']);
       double yCoord = double.parse(node['y']);
+      print("https://gnomo.fe.up.pt/~up201703917/website/images/" + conferenceInfo['id'] + "/" + id.toString() + ".jpg");
       graph.addNode(Node(id, name,
-          "https://gnomo.fe.up.pt/~up201706534/website/images/" + conferenceInfo['id'] + "/" + id.toString() + ".jpg", xCoord,
+          "https://gnomo.fe.up.pt/~up201703917/website/images/" + conferenceInfo['id'] + "/" + id.toString() + ".jpg",
+          xCoord,
           yCoord));
     }
 
