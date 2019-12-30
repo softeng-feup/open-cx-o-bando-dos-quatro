@@ -250,8 +250,11 @@ In the following images, we can see the sequence of photos that appears to someo
 
 
 NFC feature.
+
 ![sign-up](./resources/app_photos/15.jpg)
+
 ![sign-up](./resources/app_photos/14.jpg)
+
 ![sign-up](./resources/app_photos/16.jpg)
 
 
