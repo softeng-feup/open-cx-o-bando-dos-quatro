@@ -180,6 +180,29 @@ Our website contains a login and signup feature, so conferences can only be view
 
 The application is able to display the graphs stored in the database.
 
+## App + Website Screenshots
+
+### Website
+
+![sign-up](./resources/prints_website/1.png)
+Sign up mechanism.
+
+![login-up](./resources/prints_website/2.png)
+Login mechanism.
+
+![main-menu](./resources/prints_website/3.png)
+Main menu, already with a conference.
+
+![create-conference](./resources/prints_website/4.png)
+Create a new conference.
+
+![add-photsphere](./resources/prints_website/5.png)
+Add photospheres to said locations.
+
+![edit-conference](./resources/prints_website/6.png)
+Edit an existing conference.
+
+
 ## Test
 
 ### Test Plan:
